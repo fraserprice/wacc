@@ -1,7 +1,8 @@
 lexer grammar WACCLexer;
 
-// skip all whitespace
+// skip all whitespace and comments
 WS: [ \r\n\t]+ -> skip;
+COMMENT: '#' ~[\n]* '\n' -> skip;
 
 //brackets
 OPEN_PARENTHESES: '(';
@@ -48,7 +49,7 @@ SND: 'snd';
 // unary operators
 NOT: '!';
 MINUS: '-';
-LENGTH: 'len';
+LEN: 'len';
 ORD: 'ord';
 CHR: 'chr';
 
@@ -69,13 +70,11 @@ OR: '||';
 // identifiers
 fragment DIGIT: '0'..'9';
 fragment INT_SIGN: ('-'|'+');
-fragment ESCAPED_CHAR: '0'|'b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\';
-fragment CHARACTER: [^'\''\'''\"''\\']|'\\' ESCAPED_CHAR;
+fragment ESCAPED_CHAR: '0'|'b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\';
+fragment CHARACTER: ~['\\''\'''"']|'\\' ESCAPED_CHAR;
 IDENT: ('_'|'a'..'z'|'A'..'Z')('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
 INT_LITERAL: INT_SIGN? DIGIT+;
 BOOL_LITERAL: 'true' | 'false';
 CHAR_LITERAL: '\'' CHARACTER '\'';
-STR_LITERAL: '\"' CHARACTER* '\"';
+STR_LITERAL: '"' CHARACTER* '"';
 PAIR_LITERAL: 'null';
-
-COMMENT: '#' ([^'\n'])* '\n';
