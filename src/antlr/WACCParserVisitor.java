@@ -36,18 +36,6 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssign_rhs(@NotNull WACCParser.Assign_rhsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArithmetic_expr(@NotNull WACCParser.Arithmetic_exprContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link WACCParser#unary_op}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnary_op(@NotNull WACCParser.Unary_opContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link WACCParser#program}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -59,12 +47,6 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitType(@NotNull WACCParser.TypeContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link WACCParser#arith_op}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArith_op(@NotNull WACCParser.Arith_opContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#pair_elem_type}.
 	 * @param ctx the parse tree
@@ -83,6 +65,12 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitArg_list(@NotNull WACCParser.Arg_listContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link WACCParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLiteral(@NotNull WACCParser.LiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#base_type}.
 	 * @param ctx the parse tree
@@ -120,27 +108,9 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpr(@NotNull WACCParser.ExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#term}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTerm(@NotNull WACCParser.TermContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link WACCParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFactor(@NotNull WACCParser.FactorContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link WACCParser#array_literal}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitArray_literal(@NotNull WACCParser.Array_literalContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link WACCParser#binary_op}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBinary_op(@NotNull WACCParser.Binary_opContext ctx);
 }

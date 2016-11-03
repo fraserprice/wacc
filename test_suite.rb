@@ -10,6 +10,14 @@ total_tests = 0
 
 failed_tests = []
 
+puts "Making ..."
+
+`make`
+
+if $?.exitstatus != 0 
+  exit $?.exitstatus
+end
+
 puts "Running ..."
 
 TESTS.each_line do |test|

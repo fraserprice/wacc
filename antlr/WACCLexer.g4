@@ -69,11 +69,10 @@ OR: '||';
 
 // identifiers
 fragment DIGIT: '0'..'9';
-fragment INT_SIGN: ('-'|'+');
 fragment ESCAPED_CHAR: '0'|'b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\';
 fragment CHARACTER: ~['\\''\'''"']|'\\' ESCAPED_CHAR;
 IDENT: ('_'|'a'..'z'|'A'..'Z')('_'|'a'..'z'|'A'..'Z'|'0'..'9')*;
-INT_LITERAL: INT_SIGN? DIGIT+;
+INT_LITERAL: DIGIT+;
 BOOL_LITERAL: 'true' | 'false';
 CHAR_LITERAL: '\'' CHARACTER '\'';
 STR_LITERAL: '"' CHARACTER* '"';

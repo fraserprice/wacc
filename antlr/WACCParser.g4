@@ -62,55 +62,24 @@ pair_elem_type: base_type
 | PAIR
 ;
 
-expr: INT_LITERAL
+expr: OPEN_PARENTHESES expr CLOSE_PARENTHESES
+| (PLUS|MINUS|NOT|LEN|CHR|ORD) expr
+| expr (MULTIPLY|DIVISION|MODULO) expr
+| expr (PLUS|MINUS) expr
+| expr (GREATER|GREATER_EQ|SMALLER|SMALLER_EQ) expr
+| expr (EQ|NOT_EQ) expr
+| expr AND expr
+| expr OR expr
+| array_elem
+| literal
+| IDENT
+;
+
+literal: INT_LITERAL
 | BOOL_LITERAL
 | CHAR_LITERAL
 | STR_LITERAL
 | PAIR_LITERAL
-| IDENT
-| array_elem
-| unary_op expr
-| expr binary_op expr
-| arithmetic_expr
-| OPEN_PARENTHESES expr CLOSE_PARENTHESES
-;
-
-arithmetic_expr: arithmetic_expr (PLUS|MINUS) term
-| term
-;
-
-term: term (MULTIPLY|DIVISION) factor
-| factor
-;
-
-factor: OPEN_PARENTHESES arithmetic_expr  CLOSE_PARENTHESES
-| IDENT 
-| INT_LITERAL
-;
-
-
-unary_op: NOT
-| MINUS
-| LEN
-| ORD
-| CHR
-;
-
-binary_op: MODULO
-| GREATER
-| GREATER_EQ
-| SMALLER
-| SMALLER_EQ
-| EQ
-| NOT_EQ
-| AND
-| OR
-;
-
-arith_op: MULTIPLY
-| DIVISION
-| PLUS
-| MINUS 
 ;
 
 array_elem: IDENT (OPEN_SQUARE_BRACKET expr CLOSE_SQUARE_BRACKET)+;
