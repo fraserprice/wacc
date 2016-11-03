@@ -71,8 +71,23 @@ expr: INT_LITERAL
 | array_elem
 | unary_op expr
 | expr binary_op expr
+| arithmetic_expr
 | OPEN_PARENTHESES expr CLOSE_PARENTHESES
 ;
+
+arithmetic_expr: arithmetic_expr (PLUS|MINUS) term
+| term
+;
+
+term: term (MULTIPLY|DIVISION) factor
+| factor
+;
+
+factor: OPEN_PARENTHESES arithmetic_expr  CLOSE_PARENTHESES
+| IDENT 
+| INT_LITERAL
+;
+
 
 unary_op: NOT
 | MINUS
@@ -81,11 +96,7 @@ unary_op: NOT
 | CHR
 ;
 
-binary_op: MULTIPLY
-| DIVISION
-| MODULO
-| PLUS
-| MINUS
+binary_op: MODULO
 | GREATER
 | GREATER_EQ
 | SMALLER
@@ -94,6 +105,12 @@ binary_op: MULTIPLY
 | NOT_EQ
 | AND
 | OR
+;
+
+arith_op: MULTIPLY
+| DIVISION
+| PLUS
+| MINUS 
 ;
 
 array_elem: IDENT (OPEN_SQUARE_BRACKET expr CLOSE_SQUARE_BRACKET)+;
