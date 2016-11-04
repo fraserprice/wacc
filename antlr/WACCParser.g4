@@ -8,7 +8,7 @@ options {
 program: BEGIN_STAT func* stat END_STAT EOF
        ;
 
-func: type IDENT OPEN_PARENTHESES paramList? CLOSE_PARENTHESES IS stat END_STAT
+func: type IDENT OPEN_PARENTHESES paramList? CLOSE_PARENTHESES IS (stat)* END_STAT
     ;
 
 paramList: param (COMMA param)*
@@ -71,7 +71,8 @@ pairElemType: baseType
 			;
 
 expr: OPEN_PARENTHESES expr CLOSE_PARENTHESES
-	| (PLUS|MINUS|NOT|LEN|CHR|ORD) expr
+    | PLUS INT_LITERAL
+	| (MINUS|NOT|LEN|CHR|ORD) expr
 	| expr (MULTIPLY|DIVISION|MODULO) expr
 	| expr (PLUS|MINUS) expr
 	| expr (GREATER|GREATER_EQ|SMALLER|SMALLER_EQ) expr
