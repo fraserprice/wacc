@@ -24,17 +24,14 @@ public class Compiler {
         }
 
         WACCLexer lexer = new WACCLexer(in);
-        lexer.removeErrorListeners();
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         WACCParser parser = new WACCParser(tokens);
-        parser.removeErrorListeners();
 
         WACCParserBaseVisitor<Integer> visitor = new WACCParserBaseVisitor<>();
 
         visitor.visit(parser.program());
 
         if (parser.getNumberOfSyntaxErrors() > 0) {
-            System.err.println("#syntax_error#");
             System.exit(EXIT_SYNTAX_ERROR);
         }
 
