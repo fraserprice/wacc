@@ -3,11 +3,15 @@
 # You are free to change the language used for this script,
 # but do *not* change its name.
 
+require "Open3"
+
 if ARGV.length != 1
   puts "Compiler takes one argument which is the file to be compiled."
   exit 1
 end
 
-puts `java -cp bin:lib/antlr-4.4-complete.jar Compiler #{ARGV[0]}`
+_, stderr, status = Open3.capture3("java -cp bin:lib/antlr-4.4-complete.jar Compiler #{ARGV[0]}")
 
-exit $?.exitstatus
+STDERR.puts stderr
+
+exit status.exitstatus
