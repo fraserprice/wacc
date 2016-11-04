@@ -26,14 +26,17 @@ public class Compiler {
         WACCLexer lexer = new WACCLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         WACCParser parser = new WACCParser(tokens);
+        IFVisitor visitor = new IFVisitor();
 
-        WACCParserBaseVisitor<Integer> visitor = new WACCParserBaseVisitor<>();
-
-        visitor.visit(parser.program());
+        // Syntax check
+        WACCParser.ProgramContext tree = parser.program();
 
         if (parser.getNumberOfSyntaxErrors() > 0) {
             System.exit(EXIT_SYNTAX_ERROR);
         }
+
+        // Syntax and Semantic check
+        visitor.visit(tree);
 
         System.exit(EXIT_SUCCESS);
     }
