@@ -1194,46 +1194,180 @@ public class WACCParser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
+		public ExprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expr; }
+	 
+		public ExprContext() { }
+		public void copyFrom(ExprContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class BinCompExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public TerminalNode GREATER_EQ() { return getToken(WACCParser.GREATER_EQ, 0); }
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode SMALLER_EQ() { return getToken(WACCParser.SMALLER_EQ, 0); }
+		public TerminalNode GREATER() { return getToken(WACCParser.GREATER, 0); }
+		public TerminalNode SMALLER() { return getToken(WACCParser.SMALLER, 0); }
+		public BinCompExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitBinCompExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ArrayExprContext extends ExprContext {
+		public ArrayElemContext arrayElem() {
+			return getRuleContext(ArrayElemContext.class,0);
+		}
+		public ArrayExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitArrayExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IdentExprContext extends ExprContext {
+		public TerminalNode IDENT() { return getToken(WACCParser.IDENT, 0); }
+		public IdentExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitIdentExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class UnExprContext extends ExprContext {
+		public TerminalNode NOT() { return getToken(WACCParser.NOT, 0); }
+		public TerminalNode ORD() { return getToken(WACCParser.ORD, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public TerminalNode LEN() { return getToken(WACCParser.LEN, 0); }
+		public TerminalNode MINUS() { return getToken(WACCParser.MINUS, 0); }
+		public TerminalNode CHR() { return getToken(WACCParser.CHR, 0); }
+		public UnExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitUnExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinMulDivModExprContext extends ExprContext {
 		public TerminalNode DIVISION() { return getToken(WACCParser.DIVISION, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
 		public TerminalNode MODULO() { return getToken(WACCParser.MODULO, 0); }
 		public TerminalNode MULTIPLY() { return getToken(WACCParser.MULTIPLY, 0); }
-		public TerminalNode IDENT() { return getToken(WACCParser.IDENT, 0); }
-		public TerminalNode OPEN_PARENTHESES() { return getToken(WACCParser.OPEN_PARENTHESES, 0); }
-		public TerminalNode NOT() { return getToken(WACCParser.NOT, 0); }
-		public TerminalNode CLOSE_PARENTHESES() { return getToken(WACCParser.CLOSE_PARENTHESES, 0); }
-		public ArrayElemContext arrayElem() {
-			return getRuleContext(ArrayElemContext.class,0);
+		public BinMulDivModExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitBinMulDivModExpr(this);
+			else return visitor.visitChildren(this);
 		}
+	}
+	public static class LiteralExprContext extends ExprContext {
 		public LiteralContext literal() {
 			return getRuleContext(LiteralContext.class,0);
 		}
-		public TerminalNode AND() { return getToken(WACCParser.AND, 0); }
-		public TerminalNode ORD() { return getToken(WACCParser.ORD, 0); }
-		public TerminalNode GREATER_EQ() { return getToken(WACCParser.GREATER_EQ, 0); }
-		public TerminalNode NOT_EQ() { return getToken(WACCParser.NOT_EQ, 0); }
-		public TerminalNode LEN() { return getToken(WACCParser.LEN, 0); }
-		public TerminalNode SMALLER_EQ() { return getToken(WACCParser.SMALLER_EQ, 0); }
-		public TerminalNode OR() { return getToken(WACCParser.OR, 0); }
-		public TerminalNode GREATER() { return getToken(WACCParser.GREATER, 0); }
-		public TerminalNode INT_LITERAL() { return getToken(WACCParser.INT_LITERAL, 0); }
+		public LiteralExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitLiteralExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinAndExprContext extends ExprContext {
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
-		public TerminalNode MINUS() { return getToken(WACCParser.MINUS, 0); }
-		public TerminalNode PLUS() { return getToken(WACCParser.PLUS, 0); }
-		public TerminalNode EQ() { return getToken(WACCParser.EQ, 0); }
-		public TerminalNode SMALLER() { return getToken(WACCParser.SMALLER, 0); }
-		public TerminalNode CHR() { return getToken(WACCParser.CHR, 0); }
-		public ExprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
 		}
-		@Override public int getRuleIndex() { return RULE_expr; }
+		public TerminalNode AND() { return getToken(WACCParser.AND, 0); }
+		public BinAndExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitExpr(this);
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitBinAndExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinPlusMinusExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode PLUS() { return getToken(WACCParser.PLUS, 0); }
+		public TerminalNode MINUS() { return getToken(WACCParser.MINUS, 0); }
+		public BinPlusMinusExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitBinPlusMinusExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinOrExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode OR() { return getToken(WACCParser.OR, 0); }
+		public BinOrExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitBinOrExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ParanthesesExprContext extends ExprContext {
+		public TerminalNode CLOSE_PARENTHESES() { return getToken(WACCParser.CLOSE_PARENTHESES, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public TerminalNode OPEN_PARENTHESES() { return getToken(WACCParser.OPEN_PARENTHESES, 0); }
+		public ParanthesesExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitParanthesesExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinEqExprContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode NOT_EQ() { return getToken(WACCParser.NOT_EQ, 0); }
+		public TerminalNode EQ() { return getToken(WACCParser.EQ, 0); }
+		public BinEqExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitBinEqExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class UnPlusExprContext extends ExprContext {
+		public TerminalNode PLUS() { return getToken(WACCParser.PLUS, 0); }
+		public TerminalNode INT_LITERAL() { return getToken(WACCParser.INT_LITERAL, 0); }
+		public UnPlusExprContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitUnPlusExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1258,6 +1392,10 @@ public class WACCParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 			case 1:
 				{
+				_localctx = new UnExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
 				setState(192);
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NOT) | (1L << MINUS) | (1L << LEN) | (1L << ORD) | (1L << CHR))) != 0)) ) {
@@ -1269,6 +1407,9 @@ public class WACCParser extends Parser {
 				break;
 			case 2:
 				{
+				_localctx = new ParanthesesExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(194); match(OPEN_PARENTHESES);
 				setState(195); expr(0);
 				setState(196); match(CLOSE_PARENTHESES);
@@ -1276,22 +1417,34 @@ public class WACCParser extends Parser {
 				break;
 			case 3:
 				{
+				_localctx = new UnPlusExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(198); match(PLUS);
 				setState(199); match(INT_LITERAL);
 				}
 				break;
 			case 4:
 				{
+				_localctx = new ArrayExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(200); arrayElem();
 				}
 				break;
 			case 5:
 				{
+				_localctx = new LiteralExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(201); literal();
 				}
 				break;
 			case 6:
 				{
+				_localctx = new IdentExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(202); match(IDENT);
 				}
 				break;
@@ -1309,7 +1462,7 @@ public class WACCParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 					case 1:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new BinMulDivModExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(205);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
@@ -1324,7 +1477,7 @@ public class WACCParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new BinPlusMinusExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(208);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
@@ -1339,7 +1492,7 @@ public class WACCParser extends Parser {
 						break;
 					case 3:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new BinCompExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(211);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
@@ -1354,7 +1507,7 @@ public class WACCParser extends Parser {
 						break;
 					case 4:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new BinEqExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(214);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
@@ -1369,7 +1522,7 @@ public class WACCParser extends Parser {
 						break;
 					case 5:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new BinAndExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(217);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
@@ -1379,7 +1532,7 @@ public class WACCParser extends Parser {
 						break;
 					case 6:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new BinOrExprContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(220);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");

@@ -70,18 +70,18 @@ pairElemType: baseType
 			| PAIR
 			;
 
-expr: OPEN_PARENTHESES expr CLOSE_PARENTHESES
-    | PLUS INT_LITERAL
-	| (MINUS|NOT|LEN|CHR|ORD) expr
-	| expr (MULTIPLY|DIVISION|MODULO) expr
-	| expr (PLUS|MINUS) expr
-	| expr (GREATER|GREATER_EQ|SMALLER|SMALLER_EQ) expr
-	| expr (EQ|NOT_EQ) expr
-	| expr AND expr
-	| expr OR expr
-	| arrayElem
-	| literal
-	| IDENT
+expr: OPEN_PARENTHESES expr CLOSE_PARENTHESES            #ParanthesesExpr
+    | PLUS INT_LITERAL                                   #UnPlusExpr
+	| (MINUS|NOT|LEN|CHR|ORD) expr                       #UnExpr
+	| expr (MULTIPLY|DIVISION|MODULO) expr               #BinMulDivModExpr
+	| expr (PLUS|MINUS) expr                             #BinPlusMinusExpr
+	| expr (GREATER|GREATER_EQ|SMALLER|SMALLER_EQ) expr  #BinCompExpr
+	| expr (EQ|NOT_EQ) expr                              #BinEqExpr
+	| expr AND expr                                      #BinAndExpr
+	| expr OR expr                                       #BinOrExpr
+	| arrayElem                                          #ArrayExpr
+	| literal                                            #LiteralExpr
+	| IDENT                                              #IdentExpr
 	;
 
 literal: INT_LITERAL

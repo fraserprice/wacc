@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.*;
+import visitor.SemanticVisitor;
 
 import java.io.IOException;
 
@@ -26,16 +27,16 @@ public class Compiler {
         WACCLexer lexer = new WACCLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         WACCParser parser = new WACCParser(tokens);
-        IFVisitor visitor = new IFVisitor();
 
         // Syntax check
-        WACCParser.ProgramContext tree = parser.program();
+        ParseTree tree = parser.program();
 
         if (parser.getNumberOfSyntaxErrors() > 0) {
             System.exit(EXIT_SYNTAX_ERROR);
         }
 
         // Syntax and Semantic check
+        SemanticVisitor visitor = new SemanticVisitor();
         visitor.visit(tree);
 
         System.exit(EXIT_SUCCESS);
