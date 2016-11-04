@@ -48,3 +48,5 @@ puts "Failed: "
 failed_tests.each do |failed_test|
   puts failed_test
 end
+
+`make clean`

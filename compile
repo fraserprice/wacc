@@ -8,4 +8,6 @@ if ARGV.length != 1
   exit 1
 end
 
-`java -cp bin:lib/antlr-4.4-complete.jar Compiler #{ARGV[0]}`
+puts `java -cp bin:lib/antlr-4.4-complete.jar Compiler #{ARGV[0]}`
+
+exit $?.exitstatus
