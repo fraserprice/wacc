@@ -12,29 +12,42 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#array_elem}.
+	 * Visit a parse tree produced by {@link WACCParser#argList}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitArray_elem(@NotNull WACCParser.Array_elemContext ctx);
+	T visitArgList(@NotNull WACCParser.ArgListContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#stat}.
+	 * Visit a parse tree produced by the {@code ReturnStat}
+	 * labeled alternative in {@link WACCParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStat(@NotNull WACCParser.StatContext ctx);
+	T visitReturnStat(@NotNull WACCParser.ReturnStatContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#assign_lhs}.
+	 * Visit a parse tree produced by {@link WACCParser#arrayElem}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssign_lhs(@NotNull WACCParser.Assign_lhsContext ctx);
+	T visitArrayElem(@NotNull WACCParser.ArrayElemContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#assign_rhs}.
+	 * Visit a parse tree produced by {@link WACCParser#assignRhs}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssign_rhs(@NotNull WACCParser.Assign_rhsContext ctx);
+	T visitAssignRhs(@NotNull WACCParser.AssignRhsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link WACCParser#assignLhs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignLhs(@NotNull WACCParser.AssignLhsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link WACCParser#arrayLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayLiteral(@NotNull WACCParser.ArrayLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#program}.
 	 * @param ctx the parse tree
@@ -48,23 +61,25 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(@NotNull WACCParser.TypeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#pair_elem_type}.
+	 * Visit a parse tree produced by the {@code AssignPairArrayStat}
+	 * labeled alternative in {@link WACCParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPair_elem_type(@NotNull WACCParser.Pair_elem_typeContext ctx);
+	T visitAssignPairArrayStat(@NotNull WACCParser.AssignPairArrayStatContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#param_list}.
+	 * Visit a parse tree produced by the {@code ReadStat}
+	 * labeled alternative in {@link WACCParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParam_list(@NotNull WACCParser.Param_listContext ctx);
+	T visitReadStat(@NotNull WACCParser.ReadStatContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#arg_list}.
+	 * Visit a parse tree produced by {@link WACCParser#baseType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitArg_list(@NotNull WACCParser.Arg_listContext ctx);
+	T visitBaseType(@NotNull WACCParser.BaseTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#literal}.
 	 * @param ctx the parse tree
@@ -72,17 +87,12 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLiteral(@NotNull WACCParser.LiteralContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#base_type}.
+	 * Visit a parse tree produced by the {@code PrintlnStat}
+	 * labeled alternative in {@link WACCParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBase_type(@NotNull WACCParser.Base_typeContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link WACCParser#func}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunc(@NotNull WACCParser.FuncContext ctx);
+	T visitPrintlnStat(@NotNull WACCParser.PrintlnStatContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#param}.
 	 * @param ctx the parse tree
@@ -90,17 +100,19 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParam(@NotNull WACCParser.ParamContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#pair_type}.
+	 * Visit a parse tree produced by the {@code CompositionStat}
+	 * labeled alternative in {@link WACCParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPair_type(@NotNull WACCParser.Pair_typeContext ctx);
+	T visitCompositionStat(@NotNull WACCParser.CompositionStatContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#pair_elem}.
+	 * Visit a parse tree produced by the {@code PrintStat}
+	 * labeled alternative in {@link WACCParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPair_elem(@NotNull WACCParser.Pair_elemContext ctx);
+	T visitPrintStat(@NotNull WACCParser.PrintStatContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#expr}.
 	 * @param ctx the parse tree
@@ -108,9 +120,82 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpr(@NotNull WACCParser.ExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#array_literal}.
+	 * Visit a parse tree produced by {@link WACCParser#pairElem}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitArray_literal(@NotNull WACCParser.Array_literalContext ctx);
+	T visitPairElem(@NotNull WACCParser.PairElemContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExitStat}
+	 * labeled alternative in {@link WACCParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExitStat(@NotNull WACCParser.ExitStatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IfStat}
+	 * labeled alternative in {@link WACCParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStat(@NotNull WACCParser.IfStatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FreeStat}
+	 * labeled alternative in {@link WACCParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFreeStat(@NotNull WACCParser.FreeStatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SkipStat}
+	 * labeled alternative in {@link WACCParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSkipStat(@NotNull WACCParser.SkipStatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code WhileStat}
+	 * labeled alternative in {@link WACCParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStat(@NotNull WACCParser.WhileStatContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link WACCParser#pairType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPairType(@NotNull WACCParser.PairTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link WACCParser#pairElemType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPairElemType(@NotNull WACCParser.PairElemTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AssignPrimitiveStat}
+	 * labeled alternative in {@link WACCParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignPrimitiveStat(@NotNull WACCParser.AssignPrimitiveStatContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link WACCParser#func}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunc(@NotNull WACCParser.FuncContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link WACCParser#paramList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParamList(@NotNull WACCParser.ParamListContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ScopeBlockStat}
+	 * labeled alternative in {@link WACCParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitScopeBlockStat(@NotNull WACCParser.ScopeBlockStatContext ctx);
 }

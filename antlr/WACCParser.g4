@@ -5,83 +5,93 @@ options {
 }
 
 // EOF indicates that the program must consume to the end of the input.
-program: BEGIN_STAT func* stat END_STAT EOF;
+program: BEGIN_STAT func* stat END_STAT EOF
+       ;
 
-func: type IDENT OPEN_PARENTHESES param_list? CLOSE_PARENTHESES IS stat END_STAT;
+func: type IDENT OPEN_PARENTHESES paramList? CLOSE_PARENTHESES IS stat END_STAT
+    ;
 
-param_list: param (COMMA param)*;
+paramList: param (COMMA param)*
+         ;
 
-param: type IDENT;
+param: type IDENT
+     ;
 
-stat: SKIP_STAT
-| type IDENT ASSIGN_STAT assign_rhs
-| assign_lhs ASSIGN_STAT assign_rhs
-| READ_STAT assign_lhs
-| FREE_STAT expr
-| RETURN_STAT expr
-| EXIT_STAT expr
-| PRINT_STAT expr
-| PRINTLN_STAT expr
-| IF_STAT expr THEN_STAT stat ELSE_STAT stat FI_STAT
-| WHILE_STAT expr DO_STAT stat DONE_STAT
-| BEGIN_STAT stat END_STAT
-| stat COMPOSITION_STAT stat
-;
+stat: SKIP_STAT                                           #SkipStat
+    | type IDENT ASSIGN_STAT assignRhs                    #AssignPrimitiveStat
+    | assignLhs ASSIGN_STAT assignRhs                     #AssignPairArrayStat
+    | READ_STAT assignLhs                                 #ReadStat
+    | FREE_STAT expr                                      #FreeStat
+    | RETURN_STAT expr                                    #ReturnStat
+    | EXIT_STAT expr                                      #ExitStat
+    | PRINT_STAT expr                                     #PrintStat
+    | PRINTLN_STAT expr                                   #PrintlnStat
+    | IF_STAT expr THEN_STAT stat ELSE_STAT stat FI_STAT  #IfStat
+    | WHILE_STAT expr DO_STAT stat DONE_STAT              #WhileStat
+    | BEGIN_STAT stat END_STAT                            #ScopeBlockStat
+    | stat COMPOSITION_STAT stat                          #CompositionStat
+    ;
 
-assign_lhs: IDENT
-| array_elem
-| pair_elem
-;
+assignLhs: IDENT
+         | arrayElem
+         | pairElem
+         ;
 
-assign_rhs: expr
-| array_literal
-| NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
-| pair_elem
-| CALL_FUNC IDENT OPEN_PARENTHESES arg_list? CLOSE_PARENTHESES
-;
+assignRhs: expr
+         | arrayLiteral
+         | NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
+         | pairElem
+         | CALL_FUNC IDENT OPEN_PARENTHESES argList? CLOSE_PARENTHESES
+         ;
 
-arg_list: expr (COMMA expr)*;
+argList: expr (COMMA expr)*
+       ;
 
-pair_elem: FST expr | SND expr;
+pairElem: FST expr
+        | SND expr
+        ;
 
-type: base_type
-| type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
-| pair_type
-;
+type: baseType
+    | type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
+    | pairType
+    ;
 
-base_type: INT
-| BOOL
-| CHAR
-| STRING
-;
+baseType: INT
+        | BOOL
+        | CHAR
+        | STRING
+        ;
 
-pair_type: PAIR OPEN_PARENTHESES pair_elem_type COMMA pair_elem_type CLOSE_PARENTHESES;
+pairType: PAIR OPEN_PARENTHESES pairElemType COMMA pairElemType CLOSE_PARENTHESES
+        ;
 
-pair_elem_type: base_type
-| type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
-| PAIR
-;
+pairElemType: baseType
+			| type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
+			| PAIR
+			;
 
 expr: OPEN_PARENTHESES expr CLOSE_PARENTHESES
-| (PLUS|MINUS|NOT|LEN|CHR|ORD) expr
-| expr (MULTIPLY|DIVISION|MODULO) expr
-| expr (PLUS|MINUS) expr
-| expr (GREATER|GREATER_EQ|SMALLER|SMALLER_EQ) expr
-| expr (EQ|NOT_EQ) expr
-| expr AND expr
-| expr OR expr
-| array_elem
-| literal
-| IDENT
-;
+	| (PLUS|MINUS|NOT|LEN|CHR|ORD) expr
+	| expr (MULTIPLY|DIVISION|MODULO) expr
+	| expr (PLUS|MINUS) expr
+	| expr (GREATER|GREATER_EQ|SMALLER|SMALLER_EQ) expr
+	| expr (EQ|NOT_EQ) expr
+	| expr AND expr
+	| expr OR expr
+	| arrayElem
+	| literal
+	| IDENT
+	;
 
 literal: INT_LITERAL
-| BOOL_LITERAL
-| CHAR_LITERAL
-| STR_LITERAL
-| PAIR_LITERAL
-;
+	   | BOOL_LITERAL
+	   | CHAR_LITERAL
+	   | STR_LITERAL
+	   | PAIR_LITERAL
+	   ;
 
-array_elem: IDENT (OPEN_SQUARE_BRACKET expr CLOSE_SQUARE_BRACKET)+;
+arrayElem: IDENT (OPEN_SQUARE_BRACKET expr CLOSE_SQUARE_BRACKET)+
+         ;
 
-array_literal: OPEN_SQUARE_BRACKET (expr (COMMA expr)*)? CLOSE_SQUARE_BRACKET;
+arrayLiteral: OPEN_SQUARE_BRACKET (expr (COMMA expr)*)? CLOSE_SQUARE_BRACKET
+            ;
