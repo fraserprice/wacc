@@ -12,10 +12,6 @@ public abstract class Node {
     public Node(SymbolTable currentST) {
         this.currentST = currentST;
         this.errors = new LinkedList<>();
-
-        checkErrors();
-        printErrors();
-        instantiate();
     }
 
     /**
@@ -37,18 +33,7 @@ public abstract class Node {
     /**
      * Prints the errors if there are any
      */
-    private void printErrors() {
+    protected void printErrors() {
         errors.forEach(CompileTimeError::print);
     }
-
-    /**
-     * Updates the list of errors if there are any
-     */
-    protected abstract void checkErrors();
-
-    /**
-     * If there are no errors populate the semantic fields
-     * and update the current SymbolTable
-     */
-    protected abstract void instantiate();
 }
