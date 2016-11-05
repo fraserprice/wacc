@@ -1,9 +1,7 @@
 import antlr.WACCLexer;
 import antlr.WACCParser;
-import antlr.WACCParserBaseVisitor;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.*;
 import visitor.SemanticVisitor;
 
