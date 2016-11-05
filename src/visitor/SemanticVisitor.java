@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
  * Created by Mihai on 04/11/2016.
  */
 public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements WACCParserVisitor<Node> {
+
     @Override
     public Node visitArgList(@NotNull WACCParser.ArgListContext ctx) {
         visitChildren(ctx); return null;
@@ -161,9 +162,6 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitIfStat(@NotNull WACCParser.IfStatContext ctx) {
-        visitChildren(ctx);
-        Node expr = visit(ctx.expr());
-        // expr.check();
 
         return null;
     }
