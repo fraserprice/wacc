@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Node {
     protected SymbolTable currentST;
-    protected List<Error> errors;
+    protected List<CompileTimeError> errors;
 
     public Node(SymbolTable currentST) {
         this.currentST = currentST;
@@ -23,15 +23,14 @@ public abstract class Node {
      * @return boolean
      */
     public boolean hasErrors() {
-        // TODO
-        return false;
+        return !errors.isEmpty();
     }
 
     /**
      * Returns the list of errors
      * @return List
      */
-    public List<Error> getErrors() {
+    public List<CompileTimeError> getErrors() {
         return errors;
     }
 
@@ -39,7 +38,7 @@ public abstract class Node {
      * Prints the errors if there are any
      */
     private void printErrors() {
-        // TODO
+        errors.forEach(CompileTimeError::print);
     }
 
     /**
