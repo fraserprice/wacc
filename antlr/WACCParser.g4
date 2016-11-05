@@ -70,7 +70,7 @@ pairElemType: baseType
 			| PAIR
 			;
 
-expr: OPEN_PARENTHESES expr CLOSE_PARENTHESES            #ParanthesesExpr
+expr: OPEN_PARENTHESES expr CLOSE_PARENTHESES            #ParanthesisExpr
     | PLUS INT_LITERAL                                   #UnPlusExpr
 	| (MINUS|NOT|LEN|CHR|ORD) expr                       #UnExpr
 	| expr (MULTIPLY|DIVISION|MODULO) expr               #BinMulDivModExpr

@@ -4,11 +4,28 @@ import antlr.WACCParser;
 import antlr.WACCParserVisitor;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
+import symobjects.SymbolTable;
 
-/**
- * Created by Mihai on 04/11/2016.
- */
 public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements WACCParserVisitor<Node> {
+    /**
+     * Holds reference to current scope
+     */
+    private SymbolTable currentST;
+
+    /**
+     * Create a new SymbolTable for the current ST
+     * and updates the currentST field
+     */
+    private void createChildST() {
+        // TODO
+    }
+
+    /**
+     * Updates the currentST field to it's parent
+     */
+    private void closeCurrentScope() {
+        // TODO
+    }
 
     @Override
     public Node visitArgList(@NotNull WACCParser.ArgListContext ctx) {
@@ -146,7 +163,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     }
 
     @Override
-    public Node visitParanthesesExpr(@NotNull WACCParser.ParanthesesExprContext ctx) {
+    public Node visitParanthesisExpr(@NotNull WACCParser.ParanthesisExprContext ctx) {
         visitChildren(ctx); return null;
     }
 
@@ -162,8 +179,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitIfStat(@NotNull WACCParser.IfStatContext ctx) {
-
-        return null;
+        visitChildren(ctx); return null;
     }
 
     @Override

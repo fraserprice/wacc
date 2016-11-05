@@ -1332,16 +1332,16 @@ public class WACCParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class ParanthesesExprContext extends ExprContext {
+	public static class ParanthesisExprContext extends ExprContext {
 		public TerminalNode CLOSE_PARENTHESES() { return getToken(WACCParser.CLOSE_PARENTHESES, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public TerminalNode OPEN_PARENTHESES() { return getToken(WACCParser.OPEN_PARENTHESES, 0); }
-		public ParanthesesExprContext(ExprContext ctx) { copyFrom(ctx); }
+		public ParanthesisExprContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitParanthesesExpr(this);
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitParanthesisExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1407,7 +1407,7 @@ public class WACCParser extends Parser {
 				break;
 			case 2:
 				{
-				_localctx = new ParanthesesExprContext(_localctx);
+				_localctx = new ParanthesisExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(194); match(OPEN_PARENTHESES);

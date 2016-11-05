@@ -75,6 +75,13 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssignPairArrayStat(@NotNull WACCParser.AssignPairArrayStatContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ParanthesisExpr}
+	 * labeled alternative in {@link WACCParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParanthesisExpr(@NotNull WACCParser.ParanthesisExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code BinEqExpr}
 	 * labeled alternative in {@link WACCParser#expr}.
 	 * @param ctx the parse tree
@@ -269,11 +276,4 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitScopeBlockStat(@NotNull WACCParser.ScopeBlockStatContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ParanthesesExpr}
-	 * labeled alternative in {@link WACCParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParanthesesExpr(@NotNull WACCParser.ParanthesesExprContext ctx);
 }

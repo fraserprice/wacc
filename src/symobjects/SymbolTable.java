@@ -1,39 +1,37 @@
 package symobjects;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Mihai on 04/11/2016.
- */
 public class SymbolTable {
     private Map<String, AbstractIdentifierObject> map;
-    private List<SymbolTable> children;
     private SymbolTable parent;
 
     public SymbolTable() {
         this.parent = null;
         this.map = new HashMap<>();
-        this.children = new ArrayList<>();
     }
 
     public SymbolTable(SymbolTable parent) {
         this.parent = parent;
         this.map = new HashMap<>();
-        this.children = new ArrayList<>();
     }
 
-    public void add(SymbolTable st) {
-        // TODO
-    }
-
+    /**
+     * Search in the current scope for the AbstractIdentifierObject
+     * @param key
+     * @return AbstractIdentifierObject
+     */
     public AbstractIdentifierObject lookup(String key) {
         // TODO
         return null;
     }
 
+    /**
+     * Search in current and outer scopes for the AbstractIdentifierObject
+     * @param key
+     * @return AbstractIdentifierObject
+     */
     public AbstractIdentifierObject lookupAll(String key) {
         // TODO
         return null;
