@@ -5,7 +5,10 @@ import antlr.WACCParserVisitor;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import symobjects.SymbolTable;
+import symobjects.identifierobj.TypeObj;
 import visitor.nodes.ExprNode;
+import visitor.nodes.FunctionNode;
+import visitor.nodes.ProgramNode;
 import visitor.nodes.StatNode;
 import visitor.nodes.expr.ArrayElementNode;
 import visitor.nodes.expr.BinOpNode;
@@ -13,10 +16,15 @@ import visitor.nodes.expr.ParenthesisNode;
 import visitor.nodes.expr.UnaryOpNode;
 import visitor.nodes.expr.literal.*;
 import visitor.nodes.stat.*;
+import visitor.nodes.type.BaseTypeNode;
+import visitor.nodes.type.PairElemTypeNode;
 import visitor.nodes.type.TypeNode;
 import visitor.nodes.util.AssignLhsNode;
 import visitor.nodes.util.AssignRhsNode;
+import visitor.nodes.util.PairElemNode;
+import visitor.nodes.util.ParamNode;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,22 +65,58 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitAssignRhs(@NotNull WACCParser.AssignRhsContext ctx) {
-        visitChildren(ctx); return null;
+        if (ctx.OPEN_SQUARE_BRACKET() != null) {
+            List<ExprNode> exprNodes = ctx.expr().stream()
+                                        .map(e -> (ExprNode) visit(e))
+                                        .collect(Collectors.toList());
+            return new AssignRhsNode(currentST, ctx, exprNodes);
+        } else if (ctx.NEWPAIR() != null) {
+            return new AssignRhsNode(currentST, ctx, (ExprNode) visit(ctx.expr(0)), (ExprNode) visit(ctx.expr(1)));
+        } else if (ctx.pairElem() != null) {
+            return new AssignRhsNode(currentST, ctx, (PairElemNode) visit(ctx.pairElem()));
+        } else if (ctx.CALL_FUNC() != null) {
+            List<ExprNode> args = ctx.expr().stream()
+                    .map(e -> (ExprNode) visit(e))
+                    .collect(Collectors.toList());
+            return new AssignRhsNode(currentST, ctx, args, ctx.IDENT().getText());
+        } else {
+            return new AssignRhsNode(currentST, ctx, (ExprNode) visit(ctx.expr(0)));
+        }
     }
 
     @Override
     public Node visitAssignLhs(@NotNull WACCParser.AssignLhsContext ctx) {
-        visitChildren(ctx); return null;
+        if (ctx.IDENT() != null) {
+            return new AssignLhsNode(currentST, ctx);
+        } else if (ctx.arrayElem() != null) {
+            return new AssignLhsNode(currentST, ctx, (ArrayElementNode) visit(ctx.arrayElem()));
+        } else {
+            return new AssignLhsNode(currentST, ctx, (PairElemNode) visit(ctx.pairElem()));
+        }
     }
 
     @Override
     public Node visitProgram(@NotNull WACCParser.ProgramContext ctx) {
-        visitChildren(ctx); return null;
+        createChildST();
+        List<FunctionNode> functionNodes = ctx.func().stream()
+                                            .map(f -> (FunctionNode) visit(f))
+                                            .collect(Collectors.toList());
+        return new ProgramNode(currentST, ctx, functionNodes, (StatNode) visit(ctx.stat()));
     }
 
     @Override
     public Node visitType(@NotNull WACCParser.TypeContext ctx) {
-        visitChildren(ctx); return null;
+        if (ctx.OPEN_PARENTHESES() != null) {
+            // round PARENTHESES
+            return new TypeNode(currentST, ctx, (PairElemTypeNode) visit(ctx.pairElemType(0)),
+                                        (PairElemTypeNode) visit(ctx.pairElemType(1)));
+        } else if (ctx.OPEN_SQUARE_BRACKET() != null) {
+            // square PARENTHESES
+            return new TypeNode(currentST, ctx, (TypeNode) visit(ctx.type()));
+        } else {
+            // baseType
+            return new TypeNode(currentST, ctx, (BaseTypeNode) visit(ctx.baseType()));
+        }
     }
 
     @Override
@@ -87,7 +131,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitBaseType(@NotNull WACCParser.BaseTypeContext ctx) {
-        visitChildren(ctx); return null;
+        return new BaseTypeNode(currentST, ctx);
     }
 
     @Override
@@ -128,7 +172,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitParam(@NotNull WACCParser.ParamContext ctx) {
-        visitChildren(ctx); return null;
+        return new ParamNode(currentST, ctx, (TypeNode) visit(ctx.type()));
     }
 
     @Override
@@ -201,7 +245,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitArrayExpr(@NotNull WACCParser.ArrayExprContext ctx) {
-        visitChildren(ctx); return null;
+        return visit(ctx.arrayElem());
     }
 
     @Override
@@ -216,7 +260,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitPairElem(@NotNull WACCParser.PairElemContext ctx) {
-        visitChildren(ctx); return null;
+        return new PairElemNode(currentST, ctx, (ExprNode) visit(ctx));
     }
 
     @Override
@@ -260,17 +304,30 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitPairElemType(@NotNull WACCParser.PairElemTypeContext ctx) {
-        visitChildren(ctx); return null;
+        if (ctx.baseType() != null) {
+            return new PairElemTypeNode(currentST, ctx, (BaseTypeNode) visit(ctx.baseType()));
+        } else if (ctx.OPEN_SQUARE_BRACKET() != null) {
+            return new PairElemTypeNode(currentST, ctx, (TypeNode) visit(ctx.type()));
+        } else {
+            return new PairElemTypeNode(currentST, ctx);
+        }
     }
 
     @Override
-    public Node visitAssignPrimitiveStat(@NotNull WACCParser.AssignPrimitiveStatContext ctx) {
+    public AssignPrimitiveNode visitAssignPrimitiveStat(@NotNull WACCParser.AssignPrimitiveStatContext ctx) {
         return new AssignPrimitiveNode(currentST, ctx, (TypeNode) visit(ctx.type()), (AssignRhsNode) visit(ctx.assignRhs()));
     }
 
     @Override
     public Node visitFunc(@NotNull WACCParser.FuncContext ctx) {
-        visitChildren(ctx); return null;
+        createChildST();
+        TypeNode returnType = (TypeNode) visit(ctx.type());
+        List<ParamNode> params = ctx.param().stream()
+                                .map(p -> (ParamNode) visit(p))
+                                .collect(Collectors.toList());
+        StatNode statBlock = (StatNode) visit(ctx.stat());
+        closeCurrentScope();
+        return new FunctionNode(currentST, ctx, returnType, params, statBlock);
     }
 
     @Override

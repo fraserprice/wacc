@@ -7,7 +7,7 @@ import visitor.Node;
 
 // TODO
 public class BaseTypeNode extends Node {
-    public BaseTypeNode(SymbolTable currentST, ParserRuleContext ctx, TerminalNode type) {
+    public BaseTypeNode(SymbolTable currentST, ParserRuleContext ctx) {
         super(currentST, ctx);
     }
 }

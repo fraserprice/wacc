@@ -7,7 +7,7 @@ import visitor.nodes.ExprNode;
 
 // TODO
 public class PairElemNode extends Node {
-    public PairElemNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode fst, ExprNode snd) {
+    public PairElemNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode expr) {
         super(currentST, ctx);
     }
 }
