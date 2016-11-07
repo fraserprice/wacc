@@ -5,19 +5,9 @@ import symobjects.SymbolTable;
 import visitor.nodes.StatNode;
 import visitor.nodes.expr.ArrayElementNode;
 
-/**
- * Created by Toma Alexandru on 05/11/2016.
- */
 public class AssignPairArrayNode extends StatNode {
-    public AssignPairArrayNode(SymbolTable currentST, TerminalNode ident) {
-        super(currentST);
-    }
 
-    public AssignPairArrayNode(SymbolTable currentST, ArrayElementNode arrayElem) {
-        super(currentST);
-    }
-
-    public AssignPairArrayNode(SymbolTable currentST, TerminalNode ident) {
+    public AssignPairArrayNode(SymbolTable currentST, AssignLhsNode assignLhsNode, AssignRhsNode assignRhsNode) {
         super(currentST);
     }
 }

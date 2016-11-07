@@ -11,9 +11,6 @@ import visitor.nodes.stat.assignrhs.NewPairNode;
 
 import java.util.List;
 
-/**
- * Created by Toma Alexandru on 05/11/2016.
- */
 public abstract class AssignRhsNode extends Node {
     public AssignRhsNode(SymbolTable currentST, ExprNode rhs) {
         super(currentST);
