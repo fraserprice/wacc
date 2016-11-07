@@ -4,8 +4,8 @@ import symobjects.SymbolTable;
 import visitor.nodes.StatNode;
 
 // TODO
-public class SkipNode extends StatNode {
-    public SkipNode(SymbolTable currentST) {
+public class ScopeBlockNode extends StatNode {
+    public ScopeBlockNode(SymbolTable currentST, StatNode statNode) {
         super(currentST);
     }
 }

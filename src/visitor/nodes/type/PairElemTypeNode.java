@@ -1,23 +1,21 @@
 package visitor.nodes.type;
 
-import org.antlr.v4.runtime.tree.TerminalNode;
 import symobjects.SymbolTable;
 import visitor.Node;
-import visitor.nodes.TypeNode;
 
-/**
- * Created by Toma Alexandru on 05/11/2016.
- */
+// TODO
 public class PairElemTypeNode extends Node {
-
-    public PairElemTypeNode(SymbolTable currentST, TerminalNode baseType) {
+    // pairElemType: baseType
+    public PairElemTypeNode(SymbolTable currentST, BaseTypeNode baseType) {
         super(currentST);
     }
 
+    // pairElemType: type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
     public PairElemTypeNode(SymbolTable currentST, TypeNode type) {
         super(currentST);
     }
 
+    // pairElemType: PAIR
     public PairElemTypeNode(SymbolTable currentST) {
         super(currentST);
     }

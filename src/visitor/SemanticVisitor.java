@@ -29,11 +29,6 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     }
 
     @Override
-    public Node visitArgList(@NotNull WACCParser.ArgListContext ctx) {
-        visitChildren(ctx); return null;
-    }
-
-    @Override
     public Node visitReturnStat(@NotNull WACCParser.ReturnStatContext ctx) {
         visitChildren(ctx); return null;
     }
@@ -50,11 +45,6 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitAssignLhs(@NotNull WACCParser.AssignLhsContext ctx) {
-        visitChildren(ctx); return null;
-    }
-
-    @Override
-    public Node visitArrayLiteral(@NotNull WACCParser.ArrayLiteralContext ctx) {
         visitChildren(ctx); return null;
     }
 
@@ -199,11 +189,6 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     }
 
     @Override
-    public Node visitPairType(@NotNull WACCParser.PairTypeContext ctx) {
-        visitChildren(ctx); return null;
-    }
-
-    @Override
     public Node visitPairElemType(@NotNull WACCParser.PairElemTypeContext ctx) {
         visitChildren(ctx); return null;
     }
@@ -215,11 +200,6 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitFunc(@NotNull WACCParser.FuncContext ctx) {
-        visitChildren(ctx); return null;
-    }
-
-    @Override
-    public Node visitParamList(@NotNull WACCParser.ParamListContext ctx) {
         visitChildren(ctx); return null;
     }
 

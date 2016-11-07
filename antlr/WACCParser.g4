@@ -8,11 +8,8 @@ options {
 program: BEGIN_STAT func* stat END_STAT EOF
        ;
 
-func: type IDENT OPEN_PARENTHESES paramList? CLOSE_PARENTHESES IS (stat)* END_STAT
+func: type IDENT OPEN_PARENTHESES (param (COMMA param)*)? CLOSE_PARENTHESES IS stat END_STAT
     ;
-
-paramList: param (COMMA param)*
-         ;
 
 param: type IDENT
      ;
@@ -38,14 +35,11 @@ assignLhs: IDENT
          ;
 
 assignRhs: expr
-         | arrayLiteral
+         | OPEN_SQUARE_BRACKET (expr (COMMA expr)*)? CLOSE_SQUARE_BRACKET
          | NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
          | pairElem
-         | CALL_FUNC IDENT OPEN_PARENTHESES argList? CLOSE_PARENTHESES
+         | CALL_FUNC IDENT OPEN_PARENTHESES (expr (COMMA expr)*)? CLOSE_PARENTHESES
          ;
-
-argList: expr (COMMA expr)*
-       ;
 
 pairElem: FST expr
         | SND expr
@@ -53,16 +47,13 @@ pairElem: FST expr
 
 type: baseType
     | type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
-    | pairType
+    | PAIR OPEN_PARENTHESES pairElemType COMMA pairElemType CLOSE_PARENTHESES
     ;
 
 baseType: INT
         | BOOL
         | CHAR
         | STRING
-        ;
-
-pairType: PAIR OPEN_PARENTHESES pairElemType COMMA pairElemType CLOSE_PARENTHESES
         ;
 
 pairElemType: baseType
@@ -93,6 +84,3 @@ literal: INT_LITERAL
 
 arrayElem: IDENT (OPEN_SQUARE_BRACKET expr CLOSE_SQUARE_BRACKET)+
          ;
-
-arrayLiteral: OPEN_SQUARE_BRACKET (expr (COMMA expr)*)? CLOSE_SQUARE_BRACKET
-            ;
