@@ -6,7 +6,7 @@ import visitor.Node;
 import visitor.nodes.expr.ArrayElementNode;
 
 // TODO
-public abstract class AssignLhsNode extends Node {
+public class AssignLhsNode extends Node {
 
     // assignLhs: IDENT
     public AssignLhsNode(SymbolTable currentST, ParserRuleContext ctx) {

@@ -14,9 +14,9 @@ public class IntNode extends LiteralNode {
         check(ctx.getText());
     }
 
-    public IntNode(SymbolTable currentST, TerminalNode value) {
+    public IntNode(SymbolTable currentST, String value) {
         super(currentST, null);
-        check(value.getText());
+        check(value);
     }
 
     private void check(String textValue) {
