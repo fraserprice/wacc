@@ -23,8 +23,7 @@ public class SymbolTable {
      * @return AbstractIdentifierObject
      */
     public AbstractIdentifierObject lookup(String key) {
-        // TODO
-        return null;
+        return map.get(key);
     }
 
     /**
@@ -33,7 +32,22 @@ public class SymbolTable {
      * @return AbstractIdentifierObject
      */
     public AbstractIdentifierObject lookupAll(String key) {
-        // TODO
+        SymbolTable current = this;
+        while(current != null) {
+            AbstractIdentifierObject obj = current.lookup(key);
+            if (obj != null) {
+                return obj;
+            }
+            current = current.getParent();
+        }
         return null;
+    }
+
+    /**
+     * Returns the parent SymbolTable
+     * @return SymbolTable
+     */
+    public SymbolTable getParent() {
+        return parent;
     }
 }

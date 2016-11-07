@@ -1,0 +1,7 @@
+begin
+    int func() is
+        return 1
+    end
+    int a = call func();
+    print a
+end

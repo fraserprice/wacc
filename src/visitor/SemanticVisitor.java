@@ -17,14 +17,15 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
      * and updates the currentST field
      */
     private void createChildST() {
-        // TODO
+        SymbolTable newST = new SymbolTable(currentST);
+        currentST = newST;
     }
 
     /**
      * Updates the currentST field to it's parent
      */
     private void closeCurrentScope() {
-        // TODO
+        currentST = currentST.getParent();
     }
 
     @Override
