@@ -86,7 +86,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitIntLiteral(@NotNull WACCParser.IntLiteralContext ctx) {
-        return new IntNode(currentST, ctx.INT_LITERAL());
+        return new IntNode(currentST, ctx);
     }
 
     @Override

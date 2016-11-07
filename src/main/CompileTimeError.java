@@ -1,5 +1,7 @@
 package main;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +26,8 @@ public enum CompileTimeError {
         return map;
     }
 
-    public void print() {
-        System.err.println(map.get(this));
+    public void print(ParserRuleContext ctx) {
+        System.err.println("Error on line " + ctx.getStart().getLine()
+                + ":" + ctx.getStart().getCharPositionInLine() + " " + map.get(this));
     }
 }

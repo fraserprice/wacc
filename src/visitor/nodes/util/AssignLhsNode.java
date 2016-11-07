@@ -1,5 +1,6 @@
 package visitor.nodes.util;
 
+import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import visitor.Node;
 import visitor.nodes.expr.ArrayElementNode;
@@ -9,17 +10,17 @@ import visitor.nodes.expr.IdentNode;
 public abstract class AssignLhsNode extends Node {
 
     // assignLhs: IDENT
-    public AssignLhsNode(SymbolTable currentST, IdentNode name) {
-        super(currentST);
+    public AssignLhsNode(SymbolTable currentST, ParserRuleContext ctx, IdentNode name) {
+        super(currentST, ctx);
     }
 
     // assignLhs: arrayElem
-    public AssignLhsNode(SymbolTable currentST, ArrayElementNode arrayElem) {
-        super(currentST);
+    public AssignLhsNode(SymbolTable currentST, ParserRuleContext ctx, ArrayElementNode arrayElem) {
+        super(currentST, ctx);
     }
 
     // assignLhs; pairElem
-    public AssignLhsNode(SymbolTable currentST, PairElemNode pairElem) {
-        super(currentST);
+    public AssignLhsNode(SymbolTable currentST, ParserRuleContext ctx, PairElemNode pairElem) {
+        super(currentST, ctx);
     }
 }

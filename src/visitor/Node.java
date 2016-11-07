@@ -1,6 +1,7 @@
 package visitor;
 
 import main.CompileTimeError;
+import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 
 import java.util.LinkedList;
@@ -9,9 +10,11 @@ import java.util.List;
 public abstract class Node {
     protected SymbolTable currentST;
     private List<CompileTimeError> errors;
+    protected ParserRuleContext ctx;
 
-    public Node(SymbolTable currentST) {
+    public Node(SymbolTable currentST, ParserRuleContext ctx) {
         this.currentST = currentST;
+        this.ctx = ctx;
         this.errors = new LinkedList<>();
     }
 
@@ -35,7 +38,7 @@ public abstract class Node {
      * Prints the errors if there are any
      */
     protected void printErrors() {
-        errors.forEach(CompileTimeError::print);
+        errors.forEach(e -> e.print(ctx));
     }
 
     /**

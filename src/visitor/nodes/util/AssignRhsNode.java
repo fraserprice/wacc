@@ -1,5 +1,6 @@
 package visitor.nodes.util;
 
+import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import visitor.Node;
 import visitor.nodes.ExprNode;
@@ -10,27 +11,27 @@ import java.util.List;
 // TODO
 public class AssignRhsNode extends Node {
     // assignRhs: expr
-    public AssignRhsNode(SymbolTable currentST, ExprNode rhs) {
-        super(currentST);
+    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode rhs) {
+        super(currentST, ctx);
     }
 
     // assignRhs: arrayLiteral
-    public AssignRhsNode(SymbolTable currentST, List<ExprNode> arrayArgs) {
-        super(currentST);
+    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, List<ExprNode> arrayArgs) {
+        super(currentST, ctx);
     }
 
     // assignRhs: NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
-    public AssignRhsNode(SymbolTable currentST, ExprNode first, ExprNode second) {
-        super(currentST);
+    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode first, ExprNode second) {
+        super(currentST, ctx);
     }
 
     // assignRhs: pairElem
-    public AssignRhsNode(SymbolTable currentST, PairElemNode pairElem) {
-        super(currentST);
+    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, PairElemNode pairElem) {
+        super(currentST, ctx);
     }
 
     // CALL_FUNC IDENT OPEN_PARENTHESES argList? CLOSE_PARENTHESES
-    public AssignRhsNode(SymbolTable currentST, IdentNode name, List<ExprNode> args) {
-        super(currentST);
+    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, IdentNode name, List<ExprNode> args) {
+        super(currentST, ctx);
     }
 }
