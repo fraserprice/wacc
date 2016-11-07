@@ -11,7 +11,6 @@ import visitor.nodes.expr.BinOpNode;
 import visitor.nodes.expr.ParenthesisNode;
 import visitor.nodes.expr.UnaryOpNode;
 import visitor.nodes.expr.literal.*;
-import visitor.nodes.expr.operator.BinOp;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -155,7 +154,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitLiteralExpr(@NotNull WACCParser.LiteralExprContext ctx) {
-        visitChildren(ctx); return null;
+        return visit(ctx.literal());
     }
 
     @Override
