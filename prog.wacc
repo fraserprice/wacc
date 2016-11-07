@@ -1,7 +1,4 @@
 begin
-    int func() is
-        return 1
-    end
-    int a = call func();
-    print a
+	int a = 200000000000000000000000000000000000000;
+	print a
 end

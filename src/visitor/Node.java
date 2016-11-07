@@ -1,5 +1,6 @@
 package visitor;
 
+import main.CompileTimeError;
 import symobjects.SymbolTable;
 
 import java.util.LinkedList;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public abstract class Node {
     protected SymbolTable currentST;
-    protected List<CompileTimeError> errors;
+    private List<CompileTimeError> errors;
 
     public Node(SymbolTable currentST) {
         this.currentST = currentST;
@@ -35,5 +36,13 @@ public abstract class Node {
      */
     protected void printErrors() {
         errors.forEach(CompileTimeError::print);
+    }
+
+    /**
+     * Adds an error to the error list
+     * @param error
+     */
+    protected void addError(CompileTimeError error) {
+        errors.add(error);
     }
 }

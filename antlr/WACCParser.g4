@@ -75,11 +75,11 @@ expr: OPEN_PARENTHESES expr CLOSE_PARENTHESES            #ParanthesisExpr
 	| IDENT                                              #IdentExpr
 	;
 
-literal: INT_LITERAL
-	   | BOOL_LITERAL
-	   | CHAR_LITERAL
-	   | STR_LITERAL
-	   | PAIR_LITERAL
+literal: INT_LITERAL   #IntLiteral
+	   | BOOL_LITERAL  #BoolLiteral
+	   | CHAR_LITERAL  #CharLiteral
+	   | STR_LITERAL   #StrLiteral
+	   | PAIR_LITERAL  #PairLiteral
 	   ;
 
 arrayElem: IDENT (OPEN_SQUARE_BRACKET expr CLOSE_SQUARE_BRACKET)+

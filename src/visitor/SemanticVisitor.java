@@ -5,6 +5,7 @@ import antlr.WACCParserVisitor;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import symobjects.SymbolTable;
+import visitor.nodes.expr.literal.IntNode;
 
 public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements WACCParserVisitor<Node> {
     /**
@@ -74,12 +75,32 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     }
 
     @Override
-    public Node visitLiteral(@NotNull WACCParser.LiteralContext ctx) {
+    public Node visitPrintlnStat(@NotNull WACCParser.PrintlnStatContext ctx) {
         visitChildren(ctx); return null;
     }
 
     @Override
-    public Node visitPrintlnStat(@NotNull WACCParser.PrintlnStatContext ctx) {
+    public Node visitBoolLiteral(@NotNull WACCParser.BoolLiteralContext ctx) {
+        visitChildren(ctx); return null;
+    }
+
+    @Override
+    public Node visitIntLiteral(@NotNull WACCParser.IntLiteralContext ctx) {
+        return new IntNode(currentST, ctx.INT_LITERAL());
+    }
+
+    @Override
+    public Node visitCharLiteral(@NotNull WACCParser.CharLiteralContext ctx) {
+        visitChildren(ctx); return null;
+    }
+
+    @Override
+    public Node visitStrLiteral(@NotNull WACCParser.StrLiteralContext ctx) {
+        visitChildren(ctx); return null;
+    }
+
+    @Override
+    public Node visitPairLiteral(@NotNull WACCParser.PairLiteralContext ctx) {
         visitChildren(ctx); return null;
     }
 

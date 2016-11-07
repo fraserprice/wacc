@@ -536,7 +536,7 @@ begin
 			return true
 		else
 			# Should not happen. Cannot find such move.
-			println "Internal visitor.CompileTimeError: cannot find the next move for the AI" ;
+			println "Internal main.CompileTimeError: cannot find the next move for the AI" ;
 			exit -1
 		fi
 		
@@ -847,7 +847,7 @@ begin
 				return 'x'
 			else
 				# Should not happen!
-				println "Internal visitor.CompileTimeError: symbol given is neither \'x\' or \'o\'" ;
+				println "Internal main.CompileTimeError: symbol given is neither \'x\' or \'o\'" ;
 				exit -1 
 			fi 
 		fi

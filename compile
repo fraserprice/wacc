@@ -4,11 +4,11 @@
 # but do *not* change its name.
 
 if ARGV.length != 1
-  puts "Compiler takes one argument which is the file to be compiled."
+  puts "main.Compiler takes one argument which is the file to be compiled."
   exit 1
 end
 
-error = `java -cp bin:lib/antlr-4.4-complete.jar Compiler #{ARGV[0]}`
+error = `java -cp bin:lib/antlr-4.4-complete.jar main.Compiler #{ARGV[0]}`
 
 exit_status = $?.exitstatus
 
