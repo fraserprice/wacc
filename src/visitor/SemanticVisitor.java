@@ -5,7 +5,6 @@ import antlr.WACCParserVisitor;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import symobjects.SymbolTable;
-import symobjects.identifierobj.TypeObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.FunctionNode;
 import visitor.nodes.ProgramNode;
@@ -24,7 +23,6 @@ import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.util.PairElemNode;
 import visitor.nodes.util.ParamNode;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -250,7 +248,13 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitUnExpr(@NotNull WACCParser.UnExprContext ctx) {
-        return new UnaryOpNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
+        ExprNode expr = (ExprNode) visit(ctx.expr());
+        if (ctx.MINUS() != null) {
+            // might have negative integer
+            // TODO
+        }
+
+        return new UnaryOpNode(currentST, ctx, expr);
     }
 
     @Override
@@ -260,7 +264,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitPairElem(@NotNull WACCParser.PairElemContext ctx) {
-        return new PairElemNode(currentST, ctx, (ExprNode) visit(ctx));
+        return new PairElemNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
     }
 
     @Override
