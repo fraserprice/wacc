@@ -6,11 +6,16 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import symobjects.SymbolTable;
 import visitor.nodes.ExprNode;
+import visitor.nodes.StatNode;
 import visitor.nodes.expr.ArrayElementNode;
 import visitor.nodes.expr.BinOpNode;
 import visitor.nodes.expr.ParenthesisNode;
 import visitor.nodes.expr.UnaryOpNode;
 import visitor.nodes.expr.literal.*;
+import visitor.nodes.stat.*;
+import visitor.nodes.type.TypeNode;
+import visitor.nodes.util.AssignLhsNode;
+import visitor.nodes.util.AssignRhsNode;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +44,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitReturnStat(@NotNull WACCParser.ReturnStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new ReturnNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
     }
 
     @Override
@@ -72,12 +77,12 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitAssignPairArrayStat(@NotNull WACCParser.AssignPairArrayStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new AssignPairArrayNode(currentST, ctx, (AssignLhsNode) visit(ctx.assignLhs()), (AssignRhsNode) visit(ctx.assignRhs()));
     }
 
     @Override
     public Node visitReadStat(@NotNull WACCParser.ReadStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new ReadNode(currentST, ctx, (AssignLhsNode) visit(ctx.assignLhs()));
     }
 
     @Override
@@ -87,7 +92,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitPrintlnStat(@NotNull WACCParser.PrintlnStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new PrintlnNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
     }
 
     // WILL RETURN NULL IF CALLED
@@ -128,12 +133,12 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitCompositionStat(@NotNull WACCParser.CompositionStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new CompositionNode(currentST, ctx, (StatNode) visit(ctx.stat(0)), (StatNode) visit(ctx.stat(1)));
     }
 
     @Override
     public Node visitPrintStat(@NotNull WACCParser.PrintStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new PrintNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
     }
 
     @Override
@@ -216,27 +221,41 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitExitStat(@NotNull WACCParser.ExitStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new ExitNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
     }
 
     @Override
     public Node visitIfStat(@NotNull WACCParser.IfStatContext ctx) {
-        visitChildren(ctx); return null;
+        ExprNode exprBlock = (ExprNode) visit(ctx.expr());
+
+        createChildST();
+        StatNode thenBlock = (StatNode) visit(ctx.stat(0));
+        closeCurrentScope();
+
+        createChildST();
+        StatNode elseBlock = (StatNode) visit(ctx.stat(1));
+        closeCurrentScope();
+
+        IfNode ifBlock = new IfNode(currentST, ctx, exprBlock, thenBlock, elseBlock);
+        return ifBlock;
     }
 
     @Override
     public Node visitFreeStat(@NotNull WACCParser.FreeStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new FreeNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
     }
 
     @Override
     public Node visitSkipStat(@NotNull WACCParser.SkipStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new SkipNode(currentST, ctx);
     }
 
     @Override
     public Node visitWhileStat(@NotNull WACCParser.WhileStatContext ctx) {
-        visitChildren(ctx); return null;
+        createChildST();
+        WhileNode whileBlock = new WhileNode(currentST, ctx, (ExprNode) visit(ctx.expr()), (StatNode) visit(ctx.stat()));
+        closeCurrentScope();
+        return whileBlock;
     }
 
     @Override
@@ -246,7 +265,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitAssignPrimitiveStat(@NotNull WACCParser.AssignPrimitiveStatContext ctx) {
-        visitChildren(ctx); return null;
+        return new AssignPrimitiveNode(currentST, ctx, (TypeNode) visit(ctx.type()), (AssignRhsNode) visit(ctx.assignRhs()));
     }
 
     @Override
@@ -256,6 +275,9 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitScopeBlockStat(@NotNull WACCParser.ScopeBlockStatContext ctx) {
-        visitChildren(ctx); return null;
+        createChildST();
+        ScopeBlockNode block = new ScopeBlockNode(currentST, ctx, (StatNode) visit(ctx.stat()));
+        closeCurrentScope();
+        return block;
     }
 }
