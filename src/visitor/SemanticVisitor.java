@@ -24,6 +24,7 @@ import visitor.nodes.util.PairElemNode;
 import visitor.nodes.util.ParamNode;
 
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements WACCParserVisitor<Node> {
@@ -238,7 +239,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitUnPlusExpr(@NotNull WACCParser.UnPlusExprContext ctx) {
-        return new UnaryOpNode(currentST, ctx, new IntNode(currentST, ctx.INT_LITERAL()));
+        return new UnaryOpNode(currentST, ctx, new IntNode(currentST, ctx.INT_LITERAL().getText()));
     }
 
     @Override
@@ -248,13 +249,17 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitUnExpr(@NotNull WACCParser.UnExprContext ctx) {
-        ExprNode expr = (ExprNode) visit(ctx.expr());
+        // special case
         if (ctx.MINUS() != null) {
             // might have negative integer
-            // TODO
+            Pattern p = Pattern.compile("[0-9]+");
+            if (p.matcher(ctx.expr().getText()).matches()) {
+                // we have int literal
+                return new UnaryOpNode(currentST, ctx, new IntNode(currentST, "-" + ctx.expr().getText()));
+            }
         }
 
-        return new UnaryOpNode(currentST, ctx, expr);
+        return new UnaryOpNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
     }
 
     @Override
