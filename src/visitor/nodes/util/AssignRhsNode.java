@@ -4,7 +4,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import visitor.Node;
 import visitor.nodes.ExprNode;
-import visitor.nodes.expr.IdentNode;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class AssignRhsNode extends Node {
     }
 
     // CALL_FUNC IDENT OPEN_PARENTHESES argList? CLOSE_PARENTHESES
-    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, IdentNode name, List<ExprNode> args) {
+    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, List<ExprNode> args, String ident) {
         super(currentST, ctx);
     }
 }

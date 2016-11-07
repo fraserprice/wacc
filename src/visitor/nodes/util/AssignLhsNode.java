@@ -4,13 +4,12 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import visitor.Node;
 import visitor.nodes.expr.ArrayElementNode;
-import visitor.nodes.expr.IdentNode;
 
 // TODO
 public abstract class AssignLhsNode extends Node {
 
     // assignLhs: IDENT
-    public AssignLhsNode(SymbolTable currentST, ParserRuleContext ctx, IdentNode name) {
+    public AssignLhsNode(SymbolTable currentST, ParserRuleContext ctx) {
         super(currentST, ctx);
     }
 

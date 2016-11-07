@@ -2,6 +2,7 @@ package visitor.nodes.expr.literal;
 
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import symobjects.SymbolTable;
 import visitor.nodes.expr.LiteralNode;
 
@@ -10,9 +11,17 @@ public class IntNode extends LiteralNode {
 
     public IntNode(SymbolTable currentST, ParserRuleContext ctx) {
         super(currentST, ctx);
+        check(ctx.getText());
+    }
 
+    public IntNode(SymbolTable currentST, TerminalNode value) {
+        super(currentST, null);
+        check(value.getText());
+    }
+
+    private void check(String textValue) {
         try {
-            this.value = Integer.parseInt(ctx.getText());
+            this.value = Integer.parseInt(textValue);
         } catch (NumberFormatException e) {
             addError(CompileTimeError.INTEGER_OVERFLOW);
             printErrors();
