@@ -1,10 +1,11 @@
 package visitor.nodes.stat;
 
-import org.antlr.v4.runtime.tree.TerminalNode;
 import symobjects.SymbolTable;
+import visitor.nodes.util.AssignLhsNode;
+import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.StatNode;
-import visitor.nodes.expr.ArrayElementNode;
 
+// TODO
 public class AssignPairArrayNode extends StatNode {
 
     public AssignPairArrayNode(SymbolTable currentST, AssignLhsNode assignLhsNode, AssignRhsNode assignRhsNode) {

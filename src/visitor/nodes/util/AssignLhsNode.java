@@ -1,22 +1,25 @@
-package visitor.nodes.stat;
+package visitor.nodes.util;
 
 import symobjects.SymbolTable;
 import visitor.Node;
 import visitor.nodes.expr.ArrayElementNode;
-import visitor.nodes.expr.literal.PairNode;
+import visitor.nodes.expr.IdentNode;
 
+// TODO
 public abstract class AssignLhsNode extends Node {
 
-    public AssignLhsNode(SymbolTable currentST) {
+    // assignLhs: IDENT
+    public AssignLhsNode(SymbolTable currentST, IdentNode name) {
         super(currentST);
     }
 
+    // assignLhs: arrayElem
     public AssignLhsNode(SymbolTable currentST, ArrayElementNode arrayElem) {
         super(currentST);
     }
 
-    public AssignLhsNode(SymbolTable currentST, PairNode pairNode) {
+    // assignLhs; pairElem
+    public AssignLhsNode(SymbolTable currentST, PairElemNode pairElem) {
         super(currentST);
     }
-
 }

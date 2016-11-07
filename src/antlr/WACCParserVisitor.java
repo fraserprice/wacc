@@ -12,12 +12,6 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#argList}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArgList(@NotNull WACCParser.ArgListContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code ReturnStat}
 	 * labeled alternative in {@link WACCParser#stat}.
 	 * @param ctx the parse tree
@@ -42,12 +36,6 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAssignLhs(@NotNull WACCParser.AssignLhsContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link WACCParser#arrayLiteral}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArrayLiteral(@NotNull WACCParser.ArrayLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#program}.
 	 * @param ctx the parse tree
@@ -225,12 +213,6 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUnPlusExpr(@NotNull WACCParser.UnPlusExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#pairType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPairType(@NotNull WACCParser.PairTypeContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link WACCParser#pairElemType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -263,12 +245,6 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUnExpr(@NotNull WACCParser.UnExprContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link WACCParser#paramList}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParamList(@NotNull WACCParser.ParamListContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ScopeBlockStat}
 	 * labeled alternative in {@link WACCParser#stat}.
