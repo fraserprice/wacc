@@ -90,18 +90,19 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBaseType(@NotNull WACCParser.BaseTypeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#literal}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLiteral(@NotNull WACCParser.LiteralContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code PrintlnStat}
 	 * labeled alternative in {@link WACCParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitPrintlnStat(@NotNull WACCParser.PrintlnStatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BoolLiteral}
+	 * labeled alternative in {@link WACCParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolLiteral(@NotNull WACCParser.BoolLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#param}.
 	 * @param ctx the parse tree
@@ -129,6 +130,13 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLiteralExpr(@NotNull WACCParser.LiteralExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IntLiteral}
+	 * labeled alternative in {@link WACCParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntLiteral(@NotNull WACCParser.IntLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BinOrExpr}
 	 * labeled alternative in {@link WACCParser#expr}.
@@ -163,6 +171,13 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIdentExpr(@NotNull WACCParser.IdentExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CharLiteral}
+	 * labeled alternative in {@link WACCParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharLiteral(@NotNull WACCParser.CharLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BinMulDivModExpr}
 	 * labeled alternative in {@link WACCParser#expr}.
@@ -212,6 +227,20 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUnPlusExpr(@NotNull WACCParser.UnPlusExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code StrLiteral}
+	 * labeled alternative in {@link WACCParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrLiteral(@NotNull WACCParser.StrLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PairLiteral}
+	 * labeled alternative in {@link WACCParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPairLiteral(@NotNull WACCParser.PairLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#pairElemType}.
 	 * @param ctx the parse tree

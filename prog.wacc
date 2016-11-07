@@ -1,7 +1,4 @@
 begin
-    int func() is
-        return 1
-    end
-    int a = call func();
-    print a
+	print a;
+	bool d = a == b
 end

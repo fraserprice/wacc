@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SymbolTable {
-    private Map<String, AbstractIdentifierObject> map;
+    private Map<String, IdentifierObj> map;
     private SymbolTable parent;
 
     public SymbolTable() {
@@ -18,23 +18,23 @@ public class SymbolTable {
     }
 
     /**
-     * Search in the current scope for the AbstractIdentifierObject
+     * Search in the current scope for the IdentifierObj
      * @param key
-     * @return AbstractIdentifierObject
+     * @return IdentifierObj
      */
-    public AbstractIdentifierObject lookup(String key) {
+    public IdentifierObj lookup(String key) {
         return map.get(key);
     }
 
     /**
-     * Search in current and outer scopes for the AbstractIdentifierObject
+     * Search in current and outer scopes for the IdentifierObj
      * @param key
-     * @return AbstractIdentifierObject
+     * @return IdentifierObj
      */
-    public AbstractIdentifierObject lookupAll(String key) {
+    public IdentifierObj lookupAll(String key) {
         SymbolTable current = this;
         while(current != null) {
-            AbstractIdentifierObject obj = current.lookup(key);
+            IdentifierObj obj = current.lookup(key);
             if (obj != null) {
                 return obj;
             }
