@@ -4,6 +4,7 @@ import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import symobjects.SymbolTable;
+import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.expr.LiteralNode;
 
 public class IntNode extends LiteralNode {
@@ -11,11 +12,13 @@ public class IntNode extends LiteralNode {
 
     public IntNode(SymbolTable currentST, ParserRuleContext ctx) {
         super(currentST, ctx);
+        this.type = new IntObj(currentST);
         check(ctx.getText());
     }
 
     public IntNode(SymbolTable currentST, String value) {
         super(currentST, null);
+        this.type = new IntObj(currentST);
         check(value);
     }
 

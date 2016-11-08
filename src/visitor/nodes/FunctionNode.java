@@ -14,4 +14,8 @@ public class FunctionNode extends Node {
                         List<ParamNode> paramNodeList, StatNode statNode) {
         super(currentST, ctx);
     }
+
+    public void check() {
+
+    }
 }

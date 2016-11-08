@@ -1,4 +1,3 @@
 begin
-	print a;
-	bool d = a == b
+	print true
 end

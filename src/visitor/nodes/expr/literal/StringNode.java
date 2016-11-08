@@ -9,5 +9,6 @@ public class StringNode extends LiteralNode {
 
     public StringNode(SymbolTable currentST, ParserRuleContext ctx) {
         super(currentST, ctx);
+        //TODO: this.type = new StringObj(currentST);
     }
 }

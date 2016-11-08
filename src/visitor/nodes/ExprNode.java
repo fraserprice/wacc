@@ -9,7 +9,7 @@ import visitor.Node;
  * Type might be null if there are semantic errors
  */
 public abstract class ExprNode extends Node {
-    private TypeObj type;
+    protected TypeObj type;
 
     public ExprNode(SymbolTable currentST, ParserRuleContext ctx) {
         super(currentST, ctx);

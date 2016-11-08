@@ -8,7 +8,8 @@ import java.util.Map;
 public enum CompileTimeError {
     // TODO
     NONE,
-    INTEGER_OVERFLOW;
+    INTEGER_OVERFLOW,
+    TYPE_MISMATCH_ERROR;
 
     private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
@@ -21,6 +22,7 @@ public enum CompileTimeError {
         Map<CompileTimeError, String> map = new HashMap<CompileTimeError, String>() {{
             put(NONE, "");
             put(INTEGER_OVERFLOW, "Integer Overflow");
+            put(TYPE_MISMATCH_ERROR, "Type Mismatch");
         }};
 
         return map;
