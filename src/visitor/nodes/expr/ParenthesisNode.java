@@ -4,7 +4,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import visitor.nodes.ExprNode;
 
-//TODO
 public class ParenthesisNode extends ExprNode {
 
     public ParenthesisNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode argument) {

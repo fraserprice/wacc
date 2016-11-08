@@ -1,6 +1,5 @@
 package visitor.nodes.expr;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
@@ -12,7 +11,6 @@ import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.expr.operator.UnOp;
 
-import javax.lang.model.type.ArrayType;
 
 // TODO
 public class UnaryOpNode extends ExprNode {

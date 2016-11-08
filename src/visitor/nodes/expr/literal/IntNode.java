@@ -2,7 +2,6 @@ package visitor.nodes.expr.literal;
 
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.TerminalNode;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.expr.LiteralNode;
