@@ -24,7 +24,7 @@ public class IntNode extends LiteralNode {
             this.value = Integer.parseInt(textValue);
         } catch (NumberFormatException e) {
             addError(CompileTimeError.INTEGER_OVERFLOW);
-            printErrors();
+            printSyntacticErrors();
             System.exit(CompileTimeError.EXIT_SYNTAX_ERROR);
         }
     }

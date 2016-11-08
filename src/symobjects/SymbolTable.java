@@ -50,4 +50,8 @@ public class SymbolTable {
     public SymbolTable getParent() {
         return parent;
     }
+
+    public void add(String key, IdentifierObj obj) {
+        this.map.put(key, obj);
+    }
 }

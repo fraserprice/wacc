@@ -26,7 +26,12 @@ public enum CompileTimeError {
         return map;
     }
 
-    public void print(ParserRuleContext ctx) {
+    public void printSemantic(ParserRuleContext ctx) {
+        System.err.println("Error on line " + ctx.getStart().getLine()
+                + ":" + ctx.getStart().getCharPositionInLine() + " " + map.get(this));
+    }
+
+    public void printSyntactic(ParserRuleContext ctx) {
         System.err.println("Error on line " + ctx.getStart().getLine()
                 + ":" + ctx.getStart().getCharPositionInLine() + " " + map.get(this));
     }
