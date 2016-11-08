@@ -23,6 +23,7 @@ public class ArrayElementNode extends ExprNode {
             if(expr.getType().getClass() != IntObj.class) {
                 addError(CompileTimeError.TYPE_MISMATCH_ERROR);
             }
+            printSyntacticErrors();
         }
     }
 
