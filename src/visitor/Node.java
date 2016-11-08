@@ -34,11 +34,14 @@ public abstract class Node {
         return errors;
     }
 
-    /**
-     * Prints the errors if there are any
-     */
-    protected void printErrors() {
-        errors.forEach(e -> e.print(ctx));
+
+    protected void printSyntacticErrors() {
+        errors.forEach(e -> e.printSyntactic(ctx));
+        System.exit(CompileTimeError.EXIT_SYNTAX_ERROR);
+    }
+
+    protected void printSemanticErrors() {
+        errors.forEach(e -> e.printSemantic(ctx));
     }
 
     /**
