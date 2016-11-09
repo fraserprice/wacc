@@ -77,7 +77,7 @@ public class BinOpNode extends ExprNode {
     }
 
     private void check() {
-        if(!lhs.getType().getClass().equals(rhs.getType().getClass())) {
+        if(lhs.getType() == null || rhs.getType() == null || !lhs.getType().getClass().equals(rhs.getType().getClass())) {
             addError(CompileTimeError.TYPE_MISMATCH_ERROR);
             printSemanticErrors();
         }
