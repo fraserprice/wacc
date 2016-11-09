@@ -1,3 +1,3 @@
 begin
-	print true
+	print 1 + 'c'
 end

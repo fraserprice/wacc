@@ -188,7 +188,6 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     public Node visitBinAndExpr(@NotNull WACCParser.BinAndExprContext ctx) {
         ExprNode lhs = (ExprNode) visit(ctx.expr(0));
         ExprNode rhs = (ExprNode) visit(ctx.expr(1));
-
         return new BinOpNode(currentST, ctx, lhs, rhs);
     }
 

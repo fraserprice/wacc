@@ -16,6 +16,7 @@ public enum CompileTimeError {
     public static final int EXIT_FILE_ERROR = 1;
     public static final int EXIT_SYNTAX_ERROR = 100;
     public static final int EXIT_SEMANTIC_ERROR = 200;
+    public static boolean hasSemanticErrors = false;
 
     // TODO Populate errors
     private static Map<CompileTimeError, String> mapInit() {
@@ -31,6 +32,7 @@ public enum CompileTimeError {
     public void printSemantic(ParserRuleContext ctx) {
         System.err.println("Error on line " + ctx.getStart().getLine()
                 + ":" + ctx.getStart().getCharPositionInLine() + " " + map.get(this));
+        hasSemanticErrors = true;
     }
 
     public void printSyntactic(ParserRuleContext ctx) {
