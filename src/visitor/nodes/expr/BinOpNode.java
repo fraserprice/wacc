@@ -9,6 +9,7 @@ import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.expr.operator.BinOp;
 
+// TODO: for each operator do semantic check
 public class BinOpNode extends ExprNode {
     private BinOp op;
     private ExprNode lhs;
@@ -18,9 +19,10 @@ public class BinOpNode extends ExprNode {
         super(currentST, ctx);
         this.lhs = lhs;
         this.rhs = rhs;
-        check();
 
-        this.type = lhs.getType();
+        if (!lhs.hasErrors() && !rhs.hasErrors()) {
+            check();
+        }
 
         /*switch (ctx.getText()) {
             case "*":
@@ -84,9 +86,12 @@ public class BinOpNode extends ExprNode {
         TypeObj lhsType = lhs.getType();
         TypeObj rhsType = rhs.getType();
 
-        if(lhsType== null || rhsType == null || lhsType.equals(rhsType)) {
+        if(lhsType == null || rhsType == null || !lhsType.equals(rhsType)) {
             addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
+            return;
         }
+
+        this.type = lhs.getType();
     }
 
 }

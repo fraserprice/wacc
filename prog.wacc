@@ -1,3 +1,11 @@
+# evaluating a moderately complex boolean expression
+
+# Output:
+# Correct
+
+# Program:
+
 begin
-	print 1 + 2
+  print(! ( ( true && false) || (true && false) ))
 end
+

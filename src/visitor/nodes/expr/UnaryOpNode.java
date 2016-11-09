@@ -3,26 +3,16 @@ package visitor.nodes.expr;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
-import symobjects.identifierobj.TypeObj;
-import symobjects.identifierobj.typeobj.ArrayObj;
-import symobjects.identifierobj.typeobj.scalarobj.BoolObj;
-import symobjects.identifierobj.typeobj.scalarobj.CharObj;
-import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
-import visitor.nodes.expr.operator.UnOp;
 
 
 // TODO
 public class UnaryOpNode extends ExprNode {
-
-    private UnOp unOp;
-    private Class<? extends TypeObj> inputType;
     private ExprNode argument;
 
     public UnaryOpNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode argument) {
         super(currentST, ctx);
-        this.argument = argument;
-        switch (getOp(ctx.getText())) {
+        /*switch (getOp(ctx.getText())) {
             case "+":
                 this.type = new IntObj(currentST);
                 inputType = IntObj.class;
@@ -53,25 +43,17 @@ public class UnaryOpNode extends ExprNode {
                 inputType = CharObj.class;
                 unOp = UnOp.ORD;
                 break;
+        }*/
+        this.argument = argument;
+        if (!argument.hasErrors()) {
+            check();
         }
-        check();
     }
 
     public void check() {
-        if( argument.getType().getClass() != inputType ) {
-            addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
-        }
-    }
+        assert (argument != null): "UnaryOp: argument can't be null";
+        assert (argument.getType() != null): "UnaryOp: argument should have a type";
 
-    private String getOp(String unExpr) {
-        String[] prefixes = {"+", "-", "!", "len", "chr", "ord"};
-        String retPrefix = "Error";
-        for(String prefix : prefixes) {
-            if(unExpr.startsWith(prefix)) {
-                retPrefix = prefix;
-            }
-        }
-        return retPrefix;
+        type = argument.getType();
     }
-
 }
