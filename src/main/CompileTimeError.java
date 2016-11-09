@@ -8,7 +8,7 @@ import java.util.Map;
 public enum CompileTimeError {
     NONE,
     INTEGER_OVERFLOW,
-    TYPE_MISMATCH_ERROR, RETURN_STATEMENT_MISSING_FROM_LAST_LINE, RETURN_TYPE_MISMATCH, UNDEFINED_IDENTIFIER, NOT_VARIABLE, EXPECTED_ARRAY_CALL;
+    TYPE_MISMATCH_ERROR, RETURN_STATEMENT_MISSING_FROM_LAST_LINE, RETURN_TYPE_MISMATCH, UNDEFINED_IDENTIFIER, NOT_VARIABLE, EXPECTED_ARRAY_CALL, INVALID_DIMENSION_NUMBER_ARRAY;
 
     private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
@@ -28,6 +28,7 @@ public enum CompileTimeError {
             put(UNDEFINED_IDENTIFIER, "Variable was not previously declared");
             put(NOT_VARIABLE, "Identifier should be a variable");
             put(EXPECTED_ARRAY_CALL, "Expected array got something else");
+            put(INVALID_DIMENSION_NUMBER_ARRAY, "Array reference has different dimensionality from it's declaration");
         }};
 
         return map;

@@ -41,6 +41,19 @@ public class ArrayElementNode extends ExprNode {
         ArrayObj arrayT = (ArrayObj) arrayType;
         type = arrayT.getType();
 
+        TypeObj arrayEntry = arrayT;
+        int dimensionCount = 0;
+
+        while (arrayEntry instanceof ArrayObj) {
+            arrayEntry = ((ArrayObj) arrayEntry).getType();
+            dimensionCount++;
+        }
+
+        if (dimensionCount != exprList.size()) {
+            addSemanticError(CompileTimeError.INVALID_DIMENSION_NUMBER_ARRAY);
+            return;
+        }
+
         for(ExprNode expr : exprList) {
             assert(expr != null): "ArrayElem: expr can't be null";
             assert(expr.getType() != null): "ArrayElem: type of expr can't be null";
