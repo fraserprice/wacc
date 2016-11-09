@@ -3,50 +3,51 @@
 
 require "open3"
 
-TESTS = `find ./tests`
+TESTS_VALID = `find ./tests/valid`
+TESTS_INVALID_SEMANTIC = `find ./tests/invalid/semanticErr`
+TESTS_INVALID_SYNATX = `find ./tests/invalid/syntaxErr`
 
-passed = 0
-total_tests = 0
+def run_test(tests, name, correct_exitstatus)
+  puts "Testing #{name} ..."
+  count = 1
+  failed = 0
+  tests.each_line do |test|
+    test = test.chomp
 
-failed_tests = []
+    if ((!File.directory? test) && (test.end_with? ".wacc"))
+      _, stderr, op = Open3.capture3("./compile #{test}")
+
+      puts "#{count} - #{test} : #{op.exitstatus}"
+      puts stderr
+      count += 1
+      if op.exitstatus != correct_exitstatus
+        failed += 1
+      end
+    end
+  end
+
+  puts "#{name}: #{count - failed}/#{count}"
+end
 
 puts "Making ..."
 
 `make`
 
-if $?.exitstatus != 0 
-  exit $?.exitstatus
+puts "Teststing ..."
+
+if ARGV[0] == nil
+  run_test(TESTS_VALID, "Valid", 0)
+  run_test(TESTS_INVALID_SEMANTIC, "Semantic", 200)
+  run_test(TESTS_INVALID_SYNATX, "Syntax", 100)
+elsif ARGV[0] == "valid"
+  run_test(TESTS_VALID, "Valid", 0)
+elsif ARGV[0] == "semantic"
+  run_test(TESTS_INVALID_SEMANTIC, "Semantic", 200)
+elsif ARGV[0] == "syntax"
+  run_test(TESTS_INVALID_SYNATX, "Syntax", 100)
+else
+  puts "Invalid argument"
 end
 
-puts "Running ..."
-
-TESTS.each_line do |test|
-  test = test.chomp
-
-  if (!File.directory? test) && (test.end_with? ".wacc")
-    _, stderr, _ = Open3.capture3("./grun antlr.WACC program -tokens < #{test}")
-
-    print "Test #{total_tests + 1}: "
-    if stderr.empty?
-      passed += 1
-      print "PASSED"
-    else
-      print "FAILED"
-      failed_tests.push test
-    end
-
-    puts " #{test}"
-    puts stderr unless stderr.empty?
-
-    total_tests += 1
-  end
-end
-
-puts "Completed: #{passed}/#{total_tests} passed"
-
-puts "Failed: "
-failed_tests.each do |failed_test|
-  puts failed_test
-end
-
+puts "Finished"
 `make clean`

@@ -311,7 +311,7 @@ begin
 			continue = false
 		else
 			# Should not happen.
-			print "main.CompileTimeError: unknown choice (" ;
+			print "Error: unknown choice (" ;
 			print choice ;
 			println ")" ;
 			exit -1
