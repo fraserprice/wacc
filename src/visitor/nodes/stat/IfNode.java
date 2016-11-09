@@ -11,10 +11,15 @@ public class IfNode extends StatNode {
 
     public IfNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode exprNode, StatNode thenStat, StatNode elseStat) {
         super(currentST, ctx);
-        checkIfNode(exprNode);
+        if (!exprNode.hasErrors()) {
+            checkIfNode(exprNode);
+        }
     }
 
     private void checkIfNode(ExprNode exprNode) {
+        assert (exprNode != null): "IfNode: expr can't be null";
+        assert (exprNode.getType() != null): "IfNode: expr needs a type";
+
         if(!(exprNode.getType() instanceof BoolObj)) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE);
         }

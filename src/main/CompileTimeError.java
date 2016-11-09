@@ -3,7 +3,11 @@ package main;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum CompileTimeError {
     NONE,
@@ -21,7 +25,7 @@ public enum CompileTimeError {
     UNDEFINED_IDENTIFIER,
     NOT_VARIABLE,
     EXPECTED_ARRAY_CALL,
-    INVALID_DIMENSION_NUMBER_ARRAY;
+    INVALID_DIMENSION_NUMBER_ARRAY, INVALID_EXIT_ARGUMENT, INVALID_VARIABLE_NAME;
 
     private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
@@ -29,6 +33,12 @@ public enum CompileTimeError {
     public static final int EXIT_SYNTAX_ERROR = 100;
     public static final int EXIT_SEMANTIC_ERROR = 200;
     public static boolean hasSemanticErrors = false;
+    public static final Set<String> invalidIdentifierVariableNames = Stream.of(
+            "'is'", "'call'", "'skip'", "'read'", "'free'", "'return'", "'exit'", "'print'",
+            "'println'", "'if'", "'then'", "'else'", "'fi'", "'while'", "'do'", "'done'",
+            "'begin'", "'end'", "';'", "'int'", "'bool'", "'char'", "'string'", "'newpair'",
+            "'pair'", "'fst'", "'snd'", "'len'", "'ord'", "'chr'","'null'")
+            .collect(Collectors.toCollection(HashSet::new));
 
     // TODO Populate errors
     private static Map<CompileTimeError, String> mapInit() {
@@ -49,6 +59,8 @@ public enum CompileTimeError {
             put(NOT_VARIABLE, "Identifier should be a variable");
             put(EXPECTED_ARRAY_CALL, "Expected array got something else");
             put(INVALID_DIMENSION_NUMBER_ARRAY, "Array reference has different dimensionality from it's declaration");
+            put(INVALID_EXIT_ARGUMENT, "Exit statement takes an int as an argument");
+            put(INVALID_VARIABLE_NAME, "Illegal variable name");
         }};
 
         return map;

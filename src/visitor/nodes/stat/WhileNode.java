@@ -11,10 +11,15 @@ public class WhileNode extends StatNode {
 
     public WhileNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode exprNode, StatNode statNode) {
         super(currentST, ctx);
-        checkWhileCondition(exprNode);
+        if (!exprNode.hasErrors()) {
+            checkWhileCondition(exprNode);
+        }
     }
 
     private void checkWhileCondition(ExprNode exprNode) {
+        assert (exprNode != null): "WhileNode: expr can't be null";
+        assert (exprNode.getType() != null): "WhileNode: expr needs a type";
+
         if(!(exprNode.getType() instanceof BoolObj)) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE);
         }

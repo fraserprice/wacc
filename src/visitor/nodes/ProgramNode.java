@@ -7,7 +7,6 @@ import visitor.Node;
 
 import java.util.List;
 
-// TODO
 public class ProgramNode extends Node {
     public ProgramNode(SymbolTable currentST, ParserRuleContext ctx, List<FunctionNode> functionNodeList, StatNode statNode) {
         super(currentST, ctx);

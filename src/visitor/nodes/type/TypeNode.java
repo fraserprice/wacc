@@ -12,20 +12,22 @@ public class TypeNode extends Node {
     // type: baseType
     public TypeNode(SymbolTable currentST, ParserRuleContext ctx, BaseTypeNode baseType) {
         super(currentST, ctx);
-        type = baseType.getType();
+        this.type = baseType.getType();
+        assert (type != null): "TypeNode: TypeNode should always instantiate a type";
     }
 
     // type: type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
     public TypeNode(SymbolTable currentST, ParserRuleContext ctx, TypeNode type) {
         super(currentST, ctx);
         this.type = type.getType();
+        assert (type != null): "TypeNode: TypeNode should always instantiate a type";
     }
 
     // type: PAIR OPEN_PARENTHESES pairElemType COMMA pairElemType CLOSE_PARENTHESES
     public TypeNode(SymbolTable currentST, ParserRuleContext ctx, PairElemTypeNode fstType, PairElemTypeNode sndType) {
         super(currentST, ctx);
         this.type = new PairObj(currentST, fstType.getType(), sndType.getType());
-
+        assert (type != null): "TypeNode: TypeNode should always instantiate a type";
     }
 
     public TypeObj getType() {
