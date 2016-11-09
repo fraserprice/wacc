@@ -4,7 +4,6 @@ import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
-import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.VariableObj;
 import visitor.nodes.ExprNode;
 
@@ -27,6 +26,6 @@ public class IdentNode extends ExprNode {
             return;
         }
 
-        type = (TypeObj) obj;
+        type = ((VariableObj) obj).getType();
     }
 }

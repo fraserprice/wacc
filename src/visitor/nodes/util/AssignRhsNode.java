@@ -8,7 +8,6 @@ import visitor.nodes.ExprNode;
 
 import java.util.List;
 
-// TODO
 public class AssignRhsNode extends Node {
     private TypeObj type;
 
