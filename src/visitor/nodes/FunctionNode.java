@@ -3,6 +3,7 @@ package visitor.nodes;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
+import symobjects.identifierobj.TypeObj;
 import visitor.Node;
 import visitor.nodes.stat.CompositionNode;
 import visitor.nodes.stat.ExitNode;
@@ -34,8 +35,16 @@ public class FunctionNode extends Node {
             current = ((CompositionNode) current).getSecondStatNode();
         }
 
-        if (!(current instanceof ExitNode) || !(current instanceof ReturnNode)) {
+        if (!(current instanceof ExitNode) && !(current instanceof ReturnNode)) {
             addSyntacticError(CompileTimeError.RETURN_STATEMENT_MISSING_FROM_LAST_LINE);
+        }
+
+        // current is either return statement or exit
+        if (current instanceof ReturnNode) {
+            TypeObj returnStatementType = ((ReturnNode) current).getReturnType();
+            if (!returnStatementType.equals(returnType)) {
+                addSyntacticError(CompileTimeError.RETURN_TYPE_MISMATCH);
+            }
         }
     }
 }
