@@ -20,7 +20,9 @@ public class BinOpNode extends ExprNode {
         this.rhs = rhs;
         check();
 
-        switch (ctx.getText()) {
+        this.type = lhs.getType();
+
+        /*switch (ctx.getText()) {
             case "*":
                 this.type = new IntObj(currentST);
                 op = BinOp.MULTIPLY;
@@ -73,11 +75,16 @@ public class BinOpNode extends ExprNode {
                 this.type = new BoolObj(currentST);
                 op = BinOp.OR;
                 break;
-        }
+        }*/
     }
 
     private void check() {
-        if(lhs.getType() == null || rhs.getType() == null || !lhs.getType().getClass().equals(rhs.getType().getClass())) {
+        assert(lhs != null): "BinOpNode: lhs can't be null";
+        assert(rhs != null): "BinOpNode: rhs can't be null";
+        TypeObj lhsType = lhs.getType();
+        TypeObj rhsType = rhs.getType();
+
+        if(lhsType== null || rhsType == null || lhsType.equals(rhsType)) {
             addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
         }
     }

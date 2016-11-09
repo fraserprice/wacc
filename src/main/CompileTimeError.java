@@ -8,7 +8,7 @@ import java.util.Map;
 public enum CompileTimeError {
     NONE,
     INTEGER_OVERFLOW,
-    TYPE_MISMATCH_ERROR, RETURN_STATEMENT_MISSING_FROM_LAST_LINE, RETURN_TYPE_MISMATCH;
+    TYPE_MISMATCH_ERROR, RETURN_STATEMENT_MISSING_FROM_LAST_LINE, RETURN_TYPE_MISMATCH, UNDEFINED_IDENTIFIER, NOT_VARIABLE, EXPECTED_ARRAY_CALL;
 
     private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
@@ -25,6 +25,9 @@ public enum CompileTimeError {
             put(TYPE_MISMATCH_ERROR, "Type Mismatch");
             put(RETURN_STATEMENT_MISSING_FROM_LAST_LINE, "Last statement from a function should be a return statement or an exit statement");
             put(RETURN_TYPE_MISMATCH, "Function return type is incompatible with return type");
+            put(UNDEFINED_IDENTIFIER, "Variable was not previously declared");
+            put(NOT_VARIABLE, "Identifier should be a variable");
+            put(EXPECTED_ARRAY_CALL, "Expected array got something else");
         }};
 
         return map;

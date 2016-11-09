@@ -15,14 +15,14 @@ import java.util.List;
 
 public class FunctionNode extends Node {
 
-    private TypeNode returnType;
+    private TypeObj returnType;
     private List<ParamNode> paramList;
     private StatNode body;
 
     public FunctionNode(SymbolTable currentST, ParserRuleContext ctx, TypeNode typeNode,
                         List<ParamNode> paramNodeList, StatNode statNode) {
         super(currentST, ctx);
-        this.returnType = typeNode;
+        this.returnType = typeNode.getType();
         this.paramList = paramNodeList;
         this.body = statNode;
         check();
