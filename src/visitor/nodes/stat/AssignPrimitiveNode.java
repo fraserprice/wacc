@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
+import symobjects.identifierobj.VariableObj;
 import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.StatNode;
 import visitor.nodes.type.TypeNode;
@@ -45,6 +46,6 @@ public class AssignPrimitiveNode extends StatNode {
             return;
         }
 
-        currentST.add(ident, type);
+        currentST.add(ident, new VariableObj(currentST, type));
     }
 }
