@@ -17,7 +17,11 @@ public enum CompileTimeError {
     VARIABLE_ALREADY_DEFINED,
     INVALID_FREE_VALUE,
     INCOMPATIBLE_TYPE,
-    READ_ERROR;
+    READ_ERROR,
+    UNDEFINED_IDENTIFIER,
+    NOT_VARIABLE,
+    EXPECTED_ARRAY_CALL,
+    INVALID_DIMENSION_NUMBER_ARRAY;
 
     private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
@@ -41,6 +45,10 @@ public enum CompileTimeError {
             put(INVALID_FREE_VALUE, "Can't free a non-pair variable");
             put(INCOMPATIBLE_TYPE, "Incompatible types to compare");
             put(READ_ERROR, "Can't read a pair variable");
+            put(UNDEFINED_IDENTIFIER, "Variable was not previously declared");
+            put(NOT_VARIABLE, "Identifier should be a variable");
+            put(EXPECTED_ARRAY_CALL, "Expected array got something else");
+            put(INVALID_DIMENSION_NUMBER_ARRAY, "Array reference has different dimensionality from it's declaration");
         }};
 
         return map;

@@ -9,6 +9,7 @@ import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.expr.operator.BinOp;
 
+// TODO: for each operator do semantic check
 public class BinOpNode extends ExprNode {
     private BinOp op;
     private ExprNode lhs;
@@ -18,9 +19,12 @@ public class BinOpNode extends ExprNode {
         super(currentST, ctx);
         this.lhs = lhs;
         this.rhs = rhs;
-        check();
 
-        switch (ctx.getText()) {
+        if (!lhs.hasErrors() && !rhs.hasErrors()) {
+            check();
+        }
+
+        /*switch (ctx.getText()) {
             case "*":
                 this.type = new IntObj(currentST);
                 op = BinOp.MULTIPLY;
@@ -73,13 +77,21 @@ public class BinOpNode extends ExprNode {
                 this.type = new BoolObj(currentST);
                 op = BinOp.OR;
                 break;
-        }
+        }*/
     }
 
     private void check() {
-        if(lhs.getType() == null || rhs.getType() == null || !lhs.getType().getClass().equals(rhs.getType().getClass())) {
+        assert(lhs != null): "BinOpNode: lhs can't be null";
+        assert(rhs != null): "BinOpNode: rhs can't be null";
+        TypeObj lhsType = lhs.getType();
+        TypeObj rhsType = rhs.getType();
+
+        if(lhsType == null || rhsType == null || !lhsType.equals(rhsType)) {
             addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
+            return;
         }
+
+        this.type = lhs.getType();
     }
 
 }

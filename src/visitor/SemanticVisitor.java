@@ -10,10 +10,7 @@ import visitor.nodes.ExprNode;
 import visitor.nodes.FunctionNode;
 import visitor.nodes.ProgramNode;
 import visitor.nodes.StatNode;
-import visitor.nodes.expr.ArrayElementNode;
-import visitor.nodes.expr.BinOpNode;
-import visitor.nodes.expr.ParenthesisNode;
-import visitor.nodes.expr.UnaryOpNode;
+import visitor.nodes.expr.*;
 import visitor.nodes.expr.literal.*;
 import visitor.nodes.stat.*;
 import visitor.nodes.type.BaseTypeNode;
@@ -144,10 +141,9 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         return new PrintlnNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
     }
 
-    // WILL RETURN NULL IF CALLED
     @Override
     public Node visitIdentExpr(@NotNull WACCParser.IdentExprContext ctx) {
-        return null;
+        return new IdentNode(currentST, ctx);
     }
 
     @Override
@@ -194,6 +190,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     public Node visitBinAndExpr(@NotNull WACCParser.BinAndExprContext ctx) {
         ExprNode lhs = (ExprNode) visit(ctx.expr(0));
         ExprNode rhs = (ExprNode) visit(ctx.expr(1));
+
         return new BinOpNode(currentST, ctx, lhs, rhs);
     }
 

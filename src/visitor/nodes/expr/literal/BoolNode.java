@@ -8,6 +8,7 @@ import visitor.nodes.expr.LiteralNode;
 public class BoolNode extends LiteralNode {
     public BoolNode(SymbolTable currentST, ParserRuleContext ctx) {
         super(currentST, ctx);
+
         type = (BoolObj) currentST.lookupAll("bool");
     }
 }

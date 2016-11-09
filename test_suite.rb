@@ -71,4 +71,3 @@ else
 end
 
 puts "Finished"
-`make clean`
