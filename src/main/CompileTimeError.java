@@ -25,7 +25,7 @@ public enum CompileTimeError {
     UNDEFINED_IDENTIFIER,
     NOT_VARIABLE,
     EXPECTED_ARRAY_CALL,
-    INVALID_DIMENSION_NUMBER_ARRAY, INVALID_EXIT_ARGUMENT, INVALID_VARIABLE_NAME;
+    INVALID_DIMENSION_NUMBER_ARRAY, INVALID_EXIT_ARGUMENT, INVALID_VARIABLE_NAME, INVALID_PAIR_ELEM_TYPE;
 
     private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
@@ -61,6 +61,7 @@ public enum CompileTimeError {
             put(INVALID_DIMENSION_NUMBER_ARRAY, "Array reference has different dimensionality from it's declaration");
             put(INVALID_EXIT_ARGUMENT, "Exit statement takes an int as an argument");
             put(INVALID_VARIABLE_NAME, "Illegal variable name");
+            put(INVALID_PAIR_ELEM_TYPE, "FST or SND should receive a Pair type");
         }};
 
         return map;

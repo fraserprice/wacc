@@ -15,10 +15,12 @@ import java.util.List;
 public class ArrayElementNode extends ExprNode {
 
     private List<ExprNode> exprList;
+    private String ident;
 
-    public ArrayElementNode(SymbolTable currentST, ParserRuleContext ctx, List<ExprNode> exprList) {
+    public ArrayElementNode(SymbolTable currentST, WACCParser.ArrayElemContext ctx, List<ExprNode> exprList) {
         super(currentST, ctx);
         this.exprList = exprList;
+        this.ident = ctx.IDENT().getText();
         boolean err = false;
         for (ExprNode expr : exprList) {
             if (expr.hasErrors()) {
@@ -31,7 +33,7 @@ public class ArrayElementNode extends ExprNode {
     }
 
     public void check() {
-        TypeObj arrayType = (TypeObj) currentST.lookupAll(((WACCParser.ArrayElemContext) ctx).IDENT().getText());
+        TypeObj arrayType = (TypeObj) currentST.lookupAll(ident);
 
         if (!(arrayType instanceof ArrayObj)) {
             addSemanticError(CompileTimeError.EXPECTED_ARRAY_CALL);
@@ -62,5 +64,9 @@ public class ArrayElementNode extends ExprNode {
                 addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
             }
         }
+    }
+
+    public String getIdent() {
+        return ident;
     }
 }
