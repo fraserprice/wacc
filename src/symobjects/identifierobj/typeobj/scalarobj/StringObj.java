@@ -1,9 +1,10 @@
-package symobjects.identifierobj.typeobj;
+package symobjects.identifierobj.typeobj.scalarobj;
 
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
+import symobjects.identifierobj.typeobj.ScalarObj;
 
-public class StringObj extends TypeObj{
+public class StringObj extends ScalarObj {
 
     public StringObj(SymbolTable identifierST) {
         super(identifierST);
