@@ -1,13 +1,22 @@
 package visitor.nodes.stat;
 
+import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
+import symobjects.identifierobj.typeobj.scalarobj.BoolObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
 
-// TODO
 public class WhileNode extends StatNode {
+
     public WhileNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode exprNode, StatNode statNode) {
         super(currentST, ctx);
+        checkWhileCondition(exprNode);
+    }
+
+    private void checkWhileCondition(ExprNode exprNode) {
+        if(!(exprNode.getType() instanceof BoolObj)) {
+            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE);
+        }
     }
 }

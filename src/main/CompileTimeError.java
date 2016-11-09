@@ -8,7 +8,16 @@ import java.util.Map;
 public enum CompileTimeError {
     NONE,
     INTEGER_OVERFLOW,
-    TYPE_MISMATCH_ERROR, RETURN_STATEMENT_MISSING_FROM_LAST_LINE, RETURN_TYPE_MISMATCH;
+    TYPE_MISMATCH_ERROR,
+    RETURN_STATEMENT_MISSING_FROM_LAST_LINE,
+    RETURN_TYPE_MISMATCH,
+    VARIABLE_NOT_DECLARED_IN_THIS_SCOPE,
+    UNKNOWN_TYPE,
+    FORBIDDEN_VARIABLE_NAME,
+    VARIABLE_ALREADY_DEFINED,
+    INVALID_FREE_VALUE,
+    INCOMPATIBLE_TYPE,
+    READ_ERROR;
 
     private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
@@ -25,6 +34,13 @@ public enum CompileTimeError {
             put(TYPE_MISMATCH_ERROR, "Type Mismatch");
             put(RETURN_STATEMENT_MISSING_FROM_LAST_LINE, "Last statement from a function should be a return statement or an exit statement");
             put(RETURN_TYPE_MISMATCH, "Function return type is incompatible with return type");
+            put(VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, "Variable not declared in this scope");
+            put(UNKNOWN_TYPE, "Unknown type");
+            put(FORBIDDEN_VARIABLE_NAME, "Forbidden variable name");
+            put(VARIABLE_ALREADY_DEFINED, "Variable is already defined");
+            put(INVALID_FREE_VALUE, "Can't free a non-pair variable");
+            put(INCOMPATIBLE_TYPE, "Incompatible types to compare");
+            put(READ_ERROR, "Can't read a pair variable");
         }};
 
         return map;
