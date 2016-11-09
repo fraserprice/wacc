@@ -21,9 +21,8 @@ public class ArrayElementNode extends ExprNode {
     public void check() {
         for(ExprNode expr : exprList) {
             if(expr.getType().getClass() != IntObj.class) {
-                addError(CompileTimeError.TYPE_MISMATCH_ERROR);
+                addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
             }
-            printSyntacticErrors();
         }
     }
 

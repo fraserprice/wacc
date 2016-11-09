@@ -7,10 +7,21 @@ TESTS_VALID = `find ./tests/valid`
 TESTS_INVALID_SEMANTIC = `find ./tests/invalid/semanticErr`
 TESTS_INVALID_SYNATX = `find ./tests/invalid/syntaxErr`
 
+class Fail
+  attr_reader :test
+  attr_reader :error_message
+
+  def initialize test, error_message
+    @test = test
+    @error_message = error_message
+  end
+end
+
 def run_test(tests, name, correct_exitstatus)
   puts "Testing #{name} ..."
   count = 1
   failed = 0
+  failedTests = []
   tests.each_line do |test|
     test = test.chomp
 
@@ -21,9 +32,19 @@ def run_test(tests, name, correct_exitstatus)
       puts stderr
       count += 1
       if op.exitstatus != correct_exitstatus
+        failedTests[failed] = Fail.new test, stderr;
         failed += 1
       end
     end
+  end
+
+  if failed != 0
+    puts "FAILED ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+  end
+
+  failedTests.each do |failedTest|
+    puts failedTest.test
+    puts failedTest.error_message
   end
 
   puts "#{name}: #{count - failed}/#{count}"

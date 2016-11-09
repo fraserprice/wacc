@@ -6,10 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum CompileTimeError {
-    // TODO
     NONE,
     INTEGER_OVERFLOW,
-    TYPE_MISMATCH_ERROR;
+    TYPE_MISMATCH_ERROR, RETURN_STATEMENT_MISSING_FROM_LAST_LINE;
 
     private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
@@ -24,6 +23,7 @@ public enum CompileTimeError {
             put(NONE, "");
             put(INTEGER_OVERFLOW, "Integer Overflow");
             put(TYPE_MISMATCH_ERROR, "Type Mismatch");
+            put(RETURN_STATEMENT_MISSING_FROM_LAST_LINE, "Last statement from a function should be a return statement or an exit statement");
         }};
 
         return map;

@@ -59,7 +59,7 @@ public class UnaryOpNode extends ExprNode {
 
     public void check() {
         if( argument.getType().getClass() != inputType ) {
-            addError(CompileTimeError.TYPE_MISMATCH_ERROR);
+            addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
         }
     }
 
