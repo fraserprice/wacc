@@ -6,6 +6,11 @@ public class ArrayObj extends TypeObj {
     private TypeObj type;
     private int elementsNo;
 
+    public ArrayObj() {
+        this.elementsNo = 0;
+        this.type = new GenericObj();
+    }
+
     public ArrayObj(TypeObj type) {
         this.type = type;
     }
@@ -25,9 +30,9 @@ public class ArrayObj extends TypeObj {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("array: ");
-        sb.append("type=").append(type);
-        sb.append(", elementsNo=").append(elementsNo);
+        final StringBuffer sb = new StringBuffer("array: [");
+        sb.append(type).append(" ");
+        sb.append("], elementsNo=").append(elementsNo);
         return sb.toString();
     }
 }

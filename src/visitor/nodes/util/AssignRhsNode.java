@@ -30,9 +30,8 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, List<ExprNode> arrayArgs) {
         super(currentST, ctx);
 
-        // TODO: should implement case where is empty
         if (arrayArgs.isEmpty()) {
-            assert(false): "TODODODOODODOD";
+            this.type = new ArrayObj();
             return;
         }
 

@@ -1,7 +1,7 @@
 package symobjects.identifierobj;
 
 import symobjects.IdentifierObj;
-import symobjects.SymbolTable;
+import symobjects.identifierobj.typeobj.GenericObj;
 
 public abstract class TypeObj extends IdentifierObj {
     @Override
@@ -11,6 +11,14 @@ public abstract class TypeObj extends IdentifierObj {
         }
 
         TypeObj other = (TypeObj) obj;
+
+        if (this instanceof GenericObj) {
+            return true;
+        }
+
+        if (other instanceof GenericObj) {
+            return true;
+        }
 
         return this.getClass().equals(other.getClass());
     }
