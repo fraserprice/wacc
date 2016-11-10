@@ -25,7 +25,15 @@ public enum CompileTimeError {
     UNDEFINED_IDENTIFIER,
     NOT_VARIABLE,
     EXPECTED_ARRAY_CALL,
-    INVALID_DIMENSION_NUMBER_ARRAY, INVALID_EXIT_ARGUMENT, INVALID_VARIABLE_NAME, INVALID_PAIR_ELEM_TYPE, FUNCTION_NOT_DEFINED, NOT_A_FUNCTION, WRONG_NUMBER_OF_PARAMS, PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE;
+    INVALID_DIMENSION_NUMBER_ARRAY,
+    INVALID_EXIT_ARGUMENT,
+    INVALID_VARIABLE_NAME,
+    INVALID_PAIR_ELEM_TYPE,
+    FUNCTION_NOT_DEFINED,
+    NOT_A_FUNCTION,
+    WRONG_NUMBER_OF_PARAMS,
+    PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE,
+    INVALID_PARAMETER_USE;
 
     private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
@@ -66,6 +74,7 @@ public enum CompileTimeError {
             put(NOT_A_FUNCTION, "Identifier is not a function");
             put(WRONG_NUMBER_OF_PARAMS, "Number of params don't match");
             put(PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE, "Type of param doesn't match");
+            put(INVALID_PARAMETER_USE, "Invalid declaration of parameter in function definition");
         }};
 
         return map;
