@@ -1,5 +1,6 @@
 package visitor.nodes.stat;
 
+import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
@@ -7,10 +8,10 @@ import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
 
-public class ExitNode extends StatNode {
+public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
     private ExprNode expr;
 
-    public ExitNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode expr) {
+    public ExitNode(SymbolTable currentST, WACCParser.ExitStatContext ctx, ExprNode expr) {
         super(currentST, ctx);
 
         this.expr = expr;

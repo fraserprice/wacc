@@ -11,7 +11,7 @@ import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.StatNode;
 import visitor.nodes.type.TypeNode;
 
-public class AssignPrimitiveNode extends StatNode {
+public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStatContext> {
     private TypeObj type;
     private String ident;
     private AssignRhsNode rhs;

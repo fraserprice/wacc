@@ -1,13 +1,15 @@
 package visitor.nodes.expr.literal;
 
+import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.expr.LiteralNode;
 
-public class IntNode extends LiteralNode {
-    public IntNode(SymbolTable currentST, ParserRuleContext ctx) {
+public class IntNode extends LiteralNode<WACCParser.IntLiteralContext> {
+
+    public IntNode(SymbolTable currentST, WACCParser.IntLiteralContext ctx) {
         super(currentST, ctx);
         this.type = (IntObj) currentST.lookupAll("int");
         check(ctx.getText());

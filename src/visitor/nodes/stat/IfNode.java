@@ -1,5 +1,6 @@
 package visitor.nodes.stat;
 
+import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
@@ -7,9 +8,9 @@ import symobjects.identifierobj.typeobj.scalarobj.BoolObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
 
-public class IfNode extends StatNode {
+public class IfNode extends StatNode<WACCParser.IfStatContext> {
 
-    public IfNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode exprNode, StatNode thenStat, StatNode elseStat) {
+    public IfNode(SymbolTable currentST, WACCParser.IfStatContext ctx, ExprNode exprNode, StatNode thenStat, StatNode elseStat) {
         super(currentST, ctx);
         if (!exprNode.hasErrors()) {
             checkIfNode(exprNode);

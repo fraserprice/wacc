@@ -14,7 +14,7 @@ import visitor.nodes.ExprNode;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class ArrayElementNode extends ExprNode {
+public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
 
     private List<ExprNode> exprList;
     private String ident;

@@ -1,5 +1,6 @@
 package visitor;
 
+import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
@@ -7,12 +8,12 @@ import symobjects.SymbolTable;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class Node {
+public abstract class Node<T extends ParserRuleContext> {
     protected SymbolTable currentST;
     private List<CompileTimeError> errors;
-    protected ParserRuleContext ctx;
+    protected T ctx;
 
-    public Node(SymbolTable currentST, ParserRuleContext ctx) {
+    public Node(SymbolTable currentST, T ctx) {
         this.currentST = currentST;
         this.ctx = ctx;
         this.errors = new LinkedList<>();

@@ -11,7 +11,7 @@ import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.expr.ArrayElementNode;
 
-public class AssignLhsNode extends Node {
+public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
 
     private IdentifierObj obj;
 

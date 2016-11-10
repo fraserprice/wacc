@@ -10,7 +10,7 @@ import symobjects.identifierobj.VariableObj;
 import visitor.Node;
 import visitor.nodes.type.TypeNode;
 
-public class ParamNode extends Node {
+public class ParamNode extends Node<WACCParser.ParamContext> {
     private VariableObj obj;
 
     public ParamNode(SymbolTable currentST, WACCParser.ParamContext ctx, TypeNode typeNode) {

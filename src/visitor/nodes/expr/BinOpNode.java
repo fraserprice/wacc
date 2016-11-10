@@ -1,5 +1,6 @@
 package visitor.nodes.expr;
 
+import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
@@ -11,7 +12,7 @@ import visitor.nodes.ExprNode;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BinOpNode extends ExprNode {
+public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
     private ExprNode lhs;
     private ExprNode rhs;
     private String operator;
@@ -31,7 +32,7 @@ public class BinOpNode extends ExprNode {
         put("||", new BoolObj());
     }};
 
-    public BinOpNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode lhs, String op, ExprNode rhs) {
+    public BinOpNode(SymbolTable currentST, WACCParser.ExprContext ctx, ExprNode lhs, String op, ExprNode rhs) {
         super(currentST, ctx);
         this.lhs = lhs;
         this.rhs = rhs;

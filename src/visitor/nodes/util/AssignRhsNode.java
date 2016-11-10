@@ -1,5 +1,6 @@
 package visitor.nodes.util;
 
+import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.IdentifierObj;
@@ -13,11 +14,11 @@ import visitor.nodes.ExprNode;
 
 import java.util.List;
 
-public class AssignRhsNode extends Node {
+public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     private TypeObj type;
 
     // assignRhs: expr
-    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode rhs) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, ExprNode rhs) {
         super(currentST, ctx);
 
         if (!rhs.hasErrors()) {
@@ -27,7 +28,7 @@ public class AssignRhsNode extends Node {
     }
 
     // assignRhs: arrayLiteral
-    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, List<ExprNode> arrayArgs) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, List<ExprNode> arrayArgs) {
         super(currentST, ctx);
 
         // TODO: should implement case where is empty
@@ -46,7 +47,7 @@ public class AssignRhsNode extends Node {
     }
 
     // assignRhs: NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
-    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode first, ExprNode second) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, ExprNode first, ExprNode second) {
         super(currentST, ctx);
         if (!first.hasErrors() && !second.hasErrors()) {
             assert(first.getType() != null): "AssignRhsNode: first should have a type";
@@ -57,7 +58,7 @@ public class AssignRhsNode extends Node {
     }
 
     // assignRhs: pairElem
-    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, PairElemNode pairElem) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, PairElemNode pairElem) {
         super(currentST, ctx);
         if (!pairElem.hasErrors()) {
             assert(pairElem.getType() != null): "AssignRhsNode: pairElem should have a type";
@@ -66,7 +67,7 @@ public class AssignRhsNode extends Node {
     }
 
     // CALL_FUNC IDENT OPEN_PARENTHESES argList? CLOSE_PARENTHESES
-    public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, List<ExprNode> args, String ident) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, List<ExprNode> args, String ident) {
         super(currentST, ctx);
 
         IdentifierObj obj = currentST.lookupAll(ident);

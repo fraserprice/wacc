@@ -1,5 +1,6 @@
 package visitor.nodes.expr;
 
+import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 
 // TODO
-public class UnaryOpNode extends ExprNode {
+public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
     private ExprNode argument;
     private String operator;
     private static final Map<String, TypeObj> operatorToType = new HashMap<String, TypeObj>() {{
@@ -26,7 +27,7 @@ public class UnaryOpNode extends ExprNode {
         put("ord", new IntObj());
     }};
 
-    public UnaryOpNode(SymbolTable currentST, ParserRuleContext ctx, String op, ExprNode argument) {
+    public UnaryOpNode(SymbolTable currentST, WACCParser.ExprContext ctx, String op, ExprNode argument) {
         super(currentST, ctx);
         this.argument = argument;
         this.operator = op;

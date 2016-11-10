@@ -1,5 +1,6 @@
 package visitor.nodes.util;
 
+import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
@@ -8,11 +9,11 @@ import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.ExprNode;
 
-public class PairElemNode extends Node {
+public class PairElemNode extends Node<WACCParser.PairElemContext> {
     private TypeObj type;
     private ExprNode expr;
 
-    public PairElemNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode expr) {
+    public PairElemNode(SymbolTable currentST, WACCParser.PairElemContext ctx, ExprNode expr) {
         super(currentST, ctx);
 
         if (!expr.hasErrors()) {

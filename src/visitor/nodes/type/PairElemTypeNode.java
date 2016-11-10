@@ -1,5 +1,6 @@
 package visitor.nodes.type;
 
+import antlr.WACCParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
@@ -8,23 +9,23 @@ import symobjects.identifierobj.typeobj.TyplessPairObj;
 import visitor.Node;
 
 // TODO
-public class PairElemTypeNode extends Node {
+public class PairElemTypeNode extends Node<WACCParser.PairElemTypeContext> {
     private TypeObj type;
 
     // pairElemType: baseType
-    public PairElemTypeNode(SymbolTable currentST, ParserRuleContext ctx, BaseTypeNode baseType) {
+    public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx, BaseTypeNode baseType) {
         super(currentST, ctx);
         type = baseType.getType();
     }
 
     // pairElemType: type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
-    public PairElemTypeNode(SymbolTable currentST, ParserRuleContext ctx, TypeNode type) {
+    public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx, TypeNode type) {
         super(currentST, ctx);
         this.type = new ArrayObj(type.getType());
     }
 
     // pairElemType: PAIR
-    public PairElemTypeNode(SymbolTable currentST, ParserRuleContext ctx) {
+    public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx) {
         super(currentST, ctx);
         this.type = new TyplessPairObj();
     }
