@@ -31,4 +31,16 @@ public class PairObj extends TypeObj {
         final StringBuffer sb = new StringBuffer("pair<" + type1 + ", " + type2 + ">");
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PairObj)) {
+            return false;
+        }
+
+        PairObj pairObj = (PairObj) obj;
+
+        return (type1.equals(pairObj.getType1()) && type2.equals(pairObj.getType2())) ||
+                (type1 == null && type2 == null) || (pairObj.getType1() == null && pairObj.getType2() == null);
+    }
 }

@@ -8,4 +8,9 @@ public class BoolObj extends ScalarObj {
     public String toString() {
         return "bool";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof BoolObj;
+    }
 }

@@ -28,11 +28,40 @@ public class ArrayObj extends TypeObj {
         return elementsNo;
     }
 
+    public TypeObj getTypeOfDim(int number) {
+        TypeObj current = this;
+
+        while (current instanceof ArrayObj) {
+            current = ((ArrayObj) current).getType();
+            number--;
+            if (number == 0) {
+                break;
+            }
+        }
+
+        if (number == 0) {
+            return current;
+        }
+
+        return null;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("array: [");
         sb.append(type).append(" ");
         sb.append("], elementsNo=").append(elementsNo);
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ArrayObj)) {
+            return false;
+        }
+
+        ArrayObj other = (ArrayObj) obj;
+
+        return type.equals(other.getType());
     }
 }
