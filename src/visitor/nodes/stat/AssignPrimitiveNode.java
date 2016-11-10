@@ -31,7 +31,7 @@ public class AssignPrimitiveNode extends StatNode {
         assert (rhs != null): "AssignPrimitiveNode: rhs can't be null";
         assert (rhs.getType() != null): "AssignPrimitiveNode: rhs should have a type";
 
-        if (IdentifierObj.isValidIdentifierName(ident)) {
+        if (!IdentifierObj.isValidIdentifierName(ident)) {
             addSemanticError(CompileTimeError.INVALID_VARIABLE_NAME);
             return;
         }

@@ -29,6 +29,7 @@ public class FunctionNode extends Node {
     }
 
     private void check() {
+        // TODO: check for if as well and statBlock
         // last statement is either exit or return
         StatNode current = body;
         while (current instanceof CompositionNode) {
