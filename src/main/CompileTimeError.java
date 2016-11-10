@@ -1,16 +1,10 @@
 package main;
 
-import org.antlr.v4.runtime.ParserRuleContext;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import antlr.WACCParser;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public enum CompileTimeError {
-    NONE,
     INTEGER_OVERFLOW,
     TYPE_MISMATCH_ERROR,
     RETURN_STATEMENT_MISSING_FROM_LAST_LINE,
@@ -35,56 +29,87 @@ public enum CompileTimeError {
     PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE,
     INVALID_PARAMETER_USE;
 
-    private static Map<CompileTimeError, String> map = mapInit();
     public static final int EXIT_SUCCESS = 0;
     public static final int EXIT_FILE_ERROR = 1;
     public static final int EXIT_SYNTAX_ERROR = 100;
     public static final int EXIT_SEMANTIC_ERROR = 200;
     public static boolean hasSemanticErrors = false;
-    public static final Set<String> invalidIdentifierVariableNames = Stream.of(
-            "'is'", "'call'", "'skip'", "'read'", "'free'", "'return'", "'exit'", "'print'",
-            "'println'", "'if'", "'then'", "'else'", "'fi'", "'while'", "'do'", "'done'",
-            "'begin'", "'end'", "';'", "'int'", "'bool'", "'char'", "'string'", "'newpair'",
-            "'pair'", "'fst'", "'snd'", "'len'", "'ord'", "'chr'","'null'")
-            .collect(Collectors.toCollection(HashSet::new));
-
-    // TODO Populate errors
-    private static Map<CompileTimeError, String> mapInit() {
-        Map<CompileTimeError, String> map = new HashMap<CompileTimeError, String>() {{
-            put(NONE, "");
-            put(INTEGER_OVERFLOW, "Integer Overflow");
-            put(RETURN_STATEMENT_MISSING_FROM_LAST_LINE, "Last statement from a function should be a return statement or an exit statement");
-            put(RETURN_TYPE_MISMATCH, "Function return type is incompatible with return type");
-            put(VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, "Variable not declared in this scope");
-            put(UNKNOWN_TYPE, "Unknown type");
-            put(FORBIDDEN_VARIABLE_NAME, "Forbidden variable name");
-            put(VARIABLE_ALREADY_DEFINED, "Variable is already defined");
-            put(INVALID_FREE_VALUE, "Can't free a non-pair variable");
-            put(INCOMPATIBLE_TYPE, "Incompatible types");
-            put(READ_ERROR, "Can't read a pair variable");
-            put(UNDEFINED_IDENTIFIER, "Variable was not previously declared");
-            put(NOT_VARIABLE, "Identifier should be a variable");
-            put(EXPECTED_ARRAY_CALL, "Expected array got something else");
-            put(INVALID_DIMENSION_NUMBER_ARRAY, "Array reference has different dimensionality from it's declaration");
-            put(INVALID_EXIT_ARGUMENT, "Exit statement takes an int as an argument");
-            put(INVALID_VARIABLE_NAME, "Illegal variable name");
-            put(INVALID_PAIR_ELEM_TYPE, "FST or SND should receive a Pair type");
-            put(FUNCTION_NOT_DEFINED, "Function is not defined");
-            put(NOT_A_FUNCTION, "Identifier is not a function");
-            put(WRONG_NUMBER_OF_PARAMS, "Number of params don't match");
-            put(PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE, "Type of param doesn't match");
-            put(INVALID_PARAMETER_USE, "Invalid declaration of parameter in function definition");
-        }};
-
-        return map;
-    }
+    public static final Set<String> invalidIdentifierVariableNames
+        = Arrays.stream(WACCParser.tokenNames)
+        .filter(token -> Character.isLowerCase(token.charAt(0)))
+        .collect(Collectors.toCollection(HashSet::new));
 
     public void printSemantic(int line, int characterPos, String... tokens) {
         String errorMessage;
 
         switch (this) {
-            case TYPE_MISMATCH_ERROR: errorMessage = "Type Mismatch: Type " + tokens[0] + " " + tokens[1] + "don't match";break;
-            default: errorMessage = null; //assert(false): this + " is not a semantic error";
+            case TYPE_MISMATCH_ERROR:
+                errorMessage = "Type Mismatch: Type " + tokens[0] + " " + tokens[1] + " don't match!";
+                break;
+            case RETURN_STATEMENT_MISSING_FROM_LAST_LINE:
+                errorMessage = "Last statement from function should be a return/exit statement!";
+                break;
+            case RETURN_TYPE_MISMATCH:
+                errorMessage = "Expected return type: " + tokens[0] + "; Actual return type: " + tokens[1];
+                break;
+            case VARIABLE_NOT_DECLARED_IN_THIS_SCOPE:
+                errorMessage = "Variable: " + tokens[0] + " not declared in scope!";
+                break;
+            case UNKNOWN_TYPE:
+                errorMessage = "Can't recognize symbol: " + tokens[0];
+                break;
+            case FORBIDDEN_VARIABLE_NAME:
+                errorMessage = "Forbidden variable name: " + tokens[0];
+                break;
+            case VARIABLE_ALREADY_DEFINED:
+                errorMessage = "Variable: " + tokens[0] + " already defined!";
+                break;
+            case INVALID_FREE_VALUE:
+                errorMessage = tokens[0] + " is an invalid free value; Expected: pair!";
+                break;
+            case INCOMPATIBLE_TYPE:
+                errorMessage = tokens[0] + " and " + tokens[1] + " have incompatible types!";
+                break;
+            case READ_ERROR:
+                errorMessage = "Reading a pair is not allowed! Expected: int, char, string, array!";
+                break;
+            case UNDEFINED_IDENTIFIER:
+                errorMessage = tokens[0] + " was not previously defined!";
+                break;
+            case NOT_VARIABLE:
+                errorMessage = tokens[0] + " should be a variable!";
+                break;
+            case EXPECTED_ARRAY_CALL:
+                errorMessage = "Expected: array; Actual: " + tokens[0];
+                break;
+            case INVALID_DIMENSION_NUMBER_ARRAY:
+                errorMessage = "Array reference has different dimensionality from it's declaration!";
+                break;
+            case INVALID_EXIT_ARGUMENT:
+                errorMessage = "Expected: int; Actual: " + tokens[0];
+                break;
+            case INVALID_VARIABLE_NAME:
+                errorMessage = "Illegal variable name for: " + tokens[0];
+                break;
+            case INVALID_PAIR_ELEM_TYPE:
+                errorMessage = "FST/SND expected argument: pair; Actual: " + tokens[0];
+                break;
+            case FUNCTION_NOT_DEFINED:
+                errorMessage = "Function not defined";
+                break;
+            case NOT_A_FUNCTION:
+                errorMessage = tokens[0] + " is not a function!";
+                break;
+            case WRONG_NUMBER_OF_PARAMS:
+                errorMessage = "Wrong number of parameters passed to function!";
+                break;
+            case PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE:
+                errorMessage = "Type of parameters don't match!";
+                break;
+            case INVALID_PARAMETER_USE:
+                errorMessage = "Invalid declaration of parameter in function definition!";
+                break;
+            default: errorMessage = null; assert(false): this + " is not a semantic error";
         }
 
         System.err.println("Error on line " + line + ":" + characterPos + " " + errorMessage);
@@ -92,6 +117,13 @@ public enum CompileTimeError {
     }
 
     public void printSyntactic(int line, int characterPos, String... tokens) {
-        System.err.println("Error on line " + line + ":" + characterPos + " " + map.get(this));
+        String errorMessage;
+
+        switch (this) {
+            case INTEGER_OVERFLOW: errorMessage = "Integer Overflow: " + tokens[0]; break;
+            default: errorMessage = null; assert(false): this + " is not a semantic error";
+        }
+
+        System.err.println("Error on line " + line + ":" + characterPos + " " + errorMessage);
     }
 }

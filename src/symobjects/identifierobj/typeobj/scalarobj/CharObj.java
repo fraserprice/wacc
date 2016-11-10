@@ -4,4 +4,9 @@ import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.ScalarObj;
 
 public class CharObj extends ScalarObj {
+
+    @Override
+    public String toString() {
+        return "CharObj";
+    }
 }

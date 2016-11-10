@@ -19,4 +19,12 @@ public class PairObj extends TypeObj {
     public TypeObj getType2() {
         return type2;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("PairObj: ");
+        sb.append("type1=").append(type1);
+        sb.append(", type2=").append(type2);
+        return sb.toString();
+    }
 }

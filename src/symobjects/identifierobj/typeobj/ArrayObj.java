@@ -22,4 +22,12 @@ public class ArrayObj extends TypeObj {
     public int getElementsNo() {
         return elementsNo;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ArrayObj: ");
+        sb.append("type=").append(type);
+        sb.append(", elementsNo=").append(elementsNo);
+        return sb.toString();
+    }
 }
