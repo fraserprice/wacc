@@ -39,12 +39,12 @@ public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
         obj = currentST.lookupAll(arrayElem.getIdent(), ArrayObj.class);
 
         if (obj == null) {
-            addSemanticError(CompileTimeError.VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, ctx.IDENT().toString());
+            System.out.println("HERE");
+            addSemanticError(CompileTimeError.VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, ctx.arrayElem().IDENT().getText());
             return;
         }
 
         if (!(obj instanceof ArrayObj)) {
-            System.out.println("here");
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
                 "expected", "array", "actual", obj.toString());
         }

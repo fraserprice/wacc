@@ -8,6 +8,7 @@ import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.typeobj.ArrayObj;
+import symobjects.identifierobj.typeobj.EmptyArrayObj;
 import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.ExprNode;
@@ -31,7 +32,7 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
         super(currentST, ctx);
 
         if (arrayArgs.isEmpty()) {
-            this.type = new ArrayObj();
+            this.type = new EmptyArrayObj();
             return;
         }
 

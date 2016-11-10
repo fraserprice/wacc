@@ -86,7 +86,7 @@ public enum CompileTimeError {
                 break;
             case INVALID_DIMENSION_NUMBER_ARRAY:
                 errorMessage = "Array reference has different dimensionality from " +
-                    "it's declaration! (expected: " + tokens[0] + ", actual: " + tokens[1] + ")";
+                    "it's declaration!";
                 break;
             case INVALID_EXIT_ARGUMENT:
                 errorMessage = "Expected: int; Actual: " + tokens[0];

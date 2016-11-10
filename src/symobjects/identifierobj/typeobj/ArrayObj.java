@@ -8,7 +8,7 @@ public class ArrayObj extends TypeObj {
 
     public ArrayObj() {
         this.elementsNo = 0;
-        this.type = new GenericObj();
+        this.type = new EmptyArrayObj();
     }
 
     public ArrayObj(TypeObj type) {
@@ -56,6 +56,10 @@ public class ArrayObj extends TypeObj {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj instanceof EmptyArrayObj) {
+            return true;
+        }
+
         if (!(obj instanceof ArrayObj)) {
             return false;
         }

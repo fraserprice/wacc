@@ -29,6 +29,11 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
     public void check() {
         //TODO: CHECK EXISTANCE OF varObj
         VariableObj varObj = currentST.lookupAll(ident, VariableObj.class);
+
+        if (varObj == null) {
+            return;
+        }
+
         TypeObj arrayType = varObj.getType();
 
         if (!(arrayType instanceof ArrayObj)) {
@@ -37,7 +42,17 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
         }
 
         ArrayObj arrayT = (ArrayObj) arrayType;
-        type = arrayT.getType();
+
+        // get dimensionality count by counting number of [
+        type = arrayT.getTypeOfDim(ctx.CLOSE_SQUARE_BRACKET().size());
+
+        if (type == null) {
+            addSemanticError(CompileTimeError.INVALID_DIMENSION_NUMBER_ARRAY);
+            return;
+        }
+
+
+        /*type = arrayT.getType();
 
         TypeObj arrayEntry = arrayT;
         int dimensionCount = 0;
@@ -51,7 +66,7 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
             addSemanticError(CompileTimeError.INVALID_DIMENSION_NUMBER_ARRAY,
                                 "" + dimensionCount, "" + exprList.size());
             return;
-        }
+        }*/
 
         for(ExprNode expr : exprList) {
             if (expr == null) {
