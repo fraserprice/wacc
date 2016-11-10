@@ -48,6 +48,15 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
         if (rhs == null) {
             return;
         }
+
+        if (lhs.getType() == null) {
+            return;
+        }
+
+        if (rhs.getType() == null) {
+            return;
+        }
+
         TypeObj lhsType = lhs.getType();
         TypeObj rhsType = rhs.getType();
 
