@@ -10,9 +10,12 @@ import visitor.nodes.StatNode;
 
 public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
 
+    private StatNode statNode;
+
     public WhileNode(SymbolTable currentST, WACCParser.WhileStatContext ctx, ExprNode exprNode, StatNode statNode) {
         super(currentST, ctx);
         checkWhileCondition(exprNode);
+        this.statNode = statNode;
     }
 
     private void checkWhileCondition(ExprNode exprNode) {
@@ -28,4 +31,9 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
                 "while condition", "bool", "actual", exprNode.getType().toString());
         }
     }
+
+    public StatNode getStatNode() {
+        return statNode;
+    }
+
 }

@@ -10,9 +10,14 @@ import visitor.nodes.StatNode;
 
 public class IfNode extends StatNode<WACCParser.IfStatContext> {
 
+    private StatNode thenStat;
+    private StatNode elseStat;
+
     public IfNode(SymbolTable currentST, WACCParser.IfStatContext ctx, ExprNode exprNode, StatNode thenStat, StatNode elseStat) {
         super(currentST, ctx);
         checkIfNode(exprNode);
+        this.elseStat = elseStat;
+        this.thenStat = thenStat;
     }
 
     private void checkIfNode(ExprNode exprNode) {
@@ -27,5 +32,13 @@ public class IfNode extends StatNode<WACCParser.IfStatContext> {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
                 "If statement", "bool", "actual", exprNode.getType().toString());
         }
+    }
+
+    public StatNode getThenBlock() {
+        return thenStat;
+    }
+
+    public StatNode getElseBlock() {
+        return elseStat;
     }
 }
