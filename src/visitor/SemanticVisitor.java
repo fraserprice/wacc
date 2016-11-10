@@ -242,7 +242,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
         if (ctx.MULTIPLY() != null) {
             return new BinOpNode(currentST, ctx, lhs, ctx.MULTIPLY().getText(), rhs);
-        } else if (ctx.DIVISION().getText() != null) {
+        } else if (ctx.DIVISION() != null) {
             return new BinOpNode(currentST, ctx, lhs, ctx.DIVISION().getText(), rhs);
         } else {
             return new BinOpNode(currentST, ctx, lhs, ctx.MODULO().getText(), rhs);
