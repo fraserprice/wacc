@@ -7,7 +7,6 @@ import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 
-// TODO
 public class PairElemTypeNode extends Node<WACCParser.PairElemTypeContext> {
     private TypeObj type;
 

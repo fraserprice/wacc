@@ -59,6 +59,37 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         return (StatNode) visit(ctx);
     }
 
+    private void parseFunctions(@NotNull WACCParser.ProgramContext ctx) {
+        currentST.add("int", new IntObj());
+        currentST.add("bool", new BoolObj());
+        currentST.add("char", new CharObj());
+        currentST.add("null", new PairObj());
+        currentST.add("string", new ArrayObj(new CharObj()));
+        for (WACCParser.FuncContext fCtx : ctx.func()) {
+            createChildST();
+            SymbolTable functionScope = currentST;
+            TypeNode returnType = visitType(fCtx.type());
+            List<ParamNode> params = fCtx.param().stream()
+                    .map(p -> (ParamNode) visit(p))
+                    .collect(Collectors.toList());
+
+            List<VariableObj> paramsObj = params.stream().map(ParamNode::getObj).collect(Collectors.toList());
+            closeCurrentScope();
+            currentST.add(fCtx.IDENT().getText(), new FunctionObj(currentST, functionScope, returnType.getType(), paramsObj));
+        }
+    }
+
+    @Override
+    public ProgramNode visitProgram(@NotNull WACCParser.ProgramContext ctx) {
+        createChildST();
+        parseFunctions(ctx);
+        createChildST();
+        List<FunctionNode> functionNodes = ctx.func().stream()
+                .map(f -> visitFunc(f))
+                .collect(Collectors.toList());
+        return new ProgramNode(currentST, ctx, functionNodes, visitStatNode(ctx.stat()));
+    }
+
     @Override
     public ReturnNode visitReturnStat(@NotNull WACCParser.ReturnStatContext ctx) {
         return new ReturnNode(currentST, ctx, visitExprNodes(ctx.expr()));
@@ -102,20 +133,6 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         } else {
             return new AssignLhsNode(currentST, ctx, visitPairElem(ctx.pairElem()));
         }
-    }
-
-    @Override
-    public ProgramNode visitProgram(@NotNull WACCParser.ProgramContext ctx) {
-        createChildST();
-        currentST.add("int", new IntObj());
-        currentST.add("bool", new BoolObj());
-        currentST.add("char", new CharObj());
-        currentST.add("null", new PairObj());
-        currentST.add("string", new ArrayObj(new CharObj()));
-        List<FunctionNode> functionNodes = ctx.func().stream()
-                                            .map(f -> visitFunc(f))
-                                            .collect(Collectors.toList());
-        return new ProgramNode(currentST, ctx, functionNodes, visitStatNode(ctx.stat()));
     }
 
     @Override
@@ -374,19 +391,14 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public FunctionNode visitFunc(@NotNull WACCParser.FuncContext ctx) {
-        SymbolTable previous = currentST;
-        createChildST();
-        TypeNode returnType = visitType(ctx.type());
-        List<ParamNode> params = ctx.param().stream()
-                                .map(p -> (ParamNode) visit(p))
-                                .collect(Collectors.toList());
-
-        List<VariableObj> paramsObj = params.stream().map(ParamNode::getObj).collect(Collectors.toList());
-        previous.add(ctx.IDENT().getText(), new FunctionObj(previous, returnType.getType(), paramsObj));
-
+        SymbolTable previousST = currentST;
+        FunctionObj fObj = currentST.lookupAll(ctx.IDENT().getText(), FunctionObj.class);
+        assert (fObj != null): "Should always find a function object";
+        currentST = fObj.getFunctionScope();
         StatNode statBlock = visitStatNode(ctx.stat());
-        closeCurrentScope();
-        return new FunctionNode(currentST, ctx, returnType, params, statBlock);
+        currentST = previousST;
+
+        return new FunctionNode(currentST, ctx, fObj, statBlock);
     }
 
     @Override

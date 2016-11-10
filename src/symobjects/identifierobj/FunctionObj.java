@@ -8,10 +8,12 @@ import java.util.List;
 public class FunctionObj extends IdentifierObj {
     private TypeObj returnType;
     private SymbolTable currentST;
+    private SymbolTable functionScope;
     private List<VariableObj> params;
 
-    public FunctionObj(SymbolTable currentST, TypeObj returnType, List<VariableObj> params) {
+    public FunctionObj(SymbolTable currentST, SymbolTable functionScope, TypeObj returnType, List<VariableObj> params) {
         this.returnType = returnType;
+        this.functionScope = functionScope;
         this.currentST = currentST;
         this.params = params;
     }
@@ -28,8 +30,12 @@ public class FunctionObj extends IdentifierObj {
         return params;
     }
 
+    public SymbolTable getFunctionScope() {
+        return functionScope;
+    }
+
     @Override
     public String toString() {
-        return "function";
+        return returnType + " function";
     }
 }

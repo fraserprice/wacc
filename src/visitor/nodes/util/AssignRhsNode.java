@@ -7,12 +7,14 @@ import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.TypeObj;
+import symobjects.identifierobj.VariableObj;
 import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.EmptyArrayObj;
 import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.ExprNode;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
@@ -71,31 +73,27 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, List<ExprNode> args, String ident) {
         super(currentST, ctx);
 
-        FunctionObj obj = currentST.lookupAll(ident, FunctionObj.class);
+        FunctionObj func = currentST.lookupAll(ident, FunctionObj.class);
 
-        if (obj == null) {
+        if (func == null) {
             addSemanticError(CompileTimeError.FUNCTION_NOT_DEFINED, ident);
             return;
         }
 
-        if (!(obj instanceof FunctionObj)) {
-            addSemanticError(CompileTimeError.NOT_A_FUNCTION, ident);
+        type = func.getReturnType();
+
+        if (func.getParams().size() != args.size()) {
+            addSemanticError(CompileTimeError.WRONG_NUMBER_OF_PARAMS, "" + func.getParams().size(), "" + args.size());
             return;
         }
 
-        FunctionObj funcObj = (FunctionObj) obj;
+        for (int i = 0; i < func.getParams().size(); i++) {
+            TypeObj param = func.getParams().get(i).getType();
+            TypeObj argument = args.get(i).getType();
 
-        this.type = funcObj.getReturnType();
-
-        if (args.size() != funcObj.getParams().size()) {
-            addSemanticError(CompileTimeError.WRONG_NUMBER_OF_PARAMS, "" + funcObj.getParams().size(), "" + args.size());
-            return;
-        }
-
-        for (int i = 0; i < args.size(); i++) {
-            if (!args.get(i).getType().equals(funcObj.getParams().get(i).getType())) {
+            if (!param.equals(argument)) {
                 addSemanticError(CompileTimeError.PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE, "" + i,
-                    ident, funcObj.getParams().get(i).getType().toString(), args.get(i).getType().toString());
+                        ident, param.toString(), argument.toString());
             }
         }
     }

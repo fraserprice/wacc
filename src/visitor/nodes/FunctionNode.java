@@ -19,16 +19,13 @@ import java.util.stream.Collectors;
 
 public class FunctionNode extends Node<WACCParser.FuncContext> {
 
-    private TypeObj returnType;
-    private List<ParamNode> paramList;
+    private FunctionObj fObj;
     private StatNode body;
     private String name;
 
-    public FunctionNode(SymbolTable currentST, WACCParser.FuncContext ctx, TypeNode typeNode,
-                        List<ParamNode> paramNodeList, StatNode statNode) {
+    public FunctionNode(SymbolTable currentST, WACCParser.FuncContext ctx, FunctionObj fObj, StatNode statNode) {
         super(currentST, ctx);
-        this.returnType = typeNode.getType();
-        this.paramList = paramNodeList;
+        this.fObj = fObj;
         this.body = statNode;
         this.name = ctx.IDENT().getText();
         check();
@@ -46,8 +43,9 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
 
         for (ReturnNode retStat: returnStatList) {
             TypeObj returnStatementType = retStat.getReturnType();
-            if (!returnStatementType.equals(returnType)) {
-                addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH, returnType.toString(), returnStatementType.toString());
+            if (!returnStatementType.equals(fObj.getReturnType())) {
+                addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH,
+                                                fObj.getReturnType().toString(), returnStatementType.toString());
                 return;
             }
         }
