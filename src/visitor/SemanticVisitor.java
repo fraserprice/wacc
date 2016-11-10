@@ -239,14 +239,15 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     public Node visitBinMulDivModExpr(@NotNull WACCParser.BinMulDivModExprContext ctx) {
         ExprNode lhs = (ExprNode) visit(ctx.expr(0));
         ExprNode rhs = (ExprNode) visit(ctx.expr(1));
-
+        BinOpNode binOpNode = null;
         if (ctx.MULTIPLY() != null) {
-            return new BinOpNode(currentST, ctx, lhs, ctx.MULTIPLY().getText(), rhs);
-        } else if (ctx.DIVISION().getText() != null) {
-            return new BinOpNode(currentST, ctx, lhs, ctx.DIVISION().getText(), rhs);
-        } else {
-            return new BinOpNode(currentST, ctx, lhs, ctx.MODULO().getText(), rhs);
+            binOpNode = new BinOpNode(currentST, ctx, lhs, ctx.MULTIPLY().getText(), rhs);
+        } else if (ctx.DIVISION() != null) {
+            binOpNode = new BinOpNode(currentST, ctx, lhs, ctx.DIVISION().getText(), rhs);
+        } else if (ctx.MODULO() != null) {
+            binOpNode = new BinOpNode(currentST, ctx, lhs, ctx.MODULO().getText(), rhs);
         }
+        return binOpNode;
     }
 
     @Override
