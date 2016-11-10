@@ -19,4 +19,9 @@ public class VariableObj extends IdentifierObj {
     public SymbolTable getCurrentST() {
         return currentST;
     }
+
+    @Override
+    public String toString() {
+        return type.toString() + " variable";
+    }
 }

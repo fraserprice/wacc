@@ -25,7 +25,7 @@ public class ArrayObj extends TypeObj {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("ArrayObj: ");
+        final StringBuffer sb = new StringBuffer("array: ");
         sb.append("type=").append(type);
         sb.append(", elementsNo=").append(elementsNo);
         return sb.toString();

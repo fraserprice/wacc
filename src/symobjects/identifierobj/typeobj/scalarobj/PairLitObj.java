@@ -7,6 +7,6 @@ public class PairLitObj extends ScalarObj {
 
     @Override
     public String toString() {
-        return "PairLitObj";
+        return "null";
     }
 }

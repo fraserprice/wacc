@@ -27,4 +27,9 @@ public class FunctionObj extends IdentifierObj {
     public List<VariableObj> getParams() {
         return params;
     }
+
+    @Override
+    public String toString() {
+        return "function";
+    }
 }

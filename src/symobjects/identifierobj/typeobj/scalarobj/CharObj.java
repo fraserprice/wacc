@@ -7,6 +7,6 @@ public class CharObj extends ScalarObj {
 
     @Override
     public String toString() {
-        return "CharObj";
+        return "char";
     }
 }

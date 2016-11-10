@@ -6,6 +6,6 @@ public class IntObj extends ScalarObj {
 
     @Override
     public String toString() {
-        return "IntObj";
+        return "int";
     }
 }

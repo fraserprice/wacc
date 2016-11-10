@@ -22,9 +22,7 @@ public class PairObj extends TypeObj {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("PairObj: ");
-        sb.append("type1=").append(type1);
-        sb.append(", type2=").append(type2);
+        final StringBuffer sb = new StringBuffer("pair<" + type1 + ", " + type2 + ">");
         return sb.toString();
     }
 }
