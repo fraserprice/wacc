@@ -8,6 +8,7 @@ import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.VariableObj;
 import symobjects.identifierobj.typeobj.ArrayObj;
+import symobjects.identifierobj.typeobj.PairObj;
 import symobjects.identifierobj.typeobj.scalarobj.*;
 import visitor.nodes.ExprNode;
 import visitor.nodes.FunctionNode;
@@ -109,7 +110,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         currentST.add("int", new IntObj());
         currentST.add("bool", new BoolObj());
         currentST.add("char", new CharObj());
-        currentST.add("pair", new PairLitObj());
+        currentST.add("null", new PairObj());
         currentST.add("string", new ArrayObj((CharObj) currentST.lookupAll("char")));
         List<FunctionNode> functionNodes = ctx.func().stream()
                                             .map(f -> visitFunc(f))

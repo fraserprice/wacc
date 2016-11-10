@@ -1,11 +1,10 @@
 package visitor.nodes.type;
 
 import antlr.WACCParser;
-import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.typeobj.ArrayObj;
-import symobjects.identifierobj.typeobj.TyplessPairObj;
+import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 
 // TODO
@@ -27,7 +26,7 @@ public class PairElemTypeNode extends Node<WACCParser.PairElemTypeContext> {
     // pairElemType: PAIR
     public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx) {
         super(currentST, ctx);
-        this.type = new TyplessPairObj();
+        this.type = new PairObj();
     }
 
     public TypeObj getType() {

@@ -2,10 +2,8 @@ package visitor.nodes.stat;
 
 import antlr.WACCParser;
 import main.CompileTimeError;
-import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.PairObj;
-import symobjects.identifierobj.typeobj.scalarobj.PairLitObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
 
