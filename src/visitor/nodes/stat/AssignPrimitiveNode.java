@@ -46,6 +46,7 @@ public class AssignPrimitiveNode extends StatNode {
             return;
         }
 
-        currentST.add(ident, new VariableObj(currentST, type));
+        // we don't add the type because it's size is 0
+        currentST.add(ident, new VariableObj(currentST, rhs.getType()));
     }
 }

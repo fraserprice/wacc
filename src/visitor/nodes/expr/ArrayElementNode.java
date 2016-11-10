@@ -64,7 +64,7 @@ public class ArrayElementNode extends ExprNode {
             assert(expr != null): "ArrayElem: expr can't be null";
             assert(expr.getType() != null): "ArrayElem: type of expr can't be null";
 
-            if(!expr.getType().equals(new IntObj(currentST))) {
+            if(!expr.getType().equals(new IntObj())) {
                 addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
             }
         }

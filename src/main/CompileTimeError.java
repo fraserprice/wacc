@@ -61,7 +61,7 @@ public enum CompileTimeError {
             put(FORBIDDEN_VARIABLE_NAME, "Forbidden variable name");
             put(VARIABLE_ALREADY_DEFINED, "Variable is already defined");
             put(INVALID_FREE_VALUE, "Can't free a non-pair variable");
-            put(INCOMPATIBLE_TYPE, "Incompatible types to compare");
+            put(INCOMPATIBLE_TYPE, "Incompatible types");
             put(READ_ERROR, "Can't read a pair variable");
             put(UNDEFINED_IDENTIFIER, "Variable was not previously declared");
             put(NOT_VARIABLE, "Identifier should be a variable");

@@ -1,15 +1,16 @@
 package symobjects.identifierobj.typeobj;
 
-import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
 
 public class ArrayObj extends TypeObj {
     private TypeObj type;
     private int elementsNo;
 
-    public ArrayObj(SymbolTable identifierST, TypeObj type, int elementsNo) {
+    public ArrayObj(TypeObj type) {
+        this.type = type;
+    }
 
-        super(identifierST);
+    public ArrayObj(TypeObj type, int elementsNo) {
         this.type = type;
         this.elementsNo = elementsNo;
     }
@@ -18,15 +19,7 @@ public class ArrayObj extends TypeObj {
         return type;
     }
 
-    public void setType(TypeObj type) {
-        this.type = type;
-    }
-
     public int getElementsNo() {
         return elementsNo;
-    }
-
-    public void setElementsNo(int elementsNo) {
-        this.elementsNo = elementsNo;
     }
 }

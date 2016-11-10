@@ -22,7 +22,7 @@ public class ExitNode extends StatNode {
     private void check() {
         assert (expr != null): "ExitNode: expr should not be null";
         assert (expr.getType() != null): "ExitNode: expr should have a type";
-        if (!expr.getType().equals(new IntObj(currentST))) {
+        if (!expr.getType().equals(new IntObj())) {
             addSemanticError(CompileTimeError.INVALID_EXIT_ARGUMENT);
         }
     }

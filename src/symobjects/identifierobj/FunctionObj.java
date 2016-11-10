@@ -7,11 +7,12 @@ import java.util.List;
 
 public class FunctionObj extends IdentifierObj {
     private TypeObj returnType;
-    private List<ParamObj> params;
+    private SymbolTable currentST;
+    private List<VariableObj> params;
 
-    public FunctionObj(SymbolTable identifierST, TypeObj returnType, List<ParamObj> params) {
-        super(identifierST);
+    public FunctionObj(SymbolTable currentST, TypeObj returnType, List<VariableObj> params) {
         this.returnType = returnType;
+        this.currentST = currentST;
         this.params = params;
     }
 
@@ -19,15 +20,11 @@ public class FunctionObj extends IdentifierObj {
         return returnType;
     }
 
-    public void setReturnType(TypeObj returnType) {
-        this.returnType = returnType;
+    public SymbolTable getCurrentST() {
+        return currentST;
     }
 
-    public List<ParamObj> getParams() {
+    public List<VariableObj> getParams() {
         return params;
-    }
-
-    public void setParams(List<ParamObj> params) {
-        this.params = params;
     }
 }

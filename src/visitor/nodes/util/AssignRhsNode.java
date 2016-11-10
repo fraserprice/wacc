@@ -6,6 +6,7 @@ import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.TypeObj;
+import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.ExprNode;
@@ -40,7 +41,8 @@ public class AssignRhsNode extends Node {
             addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
             return;
         }
-        this.type = arrayArgs.get(0).getType();
+
+        this.type = new ArrayObj(arrayArgs.get(0).getType(), arrayArgs.size());
     }
 
     // assignRhs: NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
@@ -50,7 +52,7 @@ public class AssignRhsNode extends Node {
             assert(first.getType() != null): "AssignRhsNode: first should have a type";
             assert(second.getType() != null): "AssignRhsNode: second should have a type";
 
-            this.type = new PairObj(currentST, first.getType(), second.getType());
+            this.type = new PairObj(first.getType(), second.getType());
         }
     }
 

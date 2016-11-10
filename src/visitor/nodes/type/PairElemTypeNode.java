@@ -3,6 +3,7 @@ package visitor.nodes.type;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
+import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.TyplessPairObj;
 import visitor.Node;
 
@@ -19,13 +20,13 @@ public class PairElemTypeNode extends Node {
     // pairElemType: type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
     public PairElemTypeNode(SymbolTable currentST, ParserRuleContext ctx, TypeNode type) {
         super(currentST, ctx);
-        this.type = type.getType();
+        this.type = new ArrayObj(type.getType());
     }
 
     // pairElemType: PAIR
     public PairElemTypeNode(SymbolTable currentST, ParserRuleContext ctx) {
         super(currentST, ctx);
-        this.type = new TyplessPairObj(currentST);
+        this.type = new TyplessPairObj();
     }
 
     public TypeObj getType() {

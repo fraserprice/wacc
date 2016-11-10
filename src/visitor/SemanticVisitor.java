@@ -95,11 +95,11 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     @Override
     public Node visitProgram(@NotNull WACCParser.ProgramContext ctx) {
         createChildST();
-        currentST.add("int", new IntObj(currentST));
-        currentST.add("bool", new BoolObj(currentST));
-        currentST.add("char", new CharObj(currentST));
-        currentST.add("pair", new PairLitObj(currentST));
-        currentST.add("string", new StringObj(currentST));
+        currentST.add("int", new IntObj());
+        currentST.add("bool", new BoolObj());
+        currentST.add("char", new CharObj());
+        currentST.add("pair", new PairLitObj());
+        currentST.add("string", new StringObj());
         List<FunctionNode> functionNodes = ctx.func().stream()
                                             .map(f -> (FunctionNode) visit(f))
                                             .collect(Collectors.toList());

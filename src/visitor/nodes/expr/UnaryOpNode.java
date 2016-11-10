@@ -18,12 +18,12 @@ public class UnaryOpNode extends ExprNode {
     private ExprNode argument;
     private String operator;
     private static final Map<String, TypeObj> operatorToType = new HashMap<String, TypeObj>() {{
-        put("+", new IntObj(null));
-        put("-", new IntObj(null));
-        put("!", new BoolObj(null));
-        put("len", new IntObj(null));
-        put("chr", new CharObj(null));
-        put("ord", new IntObj(null));
+        put("+", new IntObj());
+        put("-", new IntObj());
+        put("!", new BoolObj());
+        put("len", new IntObj());
+        put("chr", new CharObj());
+        put("ord", new IntObj());
     }};
 
     public UnaryOpNode(SymbolTable currentST, ParserRuleContext ctx, String op, ExprNode argument) {

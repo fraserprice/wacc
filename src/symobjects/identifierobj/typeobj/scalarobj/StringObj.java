@@ -5,9 +5,4 @@ import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.typeobj.ScalarObj;
 
 public class StringObj extends ScalarObj {
-
-    public StringObj(SymbolTable identifierST) {
-        super(identifierST);
-    }
-
 }

@@ -9,7 +9,7 @@ import visitor.nodes.expr.LiteralNode;
 public class IntNode extends LiteralNode {
     public IntNode(SymbolTable currentST, ParserRuleContext ctx) {
         super(currentST, ctx);
-        this.type = new IntObj(currentST);
+        this.type = (IntObj) currentST.lookupAll("int");
         check(ctx.getText());
     }
 
