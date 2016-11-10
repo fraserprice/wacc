@@ -1,3 +1,6 @@
 begin
-	print 11111111111111
+	int func() is
+		return 1 + 'c'
+	end
+	int a = call func()
 end

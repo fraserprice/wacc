@@ -66,6 +66,10 @@ public enum CompileTimeError {
                 errorMessage = tokens[0] + " is an invalid free value; Expected: pair!";
                 break;
             case INCOMPATIBLE_TYPE:
+                if (tokens.length < 4) {
+                    System.out.println(tokens[0] + " " + tokens[1] + " " + tokens[2]);
+                    System.exit(0);
+                }
                 errorMessage = tokens[0] + " of type " + tokens[1] + " and " + tokens[2] + " of type " + tokens[3] + " have incompatible types!";
                 break;
             case READ_ERROR:
