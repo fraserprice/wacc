@@ -53,7 +53,6 @@ public enum CompileTimeError {
         Map<CompileTimeError, String> map = new HashMap<CompileTimeError, String>() {{
             put(NONE, "");
             put(INTEGER_OVERFLOW, "Integer Overflow");
-            put(TYPE_MISMATCH_ERROR, "Type Mismatch");
             put(RETURN_STATEMENT_MISSING_FROM_LAST_LINE, "Last statement from a function should be a return statement or an exit statement");
             put(RETURN_TYPE_MISMATCH, "Function return type is incompatible with return type");
             put(VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, "Variable not declared in this scope");
@@ -80,14 +79,19 @@ public enum CompileTimeError {
         return map;
     }
 
-    public void printSemantic(ParserRuleContext ctx) {
-        System.err.println("Error on line " + ctx.getStart().getLine()
-                + ":" + ctx.getStart().getCharPositionInLine() + " " + map.get(this));
+    public void printSemantic(int line, int characterPos, String... tokens) {
+        String errorMessage;
+
+        switch (this) {
+            case TYPE_MISMATCH_ERROR: errorMessage = "Type Mismatch: Type " + tokens[0] + " " + tokens[1] + "don't match";break;
+            default: errorMessage = null; assert(false): this + " is not a semantic error";
+        }
+
+        System.err.println("Error on line " + line + ":" + characterPos + " " + errorMessage);
         hasSemanticErrors = true;
     }
 
-    public void printSyntactic(ParserRuleContext ctx) {
-        System.err.println("Error on line " + ctx.getStart().getLine()
-                + ":" + ctx.getStart().getCharPositionInLine() + " " + map.get(this));
+    public void printSyntactic(int line, int characterPos, String... tokens) {
+        System.err.println("Error on line " + line + ":" + characterPos + " " + map.get(this));
     }
 }

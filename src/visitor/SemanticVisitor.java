@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.VariableObj;
+import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.scalarobj.*;
 import visitor.nodes.ExprNode;
 import visitor.nodes.FunctionNode;
@@ -101,7 +102,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         currentST.add("bool", new BoolObj());
         currentST.add("char", new CharObj());
         currentST.add("pair", new PairLitObj());
-        currentST.add("string", new StringObj());
+        currentST.add("string", new ArrayObj((CharObj) currentST.lookupAll("char")));
         List<FunctionNode> functionNodes = ctx.func().stream()
                                             .map(f -> (FunctionNode) visit(f))
                                             .collect(Collectors.toList());

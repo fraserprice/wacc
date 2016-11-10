@@ -34,14 +34,25 @@ public abstract class Node {
         return errors;
     }
 
-    protected void addSyntacticError(CompileTimeError error) {
+    protected void addSyntacticError(CompileTimeError error, String... tokens) {
         errors.add(error);
-        error.printSyntactic(ctx);
+        error.printSyntactic(ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(), tokens);
         System.exit(CompileTimeError.EXIT_SYNTAX_ERROR);
     }
 
-    protected void addSemanticError(CompileTimeError error) {
+    protected void addSemanticError(CompileTimeError error, String... tokens) {
         errors.add(error);
-        error.printSemantic(ctx);
+        error.printSemantic(ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(), tokens);
+    }
+
+    protected void addSyntacticError(int line, int characterPos, CompileTimeError error, String... tokens) {
+        errors.add(error);
+        error.printSyntactic(line, characterPos, tokens);
+        System.exit(CompileTimeError.EXIT_SYNTAX_ERROR);
+    }
+
+    protected void addSemanticError(int line, int characterPos, CompileTimeError error, String... tokens) {
+        errors.add(error);
+        error.printSemantic(line, characterPos, tokens);
     }
 }
