@@ -50,15 +50,23 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         currentST = currentST.getParent();
     }
 
+    private ExprNode visitExprNodes(@NotNull WACCParser.ExprContext ctx) {
+        return (ExprNode) visit(ctx);
+    }
+
+    private StatNode visitStatNode(@NotNull WACCParser.StatContext ctx) {
+        return (StatNode) visit(ctx);
+    }
+
     @Override
     public ReturnNode visitReturnStat(@NotNull WACCParser.ReturnStatContext ctx) {
-        return new ReturnNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
+        return new ReturnNode(currentST, ctx, visitExprNodes(ctx.expr()));
     }
 
     @Override
     public ArrayElementNode visitArrayElem(@NotNull WACCParser.ArrayElemContext ctx) {
         List<ExprNode> exprList = ctx.expr().stream()
-                .map(prc -> (ExprNode) visit(prc))
+                .map(prc -> visitExprNodes(prc))
                 .collect(Collectors.toList());
         return new ArrayElementNode(currentST, ctx, exprList);
     }
@@ -67,20 +75,20 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     public AssignRhsNode visitAssignRhs(@NotNull WACCParser.AssignRhsContext ctx) {
         if (ctx.OPEN_SQUARE_BRACKET() != null) {
             List<ExprNode> exprNodes = ctx.expr().stream()
-                                        .map(e -> (ExprNode) visit(e))
+                                        .map(e -> visitExprNodes(e))
                                         .collect(Collectors.toList());
             return new AssignRhsNode(currentST, ctx, exprNodes);
         } else if (ctx.NEWPAIR() != null) {
-            return new AssignRhsNode(currentST, ctx, (ExprNode) visit(ctx.expr(0)), (ExprNode) visit(ctx.expr(1)));
+            return new AssignRhsNode(currentST, ctx, visitExprNodes(ctx.expr(0)), visitExprNodes(ctx.expr(1)));
         } else if (ctx.pairElem() != null) {
             return new AssignRhsNode(currentST, ctx, visitPairElem(ctx.pairElem()));
         } else if (ctx.CALL_FUNC() != null) {
             List<ExprNode> args = ctx.expr().stream()
-                    .map(e -> (ExprNode) visit(e))
+                    .map(e -> visitExprNodes(e))
                     .collect(Collectors.toList());
             return new AssignRhsNode(currentST, ctx, args, ctx.IDENT().getText());
         } else {
-            return new AssignRhsNode(currentST, ctx, (ExprNode) visit(ctx.expr(0)));
+            return new AssignRhsNode(currentST, ctx, visitExprNodes(ctx.expr(0)));
         }
     }
 
@@ -104,9 +112,9 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         currentST.add("pair", new PairLitObj());
         currentST.add("string", new ArrayObj((CharObj) currentST.lookupAll("char")));
         List<FunctionNode> functionNodes = ctx.func().stream()
-                                            .map(f -> (FunctionNode) visit(f))
+                                            .map(f -> visitFunc(f))
                                             .collect(Collectors.toList());
-        return new ProgramNode(currentST, ctx, functionNodes, (StatNode) visit(ctx.stat()));
+        return new ProgramNode(currentST, ctx, functionNodes, visitStatNode(ctx.stat()));
     }
 
     @Override
@@ -141,7 +149,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public PrintlnNode visitPrintlnStat(@NotNull WACCParser.PrintlnStatContext ctx) {
-        return new PrintlnNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
+        return new PrintlnNode(currentST, ctx, visitExprNodes(ctx.expr()));
     }
 
     @Override
@@ -181,26 +189,26 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public CompositionNode visitCompositionStat(@NotNull WACCParser.CompositionStatContext ctx) {
-        return new CompositionNode(currentST, ctx, (StatNode) visit(ctx.stat(0)), (StatNode) visit(ctx.stat(1)));
+        return new CompositionNode(currentST, ctx, visitStatNode(ctx.stat(0)), visitStatNode(ctx.stat(1)));
     }
 
     @Override
     public PrintNode visitPrintStat(@NotNull WACCParser.PrintStatContext ctx) {
-        return new PrintNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
+        return new PrintNode(currentST, ctx, visitExprNodes(ctx.expr()));
     }
 
     @Override
     public BinOpNode visitBinAndExpr(@NotNull WACCParser.BinAndExprContext ctx) {
-        ExprNode lhs = (ExprNode) visit(ctx.expr(0));
-        ExprNode rhs = (ExprNode) visit(ctx.expr(1));
+        ExprNode lhs = visitExprNodes(ctx.expr(0));
+        ExprNode rhs = visitExprNodes(ctx.expr(1));
 
         return new BinOpNode(currentST, ctx, lhs, ctx.AND().getText(), rhs);
     }
 
     @Override
     public BinOpNode visitBinEqExpr(@NotNull WACCParser.BinEqExprContext ctx) {
-        ExprNode lhs = (ExprNode) visit(ctx.expr(0));
-        ExprNode rhs = (ExprNode) visit(ctx.expr(1));
+        ExprNode lhs = visitExprNodes(ctx.expr(0));
+        ExprNode rhs = visitExprNodes(ctx.expr(1));
 
         if (ctx.EQ() != null) {
             return new BinOpNode(currentST, ctx, lhs, ctx.EQ().getText(), rhs);
@@ -216,16 +224,16 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public BinOpNode visitBinOrExpr(@NotNull WACCParser.BinOrExprContext ctx) {
-        ExprNode lhs = (ExprNode) visit(ctx.expr(0));
-        ExprNode rhs = (ExprNode) visit(ctx.expr(1));
+        ExprNode lhs = visitExprNodes(ctx.expr(0));
+        ExprNode rhs = visitExprNodes(ctx.expr(1));
 
         return new BinOpNode(currentST, ctx, lhs, ctx.OR().getText(), rhs);
     }
 
     @Override
     public BinOpNode visitBinCompExpr(@NotNull WACCParser.BinCompExprContext ctx) {
-        ExprNode lhs = (ExprNode) visit(ctx.expr(0));
-        ExprNode rhs = (ExprNode) visit(ctx.expr(1));
+        ExprNode lhs = visitExprNodes(ctx.expr(0));
+        ExprNode rhs = visitExprNodes(ctx.expr(1));
 
         if (ctx.GREATER() != null) {
             return new BinOpNode(currentST, ctx, lhs, ctx.GREATER().getText(), rhs);
@@ -240,8 +248,8 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public BinOpNode visitBinMulDivModExpr(@NotNull WACCParser.BinMulDivModExprContext ctx) {
-        ExprNode lhs = (ExprNode) visit(ctx.expr(0));
-        ExprNode rhs = (ExprNode) visit(ctx.expr(1));
+        ExprNode lhs = visitExprNodes(ctx.expr(0));
+        ExprNode rhs = visitExprNodes(ctx.expr(1));
 
         if (ctx.MULTIPLY() != null) {
             return new BinOpNode(currentST, ctx, lhs, ctx.MULTIPLY().getText(), rhs);
@@ -254,8 +262,8 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public BinOpNode visitBinPlusMinusExpr(@NotNull WACCParser.BinPlusMinusExprContext ctx) {
-        ExprNode lhs = (ExprNode) visit(ctx.expr(0));
-        ExprNode rhs = (ExprNode) visit(ctx.expr(1));
+        ExprNode lhs = visitExprNodes(ctx.expr(0));
+        ExprNode rhs = visitExprNodes(ctx.expr(1));
 
         if (ctx.PLUS() != null) {
             return new BinOpNode(currentST, ctx, lhs, ctx.PLUS().getText(), rhs);
@@ -287,43 +295,43 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         }
 
         if (ctx.MINUS() != null) {
-            return new UnaryOpNode(currentST, ctx, ctx.MINUS().getText(), (ExprNode) visit(ctx.expr()));
+            return new UnaryOpNode(currentST, ctx, ctx.MINUS().getText(), visitExprNodes(ctx.expr()));
         } else if (ctx.NOT() != null) {
-            return new UnaryOpNode(currentST, ctx, ctx.NOT().getText(), (ExprNode) visit(ctx.expr()));
+            return new UnaryOpNode(currentST, ctx, ctx.NOT().getText(), visitExprNodes(ctx.expr()));
         } else if (ctx.LEN() != null) {
-            return new UnaryOpNode(currentST, ctx, ctx.LEN().getText(), (ExprNode) visit(ctx.expr()));
+            return new UnaryOpNode(currentST, ctx, ctx.LEN().getText(), visitExprNodes(ctx.expr()));
         } else if (ctx.CHR() != null) {
-            return new UnaryOpNode(currentST, ctx, ctx.CHR().getText(), (ExprNode) visit(ctx.expr()));
+            return new UnaryOpNode(currentST, ctx, ctx.CHR().getText(), visitExprNodes(ctx.expr()));
         } else {
-            return new UnaryOpNode(currentST, ctx, ctx.ORD().getText(), (ExprNode) visit(ctx.expr()));
+            return new UnaryOpNode(currentST, ctx, ctx.ORD().getText(), visitExprNodes(ctx.expr()));
         }
     }
 
     @Override
     public ParenthesisNode visitParanthesisExpr(@NotNull WACCParser.ParanthesisExprContext ctx) {
-        return new ParenthesisNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
+        return new ParenthesisNode(currentST, ctx, visitExprNodes(ctx.expr()));
     }
 
     @Override
     public PairElemNode visitPairElem(@NotNull WACCParser.PairElemContext ctx) {
-        return new PairElemNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
+        return new PairElemNode(currentST, ctx, visitExprNodes(ctx.expr()));
     }
 
     @Override
     public ExitNode visitExitStat(@NotNull WACCParser.ExitStatContext ctx) {
-        return new ExitNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
+        return new ExitNode(currentST, ctx, visitExprNodes(ctx.expr()));
     }
 
     @Override
     public IfNode visitIfStat(@NotNull WACCParser.IfStatContext ctx) {
-        ExprNode exprBlock = (ExprNode) visit(ctx.expr());
+        ExprNode exprBlock = visitExprNodes(ctx.expr());
 
         createChildST();
-        StatNode thenBlock = (StatNode) visit(ctx.stat(0));
+        StatNode thenBlock = visitStatNode(ctx.stat(0));
         closeCurrentScope();
 
         createChildST();
-        StatNode elseBlock = (StatNode) visit(ctx.stat(1));
+        StatNode elseBlock = visitStatNode(ctx.stat(1));
         closeCurrentScope();
 
         return new IfNode(currentST, ctx, exprBlock, thenBlock, elseBlock);
@@ -331,7 +339,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public FreeNode visitFreeStat(@NotNull WACCParser.FreeStatContext ctx) {
-        return new FreeNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
+        return new FreeNode(currentST, ctx, visitExprNodes(ctx.expr()));
     }
 
     @Override
@@ -342,7 +350,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     @Override
     public WhileNode visitWhileStat(@NotNull WACCParser.WhileStatContext ctx) {
         createChildST();
-        WhileNode whileBlock = new WhileNode(currentST, ctx, (ExprNode) visit(ctx.expr()), (StatNode) visit(ctx.stat()));
+        WhileNode whileBlock = new WhileNode(currentST, ctx, visitExprNodes(ctx.expr()), visitStatNode(ctx.stat()));
         closeCurrentScope();
         return whileBlock;
     }
@@ -367,7 +375,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     public FunctionNode visitFunc(@NotNull WACCParser.FuncContext ctx) {
         SymbolTable previous = currentST;
         createChildST();
-        TypeNode returnType = (TypeNode) visit(ctx.type());
+        TypeNode returnType = visitType(ctx.type());
         List<ParamNode> params = ctx.param().stream()
                                 .map(p -> (ParamNode) visit(p))
                                 .collect(Collectors.toList());
@@ -375,7 +383,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         List<VariableObj> paramsObj = params.stream().map(ParamNode::getObj).collect(Collectors.toList());
         previous.add(ctx.IDENT().getText(), new FunctionObj(previous, returnType.getType(), paramsObj));
 
-        StatNode statBlock = (StatNode) visit(ctx.stat());
+        StatNode statBlock = visitStatNode(ctx.stat());
         closeCurrentScope();
         return new FunctionNode(currentST, ctx, returnType, params, statBlock);
     }
@@ -383,7 +391,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
     @Override
     public ScopeBlockNode visitScopeBlockStat(@NotNull WACCParser.ScopeBlockStatContext ctx) {
         createChildST();
-        ScopeBlockNode block = new ScopeBlockNode(currentST, ctx, (StatNode) visit(ctx.stat()));
+        ScopeBlockNode block = new ScopeBlockNode(currentST, ctx, visitStatNode(ctx.stat()));
         closeCurrentScope();
         return block;
     }
