@@ -35,7 +35,13 @@ public class PairElemNode extends Node<WACCParser.PairElemContext> {
             return;
         }
 
-        this.type = expr.getType();
+        PairObj pair = (PairObj) expr.getType();
+
+        if (ctx.FST() != null) {
+            this.type = pair.getType1();
+        } else {
+            this.type = pair.getType2();
+        }
     }
 
     public TypeObj getType() {
