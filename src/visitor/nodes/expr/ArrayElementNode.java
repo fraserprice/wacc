@@ -27,46 +27,30 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
     }
 
     public void check() {
-        //TODO: CHECK EXISTANCE OF varObj
-        VariableObj varObj = currentST.lookupAll(ident, VariableObj.class);
+        VariableObj obj = currentST.lookupAll(ident, VariableObj.class);
 
-        if (varObj == null) {
+        if (obj == null) {
+            addSemanticError(CompileTimeError.VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, ident);
             return;
         }
 
-        TypeObj arrayType = varObj.getType();
-
-        if (!(arrayType instanceof ArrayObj)) {
-            addSemanticError(CompileTimeError.EXPECTED_ARRAY_CALL, arrayType.toString());
+        if (obj.getType() == null) {
             return;
         }
 
-        ArrayObj arrayT = (ArrayObj) arrayType;
+        if (!(obj.getType() instanceof ArrayObj)) {
+            addSemanticError(CompileTimeError.EXPECTED_ARRAY_CALL, obj.getType().toString());
+            return;
+        }
 
-        // get dimensionality count by counting number of [
-        type = arrayT.getTypeOfDim(ctx.CLOSE_SQUARE_BRACKET().size());
+        ArrayObj arrayType = (ArrayObj) obj.getType();
+
+        type = arrayType.getTypeOfDim(ctx.CLOSE_SQUARE_BRACKET().size());
 
         if (type == null) {
             addSemanticError(CompileTimeError.INVALID_DIMENSION_NUMBER_ARRAY);
             return;
         }
-
-
-        /*type = arrayT.getType();
-
-        TypeObj arrayEntry = arrayT;
-        int dimensionCount = 0;
-
-        while (arrayEntry instanceof ArrayObj) {
-            arrayEntry = ((ArrayObj) arrayEntry).getType();
-            dimensionCount++;
-        }
-
-        if (dimensionCount != exprList.size()) {
-            addSemanticError(CompileTimeError.INVALID_DIMENSION_NUMBER_ARRAY,
-                                "" + dimensionCount, "" + exprList.size());
-            return;
-        }*/
 
         for(ExprNode expr : exprList) {
             if (expr == null) {
@@ -76,8 +60,8 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
                 return;
             }
 
-            if(!expr.getType().equals(new IntObj())) {
-                addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
+            if(!(expr.getType() instanceof IntObj)) {
+                addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR, new IntObj().toString(), expr.getType().toString());
             }
         }
     }
