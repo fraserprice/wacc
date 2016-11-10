@@ -53,7 +53,9 @@ public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
 
         obj = pairElem.getType();
 
-        assert(pairElem.getType() != null): "AssignLhsNode: Pair type should always have a type";
+        if (pairElem.getType() == null) {
+            return;
+        }
         assert(obj instanceof PairObj): "AssignLhsNode: Obj from pairElem should always be a PairObj";
     }
 

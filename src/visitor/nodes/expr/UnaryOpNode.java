@@ -31,14 +31,16 @@ public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
         super(currentST, ctx);
         this.argument = argument;
         this.operator = op;
-        if (!argument.hasErrors()) {
-            check();
-        }
+        check();
     }
 
     public void check() {
-        assert (argument != null): "UnaryOp: argument can't be null";
-        assert (argument.getType() != null): "UnaryOp: argument should have a type";
+        if (argument == null) {
+            return;
+        }
+        if (argument.getType() == null) {
+            return;
+        }
 
         type = operatorToType.get(operator);
     }

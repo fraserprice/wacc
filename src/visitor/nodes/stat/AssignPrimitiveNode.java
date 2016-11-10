@@ -20,16 +20,17 @@ public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStat
         super(currentST, ctx);
         this.type = type.getType();
         this.ident = ctx.IDENT().getText();
-
-        if (!assignRhs.hasErrors()) {
-            this.rhs = assignRhs;
-            check();
-        }
+        this.rhs = assignRhs;
+        check();
     }
 
     private void check() {
-        assert (rhs != null): "AssignPrimitiveNode: rhs can't be null";
-        assert (rhs.getType() != null): "AssignPrimitiveNode: rhs should have a type";
+        if (rhs == null) {
+            return;
+        }
+        if (rhs.getType() == null) {
+            return;
+        }
 
         if (!IdentifierObj.isValidIdentifierName(ident)) {
             addSemanticError(CompileTimeError.INVALID_VARIABLE_NAME);

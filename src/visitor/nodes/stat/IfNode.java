@@ -12,14 +12,16 @@ public class IfNode extends StatNode<WACCParser.IfStatContext> {
 
     public IfNode(SymbolTable currentST, WACCParser.IfStatContext ctx, ExprNode exprNode, StatNode thenStat, StatNode elseStat) {
         super(currentST, ctx);
-        if (!exprNode.hasErrors()) {
-            checkIfNode(exprNode);
-        }
+        checkIfNode(exprNode);
     }
 
     private void checkIfNode(ExprNode exprNode) {
-        assert (exprNode != null): "IfNode: expr can't be null";
-        assert (exprNode.getType() != null): "IfNode: expr needs a type";
+        if (exprNode == null) {
+            return;
+        }
+        if (exprNode.getType() == null) {
+            return;
+        }
 
         if(!(exprNode.getType() instanceof BoolObj)) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE);
