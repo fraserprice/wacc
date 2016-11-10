@@ -5,6 +5,8 @@ import antlr.WACCParserVisitor;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import symobjects.SymbolTable;
+import symobjects.identifierobj.FunctionObj;
+import symobjects.identifierobj.VariableObj;
 import symobjects.identifierobj.typeobj.scalarobj.*;
 import visitor.nodes.ExprNode;
 import visitor.nodes.FunctionNode;
@@ -363,11 +365,16 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
     @Override
     public Node visitFunc(@NotNull WACCParser.FuncContext ctx) {
+        SymbolTable previous = currentST;
         createChildST();
         TypeNode returnType = (TypeNode) visit(ctx.type());
         List<ParamNode> params = ctx.param().stream()
                                 .map(p -> (ParamNode) visit(p))
                                 .collect(Collectors.toList());
+
+        List<VariableObj> paramsObj = params.stream().map(ParamNode::getObj).collect(Collectors.toList());
+        previous.add(ctx.IDENT().getText(), new FunctionObj(previous, returnType.getType(), paramsObj));
+
         StatNode statBlock = (StatNode) visit(ctx.stat());
         closeCurrentScope();
         return new FunctionNode(currentST, ctx, returnType, params, statBlock);

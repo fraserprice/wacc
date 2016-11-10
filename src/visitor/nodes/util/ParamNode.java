@@ -11,21 +11,26 @@ import visitor.Node;
 import visitor.nodes.type.TypeNode;
 
 public class ParamNode extends Node {
-    private TypeObj type;
+    private VariableObj obj;
 
     public ParamNode(SymbolTable currentST, WACCParser.ParamContext ctx, TypeNode typeNode) {
         super(currentST, ctx);
-        this.type = typeNode.getType();
 
-        check(ctx);
+        check(ctx, typeNode.getType());
     }
 
-    private void check(WACCParser.ParamContext ctx) {
+    private void check(WACCParser.ParamContext ctx, TypeObj type) {
         if (!IdentifierObj.isValidIdentifierName(ctx.IDENT().getText())) {
             addSemanticError(CompileTimeError.INVALID_VARIABLE_NAME);
             return;
         }
 
-        currentST.add(ctx.IDENT().getText(), new VariableObj(currentST, type));
+        obj = new VariableObj(currentST, type);
+
+        currentST.add(ctx.IDENT().getText(), obj);
+    }
+
+    public VariableObj getObj() {
+        return obj;
     }
 }

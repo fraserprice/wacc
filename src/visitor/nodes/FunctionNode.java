@@ -1,9 +1,12 @@
 package visitor.nodes;
 
+import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
+import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.TypeObj;
+import symobjects.identifierobj.VariableObj;
 import visitor.Node;
 import visitor.nodes.stat.CompositionNode;
 import visitor.nodes.stat.ExitNode;
@@ -13,19 +16,22 @@ import visitor.nodes.type.TypeNode;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FunctionNode extends Node {
 
     private TypeObj returnType;
     private List<ParamNode> paramList;
     private StatNode body;
+    private String name;
 
-    public FunctionNode(SymbolTable currentST, ParserRuleContext ctx, TypeNode typeNode,
+    public FunctionNode(SymbolTable currentST, WACCParser.FuncContext ctx, TypeNode typeNode,
                         List<ParamNode> paramNodeList, StatNode statNode) {
         super(currentST, ctx);
         this.returnType = typeNode.getType();
         this.paramList = paramNodeList;
         this.body = statNode;
+        this.name = ctx.IDENT().getText();
         check();
     }
 
@@ -50,18 +56,21 @@ public class FunctionNode extends Node {
             TypeObj returnStatementType = ((ReturnNode) current).getReturnType();
             if (!returnStatementType.equals(returnType)) {
                 addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH);
+                return;
             }
         }
 
-        for (ReturnNode retS: returnStatList) {
-            if (!retS.equals(returnType)) {
+        for (ReturnNode retStat: returnStatList) {
+            if (!retStat.equals(returnType)) {
                 addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH);
+                return;
             }
         }
 
         for (ParamNode param : paramList) {
             if (!(param instanceof ParamNode)) {
                 addSemanticError(CompileTimeError.INVALID_PARAMETER_USE);
+                return;
             }
         }
     }
