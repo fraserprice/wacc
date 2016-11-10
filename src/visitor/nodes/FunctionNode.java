@@ -8,9 +8,7 @@ import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.VariableObj;
 import visitor.Node;
-import visitor.nodes.stat.CompositionNode;
-import visitor.nodes.stat.ExitNode;
-import visitor.nodes.stat.ReturnNode;
+import visitor.nodes.stat.*;
 import visitor.nodes.util.ParamNode;
 import visitor.nodes.type.TypeNode;
 
@@ -41,14 +39,8 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
         // last statement is either exit or return
         StatNode current = body;
         List<ReturnNode> returnStatList = new LinkedList<>();
-        while (current instanceof CompositionNode) {
-            if (current instanceof ReturnNode) {
-                returnStatList.add((ReturnNode) current);
-            }
-            current = ((CompositionNode) current).getSecondStatNode();
-        }
 
-        if (!(current instanceof ExitNode) && !(current instanceof ReturnNode)) {
+        if(!lastStatIsReturn(current)) {
             addSyntacticError(CompileTimeError.RETURN_STATEMENT_MISSING_FROM_LAST_LINE);
         }
 
@@ -59,5 +51,23 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
                 return;
             }
         }
+    }
+
+    private boolean lastStatIsReturn(StatNode current) {
+
+        while (current instanceof CompositionNode) {
+            current = ((CompositionNode) current).getSecondStatNode();
+        }
+
+        if(current instanceof IfNode) {
+            return lastStatIsReturn(((IfNode) current).getElseBlock()) && lastStatIsReturn(((IfNode) current).getThenBlock());
+        } else if(current instanceof WhileNode) {
+            return lastStatIsReturn(((WhileNode) current).getStatNode());
+        } else if(current instanceof ScopeBlockNode) {
+            return lastStatIsReturn(((ScopeBlockNode) current).getBody());
+        } else if (!(current instanceof ExitNode) && !(current instanceof ReturnNode)) {
+            return false;
+        }
+        return true;
     }
 }
