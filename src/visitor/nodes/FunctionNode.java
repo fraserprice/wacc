@@ -11,6 +11,7 @@ import visitor.nodes.stat.ReturnNode;
 import visitor.nodes.util.ParamNode;
 import visitor.nodes.type.TypeNode;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class FunctionNode extends Node {
@@ -32,7 +33,11 @@ public class FunctionNode extends Node {
         // TODO: check for if as well and statBlock
         // last statement is either exit or return
         StatNode current = body;
+        List<ReturnNode> returnStatList = new LinkedList<>();
         while (current instanceof CompositionNode) {
+            if (current instanceof ReturnNode) {
+                returnStatList.add((ReturnNode) current);
+            }
             current = ((CompositionNode) current).getSecondStatNode();
         }
 
@@ -44,7 +49,19 @@ public class FunctionNode extends Node {
         if (current instanceof ReturnNode) {
             TypeObj returnStatementType = ((ReturnNode) current).getReturnType();
             if (!returnStatementType.equals(returnType)) {
-                addSyntacticError(CompileTimeError.RETURN_TYPE_MISMATCH);
+                addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH);
+            }
+        }
+
+        for (ReturnNode retS: returnStatList) {
+            if (!retS.equals(returnType)) {
+                addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH);
+            }
+        }
+
+        for (ParamNode param : paramList) {
+            if (!(param instanceof ParamNode)) {
+                addSemanticError(CompileTimeError.INVALID_PARAMETER_USE);
             }
         }
     }
