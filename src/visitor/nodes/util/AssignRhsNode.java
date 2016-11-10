@@ -19,11 +19,10 @@ public class AssignRhsNode extends Node {
     // assignRhs: expr
     public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode rhs) {
         super(currentST, ctx);
-
-        if (!rhs.hasErrors()) {
-            assert (rhs.getType() != null): "AssignRhsNode: rhs should have a type";
-            this.type = rhs.getType();
+        if (rhs.getType() == null) {
+            return;
         }
+        this.type = rhs.getType();
     }
 
     // assignRhs: arrayLiteral
@@ -48,21 +47,23 @@ public class AssignRhsNode extends Node {
     // assignRhs: NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
     public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode first, ExprNode second) {
         super(currentST, ctx);
-        if (!first.hasErrors() && !second.hasErrors()) {
-            assert(first.getType() != null): "AssignRhsNode: first should have a type";
-            assert(second.getType() != null): "AssignRhsNode: second should have a type";
-
-            this.type = new PairObj(first.getType(), second.getType());
+        if (first.getType() == null) {
+            return;
         }
+        if (second.getType() == null) {
+            return;
+        }
+
+        this.type = new PairObj(first.getType(), second.getType());
     }
 
     // assignRhs: pairElem
     public AssignRhsNode(SymbolTable currentST, ParserRuleContext ctx, PairElemNode pairElem) {
         super(currentST, ctx);
-        if (!pairElem.hasErrors()) {
-            assert(pairElem.getType() != null): "AssignRhsNode: pairElem should have a type";
-            this.type = pairElem.getType();
+        if (pairElem.getType() == null) {
+            return;
         }
+        this.type = pairElem.getType();
     }
 
     // CALL_FUNC IDENT OPEN_PARENTHESES argList? CLOSE_PARENTHESES

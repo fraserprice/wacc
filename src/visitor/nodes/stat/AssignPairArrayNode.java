@@ -16,17 +16,22 @@ public class AssignPairArrayNode extends StatNode {
         super(currentST, ctx);
         this.lhs = assignLhsNode;
         this.rhs = assignRhsNode;
-
-        if (!assignLhsNode.hasErrors() && !assignRhsNode.hasErrors()) {
-            check();
-        }
+        check();
     }
 
     private void check() {
-        assert (lhs != null): "AssignPairArrayNode: lhs can't be null";
-        assert (lhs.getType() != null): "AssignPairArrayNode: lhs needs a type";
-        assert (rhs != null): "AssignPairArrayNode: rhs can't be null";
-        assert (rhs.getType() != null): "AssignPairArrayNode: rhs needs a type";
+        if (lhs == null) {
+            return;
+        }
+        if (lhs.getType() == null) {
+            return;
+        }
+        if (rhs == null) {
+            return;
+        }
+        if (rhs.getType() == null) {
+            return;
+        }
 
         if (!lhs.getType().equals(rhs.getType())) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE);

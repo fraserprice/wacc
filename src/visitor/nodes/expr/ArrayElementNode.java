@@ -23,18 +23,12 @@ public class ArrayElementNode extends ExprNode {
         super(currentST, ctx);
         this.exprList = exprList;
         this.ident = ctx.IDENT().getText();
-        boolean err = false;
-        for (ExprNode expr : exprList) {
-            if (expr.hasErrors()) {
-                err = true;
-            }
-        }
-        if (!err) {
-            check();
-        }
+        check();
     }
 
     public void check() {
+
+
         //TODO: CHECK EXISTANCE OF varObj
         VariableObj varObj = (VariableObj) currentST.lookupAll(ident);
         TypeObj arrayType = varObj.getType();
@@ -61,8 +55,12 @@ public class ArrayElementNode extends ExprNode {
         }
 
         for(ExprNode expr : exprList) {
-            assert(expr != null): "ArrayElem: expr can't be null";
-            assert(expr.getType() != null): "ArrayElem: type of expr can't be null";
+            if (expr == null) {
+                return;
+            }
+            if (expr.getType() == null) {
+                return;
+            }
 
             if(!expr.getType().equals(new IntObj())) {
                 addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);

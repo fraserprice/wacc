@@ -22,8 +22,12 @@ public class PairElemNode extends Node {
     }
 
     private void check() {
-        assert (expr != null): "PairElemNode: expr can't be null";
-        assert (expr.getType() != null): "PairElemNode: expr needs a type";
+        if (expr == null) {
+            return;
+        }
+        if (expr.getType() == null) {
+            return;
+        }
 
         if (!(expr.getType() instanceof PairObj)) {
             addSemanticError(CompileTimeError.INVALID_PAIR_ELEM_TYPE);

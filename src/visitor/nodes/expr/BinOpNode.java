@@ -36,15 +36,17 @@ public class BinOpNode extends ExprNode {
         this.lhs = lhs;
         this.rhs = rhs;
         this.operator = op;
-
-        if (!lhs.hasErrors() && !rhs.hasErrors()) {
-            check();
-        }
+        check();
     }
 
     private void check() {
-        assert(lhs != null): "BinOpNode: lhs can't be null";
-        assert(rhs != null): "BinOpNode: rhs can't be null";
+        if (lhs == null) {
+            return;
+        }
+
+        if (rhs == null) {
+            return;
+        }
         TypeObj lhsType = lhs.getType();
         TypeObj rhsType = rhs.getType();
 
