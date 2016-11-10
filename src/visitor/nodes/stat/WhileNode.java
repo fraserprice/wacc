@@ -24,7 +24,8 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
         }
 
         if(!(exprNode.getType() instanceof BoolObj)) {
-            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE);
+            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
+                "while condition", "bool", "actual", exprNode.getType().toString());
         }
     }
 }

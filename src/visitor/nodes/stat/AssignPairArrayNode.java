@@ -35,7 +35,8 @@ public class AssignPairArrayNode extends StatNode<WACCParser.AssignPairArrayStat
         }
 
         if (!lhs.getType().equals(rhs.getType())) {
-            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE);
+            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
+                "Left hand side: ", lhs.getType().toString(), "Right hand side: " + rhs.getType().toString());
             return;
         }
     }

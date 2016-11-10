@@ -14,6 +14,7 @@ import visitor.nodes.stat.ReturnNode;
 import visitor.nodes.util.ParamNode;
 import visitor.nodes.type.TypeNode;
 
+import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,25 +52,10 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
             addSyntacticError(CompileTimeError.RETURN_STATEMENT_MISSING_FROM_LAST_LINE);
         }
 
-        // current is either return statement or exit
-        if (current instanceof ReturnNode) {
-            TypeObj returnStatementType = ((ReturnNode) current).getReturnType();
-            if (!returnStatementType.equals(returnType)) {
-                addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH);
-                return;
-            }
-        }
-
         for (ReturnNode retStat: returnStatList) {
-            if (!retStat.equals(returnType)) {
-                addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH);
-                return;
-            }
-        }
-
-        for (ParamNode param : paramList) {
-            if (!(param instanceof ParamNode)) {
-                addSemanticError(CompileTimeError.INVALID_PARAMETER_USE);
+            TypeObj returnStatementType = retStat.getReturnType();
+            if (!returnStatementType.equals(returnType)) {
+                addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH, returnType.toString(), returnStatementType.toString());
                 return;
             }
         }

@@ -31,7 +31,7 @@ public class PairElemNode extends Node<WACCParser.PairElemContext> {
         }
 
         if (!(expr.getType() instanceof PairObj)) {
-            addSemanticError(CompileTimeError.INVALID_PAIR_ELEM_TYPE);
+            addSemanticError(CompileTimeError.INVALID_PAIR_ELEM_TYPE, expr.getType().toString());
             return;
         }
 

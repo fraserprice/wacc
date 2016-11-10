@@ -19,13 +19,13 @@ public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
 
     private void check() {
         if (expr == null) {
-
+            return;
         }
         if (expr.getType() == null) {
             return;
         }
         if (!expr.getType().equals(new IntObj())) {
-            addSemanticError(CompileTimeError.INVALID_EXIT_ARGUMENT);
+            addSemanticError(CompileTimeError.INVALID_EXIT_ARGUMENT, expr.getType().toString());
         }
     }
 }

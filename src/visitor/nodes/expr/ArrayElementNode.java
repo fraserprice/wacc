@@ -27,14 +27,12 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
     }
 
     public void check() {
-
-
         //TODO: CHECK EXISTANCE OF varObj
         VariableObj varObj = (VariableObj) currentST.lookupAll(ident);
         TypeObj arrayType = varObj.getType();
 
         if (!(arrayType instanceof ArrayObj)) {
-            addSemanticError(CompileTimeError.EXPECTED_ARRAY_CALL);
+            addSemanticError(CompileTimeError.EXPECTED_ARRAY_CALL, arrayType.toString());
             return;
         }
 
@@ -50,7 +48,8 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
         }
 
         if (dimensionCount != exprList.size()) {
-            addSemanticError(CompileTimeError.INVALID_DIMENSION_NUMBER_ARRAY);
+            addSemanticError(CompileTimeError.INVALID_DIMENSION_NUMBER_ARRAY,
+                                "" + dimensionCount, "" + exprList.size());
             return;
         }
 

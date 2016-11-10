@@ -21,7 +21,7 @@ public class ParamNode extends Node<WACCParser.ParamContext> {
 
     private void check(WACCParser.ParamContext ctx, TypeObj type) {
         if (!IdentifierObj.isValidIdentifierName(ctx.IDENT().getText())) {
-            addSemanticError(CompileTimeError.INVALID_VARIABLE_NAME);
+            addSemanticError(CompileTimeError.INVALID_VARIABLE_NAME, ctx.IDENT().toString());
             return;
         }
 

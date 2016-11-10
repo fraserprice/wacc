@@ -25,7 +25,7 @@ public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
         }
 
         if(!(exprNode.getType() instanceof PairObj)) {
-            addSemanticError(CompileTimeError.INVALID_FREE_VALUE);
+            addSemanticError(CompileTimeError.INVALID_FREE_VALUE, exprNode.getType().toString());
         }
     }
 }

@@ -38,7 +38,7 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
 
         int noSameTypeAsFirst = (int) arrayArgs.stream().filter(expr -> expr.getType().equals(arrayArgs.get(0).getType())).count();
         if (noSameTypeAsFirst != arrayArgs.size()) {
-            addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
+            addSemanticError(CompileTimeError.ARRAY_LITERAL_TYPE_DONT_MATCH);
             return;
         }
 
@@ -74,12 +74,12 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
         IdentifierObj obj = currentST.lookupAll(ident);
 
         if (obj == null) {
-            addSemanticError(CompileTimeError.FUNCTION_NOT_DEFINED);
+            addSemanticError(CompileTimeError.FUNCTION_NOT_DEFINED, ident);
             return;
         }
 
         if (!(obj instanceof FunctionObj)) {
-            addSemanticError(CompileTimeError.NOT_A_FUNCTION);
+            addSemanticError(CompileTimeError.NOT_A_FUNCTION, ident);
             return;
         }
 
@@ -88,13 +88,14 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
         this.type = funcObj.getReturnType();
 
         if (args.size() != funcObj.getParams().size()) {
-            addSemanticError(CompileTimeError.WRONG_NUMBER_OF_PARAMS);
+            addSemanticError(CompileTimeError.WRONG_NUMBER_OF_PARAMS, "" + funcObj.getParams().size(), "" + args.size());
             return;
         }
 
         for (int i = 0; i < args.size(); i++) {
             if (!args.get(i).getType().equals(funcObj.getParams().get(i).getType())) {
-                addSemanticError(CompileTimeError.PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE);
+                addSemanticError(CompileTimeError.PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE, "" + i,
+                    ident, funcObj.getParams().get(i).getType().toString(), args.get(i).getType().toString());
             }
         }
     }

@@ -13,8 +13,7 @@ import visitor.nodes.ExprNode;
 import java.util.HashMap;
 import java.util.Map;
 
-
-// TODO
+// TODO: ADD ERROR FOR TYPE MISMATCH
 public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
     private ExprNode argument;
     private String operator;

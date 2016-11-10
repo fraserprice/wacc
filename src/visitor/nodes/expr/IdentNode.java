@@ -19,12 +19,12 @@ public class IdentNode extends ExprNode<WACCParser.IdentExprContext> {
         IdentifierObj obj = currentST.lookupAll(ctx.getText());
 
         if (obj == null) {
-            addSemanticError(CompileTimeError.UNDEFINED_IDENTIFIER);
+            addSemanticError(CompileTimeError.UNDEFINED_IDENTIFIER, ctx.IDENT().toString());
             return;
         }
 
         if (!(obj instanceof VariableObj)) {
-            addSemanticError(CompileTimeError.NOT_VARIABLE);
+            addSemanticError(CompileTimeError.NOT_VARIABLE, ctx.IDENT().toString());
             return;
         }
 

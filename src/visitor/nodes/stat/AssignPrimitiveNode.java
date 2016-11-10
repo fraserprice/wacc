@@ -33,17 +33,18 @@ public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStat
         }
 
         if (!IdentifierObj.isValidIdentifierName(ident)) {
-            addSemanticError(CompileTimeError.INVALID_VARIABLE_NAME);
+            addSemanticError(CompileTimeError.INVALID_VARIABLE_NAME, ident);
             return;
         }
 
         if (!type.equals(rhs.getType())) {
-            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE);
+            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE, ident,
+                type.toString(), "Right hand side: ", rhs.getType().toString());
             return;
         }
 
         if (currentST.lookup(ident) != null) {
-            addSemanticError(CompileTimeError.VARIABLE_ALREADY_DEFINED);
+            addSemanticError(CompileTimeError.VARIABLE_ALREADY_DEFINED, ident);
             return;
         }
 
