@@ -84,7 +84,7 @@ public enum CompileTimeError {
 
         switch (this) {
             case TYPE_MISMATCH_ERROR: errorMessage = "Type Mismatch: Type " + tokens[0] + " " + tokens[1] + "don't match";break;
-            default: errorMessage = null; assert(false): this + " is not a semantic error";
+            default: errorMessage = null; //assert(false): this + " is not a semantic error";
         }
 
         System.err.println("Error on line " + line + ":" + characterPos + " " + errorMessage);

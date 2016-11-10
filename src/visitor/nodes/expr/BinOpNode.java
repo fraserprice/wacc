@@ -49,7 +49,7 @@ public class BinOpNode extends ExprNode {
         TypeObj rhsType = rhs.getType();
 
         if(lhsType == null || rhsType == null || !lhsType.equals(rhsType)) {
-            addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR);
+            addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR, lhsType.toString(), rhsType.toString());
             return;
         }
 

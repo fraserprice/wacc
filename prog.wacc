@@ -1,11 +1,3 @@
-# evaluating a moderately complex boolean expression
-
-# Output:
-# Correct
-
-# Program:
-
 begin
-  print(! ( ( true && false) || (true && false) ))
+	int a = 2 + 'c'
 end
-
