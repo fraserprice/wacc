@@ -9,6 +9,6 @@ public class PairNode extends LiteralNode<WACCParser.PairLiteralContext> {
 
     public PairNode(SymbolTable currentST, WACCParser.PairLiteralContext ctx) {
         super(currentST, ctx);
-        this.type = (PairObj) currentST.lookupAll("null");
+        this.type = currentST.lookupAll("null", PairObj.class);
     }
 }

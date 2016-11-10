@@ -10,6 +10,6 @@ public class StringNode extends LiteralNode<WACCParser.StrLiteralContext> {
 
     public StringNode(SymbolTable currentST, WACCParser.StrLiteralContext ctx) {
         super(currentST, ctx);
-        this.type = (ArrayObj) currentST.lookupAll("string");
+        this.type = currentST.lookupAll("string", ArrayObj.class);
     }
 }

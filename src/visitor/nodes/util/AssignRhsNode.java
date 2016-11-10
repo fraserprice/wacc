@@ -70,7 +70,7 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, List<ExprNode> args, String ident) {
         super(currentST, ctx);
 
-        IdentifierObj obj = currentST.lookupAll(ident);
+        FunctionObj obj = currentST.lookupAll(ident, FunctionObj.class);
 
         if (obj == null) {
             addSemanticError(CompileTimeError.FUNCTION_NOT_DEFINED, ident);

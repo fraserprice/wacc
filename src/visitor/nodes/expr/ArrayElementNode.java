@@ -28,7 +28,7 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
 
     public void check() {
         //TODO: CHECK EXISTANCE OF varObj
-        VariableObj varObj = (VariableObj) currentST.lookupAll(ident);
+        VariableObj varObj = currentST.lookupAll(ident, VariableObj.class);
         TypeObj arrayType = varObj.getType();
 
         if (!(arrayType instanceof ArrayObj)) {

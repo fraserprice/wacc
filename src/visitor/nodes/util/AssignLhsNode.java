@@ -19,7 +19,7 @@ public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
     public AssignLhsNode(SymbolTable currentST, WACCParser.AssignLhsContext ctx) {
         super(currentST, ctx);
 
-        obj = currentST.lookupAll(ctx.IDENT().getText());
+        obj = currentST.lookupAll(ctx.IDENT().getText(), VariableObj.class);
 
         if (obj == null) {
             addSemanticError(CompileTimeError.VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, ctx.IDENT().toString());
@@ -36,7 +36,7 @@ public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
     public AssignLhsNode(SymbolTable currentST, WACCParser.AssignLhsContext ctx, ArrayElementNode arrayElem) {
         super(currentST, ctx);
 
-        obj = currentST.lookupAll(arrayElem.getIdent());
+        obj = currentST.lookupAll(arrayElem.getIdent(), ArrayObj.class);
 
         if (obj == null) {
             addSemanticError(CompileTimeError.VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, ctx.IDENT().toString());
@@ -44,6 +44,7 @@ public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
         }
 
         if (!(obj instanceof ArrayObj)) {
+            System.out.println("here");
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
                 "expected", "array", "actual", obj.toString());
         }

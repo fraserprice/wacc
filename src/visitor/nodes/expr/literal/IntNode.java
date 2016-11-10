@@ -11,13 +11,13 @@ public class IntNode extends LiteralNode<WACCParser.IntLiteralContext> {
 
     public IntNode(SymbolTable currentST, WACCParser.IntLiteralContext ctx) {
         super(currentST, ctx);
-        this.type = (IntObj) currentST.lookupAll("int");
+        this.type = currentST.lookupAll("int", IntObj.class);
         check(ctx.getText());
     }
 
     public IntNode(SymbolTable currentST, String value) {
         super(currentST, null);
-        this.type = (IntObj) currentST.lookupAll("int");
+        this.type = currentST.lookupAll("int", IntObj.class);
         check(value);
     }
 

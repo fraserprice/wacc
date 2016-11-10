@@ -43,7 +43,7 @@ public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStat
             return;
         }
 
-        if (currentST.lookup(ident) != null) {
+        if (currentST.lookup(ident, VariableObj.class) != null) {
             addSemanticError(CompileTimeError.VARIABLE_ALREADY_DEFINED, ident);
             return;
         }

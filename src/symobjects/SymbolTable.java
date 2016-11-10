@@ -22,8 +22,14 @@ public class SymbolTable {
      * @param key
      * @return IdentifierObj
      */
-    public IdentifierObj lookup(String key) {
-        return map.get(key);
+    public <T> T lookup(String key, Class<T> classType) {
+        IdentifierObj obj = map.get(key);
+
+        if (classType.isInstance(obj)) {
+            return (T) obj;
+        }
+
+        return null;
     }
 
     /**
@@ -31,10 +37,10 @@ public class SymbolTable {
      * @param key
      * @return IdentifierObj
      */
-    public IdentifierObj lookupAll(String key) {
+    public <T> T lookupAll(String key, Class<T> classType) {
         SymbolTable current = this;
         while(current != null) {
-            IdentifierObj obj = current.lookup(key);
+            T obj = current.lookup(key, classType);
             if (obj != null) {
                 return obj;
             }

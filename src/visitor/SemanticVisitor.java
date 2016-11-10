@@ -111,7 +111,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         currentST.add("bool", new BoolObj());
         currentST.add("char", new CharObj());
         currentST.add("null", new PairObj());
-        currentST.add("string", new ArrayObj((CharObj) currentST.lookupAll("char")));
+        currentST.add("string", new ArrayObj(new CharObj()));
         List<FunctionNode> functionNodes = ctx.func().stream()
                                             .map(f -> visitFunc(f))
                                             .collect(Collectors.toList());
