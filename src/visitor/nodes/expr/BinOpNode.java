@@ -7,77 +7,39 @@ import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.typeobj.scalarobj.BoolObj;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
-import visitor.nodes.expr.operator.BinOp;
 
-// TODO: for each operator do semantic check
+import java.util.HashMap;
+import java.util.Map;
+
 public class BinOpNode extends ExprNode {
-    private BinOp op;
     private ExprNode lhs;
     private ExprNode rhs;
+    private String operator;
+    private static final Map<String, TypeObj> operatorToType = new HashMap<String, TypeObj>() {{
+        put("*", new IntObj(null));
+        put("/", new IntObj(null));
+        put("%", new IntObj(null));
+        put("+", new IntObj(null));
+        put("-", new IntObj(null));
+        put(">", new BoolObj(null));
+        put(">=", new BoolObj(null));
+        put("<", new BoolObj(null));
+        put("<=", new BoolObj(null));
+        put("==", new BoolObj(null));
+        put("!=", new BoolObj(null));
+        put("&&", new BoolObj(null));
+        put("||", new BoolObj(null));
+    }};
 
-    public BinOpNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode lhs, ExprNode rhs) {
+    public BinOpNode(SymbolTable currentST, ParserRuleContext ctx, ExprNode lhs, String op, ExprNode rhs) {
         super(currentST, ctx);
         this.lhs = lhs;
         this.rhs = rhs;
+        this.operator = op;
 
         if (!lhs.hasErrors() && !rhs.hasErrors()) {
             check();
         }
-
-        /*switch (ctx.getText()) {
-            case "*":
-                this.type = new IntObj(currentST);
-                op = BinOp.MULTIPLY;
-                break;
-            case "/":
-                this.type = new IntObj(currentST);
-                op = BinOp.DIVISION;
-                break;
-            case "%":
-                this.type = new IntObj(currentST);
-                op = BinOp.MODULO;
-                break;
-            case "+":
-                this.type = new IntObj(currentST);
-                op = BinOp.PLUS;
-                break;
-            case "-":
-                this.type = new IntObj(currentST);
-                op = BinOp.MINUS;
-                break;
-            case ">":
-                this.type = new BoolObj(currentST);
-                op = BinOp.GREATER;
-                break;
-            case ">=":
-                this.type = new BoolObj(currentST);
-                op = BinOp.GREATER_EQ;
-                break;
-            case "<":
-                this.type = new BoolObj(currentST);
-                op = BinOp.SMALLER;
-                break;
-            case "<=":
-                this.type = new BoolObj(currentST);
-                op = BinOp.SMALLER_EQ;
-                break;
-            case "==":
-                this.type = new BoolObj(currentST);
-                op = BinOp.EQ;
-                break;
-            case "!=":
-                this.type = new BoolObj(currentST);
-                op = BinOp.NOT_EQ;
-                break;
-            case "&&":
-                this.type = new BoolObj(currentST);
-                op = BinOp.AND;
-                break;
-            case "||":
-                this.type = new BoolObj(currentST);
-                op = BinOp.OR;
-                break;
-        }*/
     }
 
     private void check() {
@@ -91,7 +53,7 @@ public class BinOpNode extends ExprNode {
             return;
         }
 
-        this.type = lhs.getType();
+        this.type = operatorToType.get(operator);
     }
 
 }

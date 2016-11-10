@@ -191,7 +191,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         ExprNode lhs = (ExprNode) visit(ctx.expr(0));
         ExprNode rhs = (ExprNode) visit(ctx.expr(1));
 
-        return new BinOpNode(currentST, ctx, lhs, rhs);
+        return new BinOpNode(currentST, ctx, lhs, ctx.AND().getText(), rhs);
     }
 
     @Override
@@ -199,7 +199,11 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         ExprNode lhs = (ExprNode) visit(ctx.expr(0));
         ExprNode rhs = (ExprNode) visit(ctx.expr(1));
 
-        return new BinOpNode(currentST, ctx, lhs, rhs);
+        if (ctx.EQ() != null) {
+            return new BinOpNode(currentST, ctx, lhs, ctx.EQ().getText(), rhs);
+        } else {
+            return new BinOpNode(currentST, ctx, lhs, ctx.NOT_EQ().getText(), rhs);
+        }
     }
 
     @Override
@@ -212,7 +216,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         ExprNode lhs = (ExprNode) visit(ctx.expr(0));
         ExprNode rhs = (ExprNode) visit(ctx.expr(1));
 
-        return new BinOpNode(currentST, ctx, lhs, rhs);
+        return new BinOpNode(currentST, ctx, lhs, ctx.OR().getText(), rhs);
     }
 
     @Override
@@ -220,7 +224,15 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         ExprNode lhs = (ExprNode) visit(ctx.expr(0));
         ExprNode rhs = (ExprNode) visit(ctx.expr(1));
 
-        return new BinOpNode(currentST, ctx, lhs, rhs);
+        if (ctx.GREATER() != null) {
+            return new BinOpNode(currentST, ctx, lhs, ctx.GREATER().getText(), rhs);
+        } else if (ctx.GREATER_EQ() != null) {
+            return new BinOpNode(currentST, ctx, lhs, ctx.GREATER_EQ().getText(), rhs);
+        } else if (ctx.SMALLER() != null) {
+            return new BinOpNode(currentST, ctx, lhs, ctx.SMALLER().getText(), rhs);
+        } else {
+            return new BinOpNode(currentST, ctx, lhs, ctx.SMALLER_EQ().getText(), rhs);
+        }
     }
 
     @Override
@@ -228,7 +240,13 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         ExprNode lhs = (ExprNode) visit(ctx.expr(0));
         ExprNode rhs = (ExprNode) visit(ctx.expr(1));
 
-        return new BinOpNode(currentST, ctx, lhs, rhs);
+        if (ctx.MULTIPLY() != null) {
+            return new BinOpNode(currentST, ctx, lhs, ctx.MULTIPLY().getText(), rhs);
+        } else if (ctx.DIVISION().getText() != null) {
+            return new BinOpNode(currentST, ctx, lhs, ctx.DIVISION().getText(), rhs);
+        } else {
+            return new BinOpNode(currentST, ctx, lhs, ctx.MODULO().getText(), rhs);
+        }
     }
 
     @Override
@@ -236,12 +254,16 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         ExprNode lhs = (ExprNode) visit(ctx.expr(0));
         ExprNode rhs = (ExprNode) visit(ctx.expr(1));
 
-        return new BinOpNode(currentST, ctx, lhs, rhs);
+        if (ctx.PLUS() != null) {
+            return new BinOpNode(currentST, ctx, lhs, ctx.PLUS().getText(), rhs);
+        } else {
+            return new BinOpNode(currentST, ctx, lhs, ctx.MINUS().getText(), rhs);
+        }
     }
 
     @Override
     public Node visitUnPlusExpr(@NotNull WACCParser.UnPlusExprContext ctx) {
-        return new UnaryOpNode(currentST, ctx, new IntNode(currentST, ctx.INT_LITERAL().getText()));
+        return new UnaryOpNode(currentST, ctx, ctx.PLUS().getText(), new IntNode(currentST, ctx.INT_LITERAL().getText()));
     }
 
     @Override
@@ -257,11 +279,21 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
             Pattern p = Pattern.compile("[0-9]+");
             if (p.matcher(ctx.expr().getText()).matches()) {
                 // we have int literal
-                return new UnaryOpNode(currentST, ctx, new IntNode(currentST, "-" + ctx.expr().getText()));
+                return new UnaryOpNode(currentST, ctx, ctx.MINUS().getText(), new IntNode(currentST, "-" + ctx.expr().getText()));
             }
         }
 
-        return new UnaryOpNode(currentST, ctx, (ExprNode) visit(ctx.expr()));
+        if (ctx.MINUS() != null) {
+            return new UnaryOpNode(currentST, ctx, ctx.MINUS().getText(), (ExprNode) visit(ctx.expr()));
+        } else if (ctx.NOT() != null) {
+            return new UnaryOpNode(currentST, ctx, ctx.NOT().getText(), (ExprNode) visit(ctx.expr()));
+        } else if (ctx.LEN() != null) {
+            return new UnaryOpNode(currentST, ctx, ctx.LEN().getText(), (ExprNode) visit(ctx.expr()));
+        } else if (ctx.CHR() != null) {
+            return new UnaryOpNode(currentST, ctx, ctx.CHR().getText(), (ExprNode) visit(ctx.expr()));
+        } else {
+            return new UnaryOpNode(currentST, ctx, ctx.ORD().getText(), (ExprNode) visit(ctx.expr()));
+        }
     }
 
     @Override
