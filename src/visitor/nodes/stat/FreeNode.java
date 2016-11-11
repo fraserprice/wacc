@@ -4,6 +4,7 @@ import antlr.WACCParser;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.PairObj;
+import symobjects.identifierobj.typeobj.NullPairObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
 

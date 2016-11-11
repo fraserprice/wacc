@@ -63,9 +63,6 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     // assignRhs: pairElem
     public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, PairElemNode pairElem) {
         super(currentST, ctx);
-        if (pairElem.getType() == null) {
-            return;
-        }
         this.type = pairElem.getType();
     }
 

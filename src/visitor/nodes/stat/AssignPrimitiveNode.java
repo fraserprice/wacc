@@ -48,7 +48,7 @@ public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStat
             return;
         }
 
-        // we don't add the type because it's size is 0
+        // we don't add the array type because it's size is 0
         currentST.add(ident, new VariableObj(currentST, rhs.getType()));
     }
 }

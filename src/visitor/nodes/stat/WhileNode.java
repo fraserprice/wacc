@@ -22,7 +22,7 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
         if  (exprNode == null) {
             return;
         }
-        if (exprNode.getType() != null) {
+        if (exprNode.getType() == null) {
             return;
         }
 

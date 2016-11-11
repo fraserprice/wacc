@@ -1,7 +1,7 @@
 begin
-	int x = 5;
-	int func() is
-		return 1 + 'c'
-	end
-	int a = call func()
+	pair(int, int) a = newpair(5, 6);
+	pair(pair, int) p = newpair(a, 2);
+	pair(int, int) x = fst p;
+	int z = fst x;
+	exit z
 end

@@ -8,7 +8,7 @@ import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.VariableObj;
 import symobjects.identifierobj.typeobj.ArrayObj;
-import symobjects.identifierobj.typeobj.PairObj;
+import symobjects.identifierobj.typeobj.NullPairObj;
 import symobjects.identifierobj.typeobj.scalarobj.*;
 import visitor.nodes.ExprNode;
 import visitor.nodes.FunctionNode;
@@ -63,7 +63,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
         currentST.add("int", new IntObj());
         currentST.add("bool", new BoolObj());
         currentST.add("char", new CharObj());
-        currentST.add("null", new PairObj());
+        currentST.add("null", new NullPairObj());
         currentST.add("string", new ArrayObj(new CharObj()));
         for (WACCParser.FuncContext fCtx : ctx.func()) {
             createChildST();

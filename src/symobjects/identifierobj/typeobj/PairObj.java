@@ -14,10 +14,6 @@ public class PairObj extends TypeObj {
         this.type2 = type2;
     }
 
-    public boolean hasTypes() {
-        return type1 != null;
-    }
-
     public TypeObj getType1() {
         return type1;
     }
@@ -34,6 +30,10 @@ public class PairObj extends TypeObj {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj instanceof NullPairObj) {
+            return true;
+        }
+
         if (!(obj instanceof PairObj)) {
             return false;
         }
