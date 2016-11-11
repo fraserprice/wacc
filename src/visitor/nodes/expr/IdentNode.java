@@ -12,6 +12,7 @@ public class IdentNode extends ExprNode<WACCParser.IdentExprContext> {
 
     public IdentNode(SymbolTable currentST, WACCParser.IdentExprContext ctx) {
         super(currentST, ctx);
+
         check();
     }
 

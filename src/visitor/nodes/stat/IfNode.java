@@ -24,10 +24,10 @@ public class IfNode extends StatNode<WACCParser.IfStatContext> {
         this.elseStat = elseStat;
         this.thenStat = thenStat;
 
-        checkIfNode(exprNode);
+        check(exprNode);
     }
 
-    private void checkIfNode(ExprNode exprNode) {
+    private void check(ExprNode exprNode) {
         if(!(exprNode.getType() instanceof BoolObj)) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
                 "If statement", "BOOL", exprNode.getCtx().getText(), exprNode.getType().toString());

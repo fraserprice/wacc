@@ -9,9 +9,11 @@ public class ParenthesisNode extends ExprNode<WACCParser.ParanthesisExprContext>
 
     public ParenthesisNode(SymbolTable currentST, WACCParser.ParanthesisExprContext ctx, ExprNode argument) {
         super(currentST, ctx);
+
         if (argument.hasErrors()) {
             setError();
         }
+
         this.type = argument.getType();
 
     }

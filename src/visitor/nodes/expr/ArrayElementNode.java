@@ -2,54 +2,49 @@ package visitor.nodes.expr;
 
 import antlr.WACCParser;
 import main.CompileTimeError;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.gui.TreePostScriptGenerator;
 import symobjects.SymbolTable;
-import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.VariableObj;
 import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
 
-    private List<ExprNode> exprList;
+    private List<ExprNode> exprNodeList;
     private String ident;
 
-    public ArrayElementNode(SymbolTable currentST, WACCParser.ArrayElemContext ctx, List<ExprNode> exprList) {
+    public ArrayElementNode(SymbolTable currentST, WACCParser.ArrayElemContext ctx, List<ExprNode> exprNodeList) {
         super(currentST, ctx);
 
-        for(ExprNode expr : exprList) {
-            if(expr.hasErrors()) {
+        for(ExprNode exprNode : exprNodeList) {
+            if(exprNode.hasErrors()) {
                 setError();
                 return;
             }
         }
 
-        this.exprList = exprList;
+        this.exprNodeList = exprNodeList;
         this.ident = ctx.IDENT().getText();
-
 
         check();
     }
 
     public void check() {
-        VariableObj obj = currentST.lookupAll(ident, VariableObj.class);
+        VariableObj variableObj = currentST.lookupAll(ident, VariableObj.class);
 
-        if (obj == null) {
+        if (variableObj == null) {
             addSemanticError(CompileTimeError.VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, ident);
             return;
         }
 
-        if (!(obj.getType() instanceof ArrayObj)) {
-            addSemanticError(CompileTimeError.EXPECTED_ARRAY_CALL, obj.getType().toString());
+        if (!(variableObj.getType() instanceof ArrayObj)) {
+            addSemanticError(CompileTimeError.EXPECTED_ARRAY_CALL, variableObj.getType().toString());
             return;
         }
 
-        ArrayObj arrayType = (ArrayObj) obj.getType();
+        ArrayObj arrayType = (ArrayObj) variableObj.getType();
 
         type = arrayType.getTypeOfDim(ctx.CLOSE_SQUARE_BRACKET().size());
 
@@ -58,7 +53,7 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
             return;
         }
 
-        for(ExprNode expr : exprList) {
+        for(ExprNode expr : exprNodeList) {
             if(!(expr.getType() instanceof IntObj)) {
                 addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR, new IntObj().toString(), expr.getType().toString());
                 return;

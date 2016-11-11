@@ -13,14 +13,15 @@ public class PairElemNode extends Node<WACCParser.PairElemContext> {
     private TypeObj type;
     private ExprNode expr;
 
-    public PairElemNode(SymbolTable currentST, WACCParser.PairElemContext ctx, ExprNode expr) {
+    public PairElemNode(SymbolTable currentST, WACCParser.PairElemContext ctx, ExprNode exprNode) {
         super(currentST, ctx);
-        this.expr = expr;
 
-        if(expr.hasErrors()) {
+        if(exprNode.hasErrors()) {
             setError();
             return;
         }
+
+        this.expr = exprNode;
 
         check();
     }

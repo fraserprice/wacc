@@ -25,14 +25,15 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
 
     public FunctionNode(SymbolTable currentST, WACCParser.FuncContext ctx, FunctionObj fObj, StatNode statNode) {
         super(currentST, ctx);
-        this.fObj = fObj;
-        this.body = statNode;
-        this.name = ctx.IDENT().getText();
 
         if(statNode.hasErrors()) {
             setError();
             return;
         }
+
+        this.fObj = fObj;
+        this.body = statNode;
+        this.name = ctx.IDENT().getText();
 
         check();
     }

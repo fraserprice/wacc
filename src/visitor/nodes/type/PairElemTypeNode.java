@@ -37,6 +37,7 @@ public class PairElemTypeNode extends Node<WACCParser.PairElemTypeContext> {
     // pairElemType: PAIR
     public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx) {
         super(currentST, ctx);
+
         this.type = new PairObj();
     }
 
