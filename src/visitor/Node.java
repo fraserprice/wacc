@@ -31,23 +31,27 @@ public abstract class Node<T extends ParserRuleContext> {
 
     protected void addSyntacticError(CompileTimeError error, String... tokens) {
         errors.add(error);
-        error.printSyntactic(ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(), tokens);
+        error.printSyntactic(ctx.getStart().getLine(), ctx.getStart()
+                .getCharPositionInLine(), tokens);
         System.exit(CompileTimeError.EXIT_SYNTAX_ERROR);
     }
 
     protected void addSemanticError(CompileTimeError error, String... tokens) {
         errors.add(error);
-        error.printSemantic(ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(), tokens);
+        error.printSemantic(ctx.getStart().getLine(), ctx.getStart()
+                .getCharPositionInLine(), tokens);
         setError();
     }
 
-    protected void addSyntacticError(int line, int characterPos, CompileTimeError error, String... tokens) {
+    protected void addSyntacticError(int line, int characterPos,
+                                     CompileTimeError error, String... tokens) {
         errors.add(error);
         error.printSyntactic(line, characterPos, tokens);
         System.exit(CompileTimeError.EXIT_SYNTAX_ERROR);
     }
 
-    protected void addSemanticError(int line, int characterPos, CompileTimeError error, String... tokens) {
+    protected void addSemanticError(int line, int characterPos,
+                                    CompileTimeError error, String... tokens) {
         errors.add(error);
         error.printSemantic(line, characterPos, tokens);
         setError();
