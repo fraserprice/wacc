@@ -15,13 +15,14 @@ public class IfNode extends StatNode<WACCParser.IfStatContext> {
 
     public IfNode(SymbolTable currentST, WACCParser.IfStatContext ctx, ExprNode exprNode, StatNode thenStat, StatNode elseStat) {
         super(currentST, ctx);
-        this.elseStat = elseStat;
-        this.thenStat = thenStat;
 
         if(exprNode.hasErrors()) {
             setError();
             return;
         }
+
+        this.elseStat = elseStat;
+        this.thenStat = thenStat;
 
         checkIfNode(exprNode);
     }

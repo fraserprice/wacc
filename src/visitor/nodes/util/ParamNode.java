@@ -16,6 +16,11 @@ public class ParamNode extends Node<WACCParser.ParamContext> {
     public ParamNode(SymbolTable currentST, WACCParser.ParamContext ctx, TypeNode typeNode) {
         super(currentST, ctx);
 
+        if(typeNode.hasErrors()) {
+            setError();
+            return;
+        }
+
         check(ctx, typeNode.getType());
     }
 

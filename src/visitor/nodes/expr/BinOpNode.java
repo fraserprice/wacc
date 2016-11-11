@@ -54,14 +54,15 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
 
     public BinOpNode(SymbolTable currentST, WACCParser.ExprContext ctx, ExprNode lhs, String op, ExprNode rhs) {
         super(currentST, ctx);
-        this.lhs = lhs;
-        this.rhs = rhs;
-        this.operator = op;
 
         if(lhs.hasErrors() || rhs.hasErrors()) {
             setError();
             return;
         }
+        this.lhs = lhs;
+        this.rhs = rhs;
+        this.operator = op;
+
 
         check();
     }

@@ -20,14 +20,15 @@ public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStat
 
     public AssignPrimitiveNode(SymbolTable currentST, WACCParser.AssignPrimitiveStatContext ctx, TypeNode type, AssignRhsNode assignRhs) {
         super(currentST, ctx);
-        this.type = type.getType();
-        this.ident = ctx.IDENT().getText();
-        this.rhs = assignRhs;
 
         if(type.hasErrors() || assignRhs.hasErrors()) {
             setError();
             return;
         }
+
+        this.type = type.getType();
+        this.ident = ctx.IDENT().getText();
+        this.rhs = assignRhs;
 
         check();
     }

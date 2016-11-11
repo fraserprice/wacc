@@ -15,6 +15,18 @@ public class ProgramNode extends Node<WACCParser.ProgramContext> {
     public ProgramNode(SymbolTable currentST, WACCParser.ProgramContext ctx, List<FunctionNode> functionNodeList, StatNode statNode) {
         super(currentST, ctx);
 
+        for(FunctionNode fn : functionNodeList) {
+            if(fn.hasErrors()) {
+                setError();
+                return;
+            }
+        }
+
+        if(statNode.hasErrors()) {
+            setError();
+            return;
+        }
+
         StatNode current = statNode;
 
         while (current instanceof CompositionNode) {

@@ -11,6 +11,12 @@ public class CompositionNode extends StatNode<WACCParser.CompositionStatContext>
 
     public CompositionNode(SymbolTable currentST, WACCParser.CompositionStatContext ctx, StatNode firstStatNode, StatNode secondStatNode) {
         super(currentST, ctx);
+
+        if(firstStatNode.hasErrors() || secondStatNode.hasErrors()) {
+            setError();
+            return;
+        }
+
         this.firstStatNode = firstStatNode;
         this.secondStatNode = secondStatNode;
     }

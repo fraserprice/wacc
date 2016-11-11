@@ -10,6 +10,12 @@ public class ScopeBlockNode extends StatNode<WACCParser.ScopeBlockStatContext> {
 
     public ScopeBlockNode(SymbolTable currentST, WACCParser.ScopeBlockStatContext ctx, StatNode statNode) {
         super(currentST, ctx);
+
+        if(statNode.hasErrors()) {
+            setError();
+            return;
+        }
+
         this.body = statNode;
     }
 

@@ -15,13 +15,14 @@ public class AssignPairArrayNode extends StatNode<WACCParser.AssignPairArrayStat
 
     public AssignPairArrayNode(SymbolTable currentST, WACCParser.AssignPairArrayStatContext ctx, AssignLhsNode assignLhsNode, AssignRhsNode assignRhsNode) {
         super(currentST, ctx);
-        this.lhs = assignLhsNode;
-        this.rhs = assignRhsNode;
 
         if(assignLhsNode.hasErrors() || assignRhsNode.hasErrors()) {
             setError();
             return;
         }
+
+        this.lhs = assignLhsNode;
+        this.rhs = assignRhsNode;
 
         check();
     }

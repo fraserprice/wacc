@@ -13,12 +13,13 @@ public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
 
     public ExitNode(SymbolTable currentST, WACCParser.ExitStatContext ctx, ExprNode expr) {
         super(currentST, ctx);
-        this.expr = expr;
 
         if(expr.hasErrors()) {
             setError();
             return;
         }
+
+        this.expr = expr;
 
         check();
     }

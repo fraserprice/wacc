@@ -16,7 +16,7 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
         super(currentST, ctx);
         this.statNode = statNode;
 
-        if(exprNode.hasErrors()) {
+        if(exprNode.hasErrors() || statNode.hasErrors()) {
             setError();
             return;
         }

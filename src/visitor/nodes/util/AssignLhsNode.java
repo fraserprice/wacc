@@ -33,12 +33,22 @@ public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
     public AssignLhsNode(SymbolTable currentST, WACCParser.AssignLhsContext ctx, ArrayElementNode arrayElem) {
         super(currentST, ctx);
 
+        if(arrayElem.hasErrors()) {
+            setError();
+            return;
+        }
+
         type = arrayElem.getType();
     }
 
     // assignLhs; pairElem
     public AssignLhsNode(SymbolTable currentST, WACCParser.AssignLhsContext ctx, PairElemNode pairElem) {
         super(currentST, ctx);
+
+        if(pairElem.hasErrors()) {
+            setError();
+            return;
+        }
 
         type = pairElem.getType();
     }

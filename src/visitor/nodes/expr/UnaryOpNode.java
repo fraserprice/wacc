@@ -37,13 +37,14 @@ public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
 
     public UnaryOpNode(SymbolTable currentST, WACCParser.ExprContext ctx, String op, ExprNode argument) {
         super(currentST, ctx);
-        this.argument = argument;
-        this.operator = op;
 
         if(argument.hasErrors()) {
             setError();
             return;
         }
+
+        this.argument = argument;
+        this.operator = op;
 
         check();
     }

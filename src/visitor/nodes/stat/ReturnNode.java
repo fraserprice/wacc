@@ -12,6 +12,12 @@ public class ReturnNode extends StatNode<WACCParser.ReturnStatContext> {
 
     public ReturnNode(SymbolTable currentST, WACCParser.ReturnStatContext ctx, ExprNode exprNode) {
         super(currentST, ctx);
+
+        if(exprNode.hasErrors()) {
+            setError();
+            return;
+        }
+
         this.returnType = exprNode.getType();
     }
 

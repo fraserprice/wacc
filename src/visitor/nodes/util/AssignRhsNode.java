@@ -32,6 +32,13 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, List<ExprNode> arrayArgs) {
         super(currentST, ctx);
 
+        for(ExprNode arg : arrayArgs) {
+            if(arg.hasErrors()) {
+                setError();
+                return;
+            }
+        }
+
         if (arrayArgs.isEmpty()) {
             this.type = new GenericObj();
             return;
@@ -61,12 +68,25 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     // assignRhs: pairElem
     public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, PairElemNode pairElem) {
         super(currentST, ctx);
+
+        if(pairElem.hasErrors()) {
+            setError();
+            return;
+        }
+
         this.type = pairElem.getType();
     }
 
     // CALL_FUNC IDENT OPEN_PARENTHESES argList? CLOSE_PARENTHESES
     public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, List<ExprNode> args, String ident) {
         super(currentST, ctx);
+
+        for (ExprNode exprNode : args) {
+            if(exprNode.hasErrors()) {
+                setError();
+                return;
+            }
+        }
 
         FunctionObj func = currentST.lookupAll(ident, FunctionObj.class);
 
@@ -86,11 +106,8 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
             TypeObj param = func.getParams().get(i).getType();
             TypeObj argument = args.get(i).getType();
 
-            if (param == null) {
-                return;
-            }
-
-            if (argument == null) {
+            if (param == null || argument == null) {
+                setError();
                 return;
             }
 

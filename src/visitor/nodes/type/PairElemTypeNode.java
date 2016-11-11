@@ -13,12 +13,24 @@ public class PairElemTypeNode extends Node<WACCParser.PairElemTypeContext> {
     // pairElemType: baseType
     public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx, BaseTypeNode baseType) {
         super(currentST, ctx);
+
+        if(baseType.hasErrors()) {
+            setError();
+            return;
+        }
+
         type = baseType.getType();
     }
 
     // pairElemType: type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
     public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx, TypeNode type) {
         super(currentST, ctx);
+
+        if(type.hasErrors()) {
+            setError();
+            return;
+        }
+
         this.type = new ArrayObj(type.getType());
     }
 

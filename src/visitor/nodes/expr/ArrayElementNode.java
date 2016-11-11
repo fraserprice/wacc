@@ -21,8 +21,6 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
 
     public ArrayElementNode(SymbolTable currentST, WACCParser.ArrayElemContext ctx, List<ExprNode> exprList) {
         super(currentST, ctx);
-        this.exprList = exprList;
-        this.ident = ctx.IDENT().getText();
 
         for(ExprNode expr : exprList) {
             if(expr.hasErrors()) {
@@ -30,6 +28,10 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
                 return;
             }
         }
+
+        this.exprList = exprList;
+        this.ident = ctx.IDENT().getText();
+
 
         check();
     }

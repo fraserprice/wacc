@@ -10,5 +10,10 @@ public class PrintNode extends StatNode<WACCParser.PrintStatContext> {
 
     public PrintNode(SymbolTable currentST, WACCParser.PrintStatContext ctx, ExprNode expr) {
         super(currentST, ctx);
+
+        if(expr.hasErrors()) {
+            setError();
+            return;
+        }
     }
 }
