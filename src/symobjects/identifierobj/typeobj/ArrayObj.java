@@ -28,7 +28,7 @@ public class ArrayObj extends TypeObj {
         return elementsNo;
     }
 
-    public void setEmelentsNo(int no) {
+    public void setElementsNo(int no) {
         this.elementsNo = no;
     }
 

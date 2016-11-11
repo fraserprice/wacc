@@ -2,7 +2,6 @@ package visitor.nodes.stat;
 
 import antlr.WACCParser;
 import main.CompileTimeError;
-import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
@@ -58,7 +57,7 @@ public class AssignPrimitiveNode extends StatNode<WACCParser
         // we don't add the array type because it's size is 0
         if (type instanceof ArrayObj && !(rhs.getType() instanceof
                 GenericObj)) {
-            ((ArrayObj) type).setEmelentsNo(((ArrayObj) rhs.getType())
+            ((ArrayObj) type).setElementsNo(((ArrayObj) rhs.getType())
                     .getElementsNo());
         }
         currentST.add(ident, new VariableObj(currentST, type));

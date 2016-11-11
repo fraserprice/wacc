@@ -1,10 +1,7 @@
 package visitor;
-
-import antlr.WACCParser;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
-
 import java.util.LinkedList;
 import java.util.List;
 

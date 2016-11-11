@@ -45,7 +45,7 @@ public class PairObj extends TypeObj {
 
         PairObj pairObj = (PairObj) obj;
 
-        return (type1.equals(pairObj.getType1()) && type2.equals(pairObj
-                .getType2()));
+        return (type1.equals(pairObj.getType1()) &&
+                type2.equals(pairObj.getType2()));
     }
 }
