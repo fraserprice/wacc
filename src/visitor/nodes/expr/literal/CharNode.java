@@ -9,6 +9,7 @@ import visitor.nodes.expr.LiteralNode;
 public class CharNode extends LiteralNode<WACCParser.CharLiteralContext> {
     public CharNode(SymbolTable currentST, WACCParser.CharLiteralContext ctx) {
         super(currentST, ctx);
+
         this.type = currentST.lookupAll("char", CharObj.class);
     }
 }

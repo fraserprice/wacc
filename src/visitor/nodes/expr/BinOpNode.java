@@ -59,10 +59,10 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
             setError();
             return;
         }
+
         this.lhs = lhs;
         this.rhs = rhs;
         this.operator = op;
-
 
         check();
     }

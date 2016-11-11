@@ -23,7 +23,7 @@ public class IntNode extends LiteralNode<WACCParser.IntLiteralContext> {
 
     private void check(String textValue) {
         try {
-            Integer value = Integer.parseInt(textValue);
+            Integer.parseInt(textValue);
         } catch (NumberFormatException e) {
             addSyntacticError(CompileTimeError.INTEGER_OVERFLOW, ctx.getText());
             System.exit(CompileTimeError.EXIT_SYNTAX_ERROR);

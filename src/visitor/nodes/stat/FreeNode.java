@@ -4,7 +4,6 @@ import antlr.WACCParser;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.PairObj;
-import symobjects.identifierobj.typeobj.NullPairObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
 
@@ -18,10 +17,10 @@ public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
             return;
         }
 
-        checkFree(exprNode);
+        check(exprNode);
     }
 
-    private void checkFree(ExprNode exprNode) {
+    private void check(ExprNode exprNode) {
         if(!(exprNode.getType() instanceof PairObj)) {
             addSemanticError(CompileTimeError.INVALID_FREE_VALUE, exprNode.getType().toString());
         }

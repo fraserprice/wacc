@@ -14,12 +14,13 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
 
     public WhileNode(SymbolTable currentST, WACCParser.WhileStatContext ctx, ExprNode exprNode, StatNode statNode) {
         super(currentST, ctx);
-        this.statNode = statNode;
 
         if(exprNode.hasErrors() || statNode.hasErrors()) {
             setError();
             return;
         }
+
+        this.statNode = statNode;
 
         checkWhileCondition(exprNode);
     }
