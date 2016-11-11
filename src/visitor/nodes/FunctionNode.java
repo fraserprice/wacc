@@ -28,6 +28,12 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
         this.fObj = fObj;
         this.body = statNode;
         this.name = ctx.IDENT().getText();
+
+        if(statNode.hasErrors()) {
+            setError();
+            return;
+        }
+
         check();
     }
 
@@ -41,10 +47,6 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
 
         for (ReturnNode retStat: returnStatList) {
             TypeObj returnStatementType = retStat.getReturnType();
-
-            if (returnStatementType == null) {
-                return;
-            }
 
             if (!returnStatementType.equals(fObj.getReturnType())) {
                 addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH,

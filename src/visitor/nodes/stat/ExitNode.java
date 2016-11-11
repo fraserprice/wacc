@@ -14,16 +14,16 @@ public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
     public ExitNode(SymbolTable currentST, WACCParser.ExitStatContext ctx, ExprNode expr) {
         super(currentST, ctx);
         this.expr = expr;
+
+        if(expr.hasErrors()) {
+            setError();
+            return;
+        }
+
         check();
     }
 
     private void check() {
-        if (expr == null) {
-            return;
-        }
-        if (expr.getType() == null) {
-            return;
-        }
         if (!expr.getType().equals(new IntObj())) {
             addSemanticError(CompileTimeError.INVALID_EXIT_ARGUMENT, expr.getType().toString());
         }

@@ -12,6 +12,7 @@ public abstract class Node<T extends ParserRuleContext> {
     protected SymbolTable currentST;
     private List<CompileTimeError> errors;
     protected T ctx;
+    private boolean hasErrors;
 
     public Node(SymbolTable currentST, T ctx) {
         this.currentST = currentST;
@@ -19,20 +20,13 @@ public abstract class Node<T extends ParserRuleContext> {
         this.errors = new LinkedList<>();
     }
 
-    /**
-     * Returns weather there are any errors
-     * @return boolean
-     */
     public boolean hasErrors() {
-        return !errors.isEmpty();
+        return hasErrors;
     }
 
-    /**
-     * Returns the list of errors
-     * @return List
-     */
-    public List<CompileTimeError> getErrors() {
-        return errors;
+
+    public void setError() {
+        this.hasErrors = true;
     }
 
     protected void addSyntacticError(CompileTimeError error, String... tokens) {
@@ -44,6 +38,7 @@ public abstract class Node<T extends ParserRuleContext> {
     protected void addSemanticError(CompileTimeError error, String... tokens) {
         errors.add(error);
         error.printSemantic(ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(), tokens);
+        setError();
     }
 
     protected void addSyntacticError(int line, int characterPos, CompileTimeError error, String... tokens) {
@@ -55,6 +50,7 @@ public abstract class Node<T extends ParserRuleContext> {
     protected void addSemanticError(int line, int characterPos, CompileTimeError error, String... tokens) {
         errors.add(error);
         error.printSemantic(line, characterPos, tokens);
+        setError();
     }
 
     public T getCtx() {

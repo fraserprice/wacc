@@ -20,7 +20,6 @@ public class BaseTypeNode extends Node<WACCParser.BaseTypeContext> {
             case "bool": type = currentST.lookupAll("bool", BoolObj.class);break;
             case "char": type = currentST.lookupAll("char", CharObj.class);break;
             case "string": type = currentST.lookupAll("string", ArrayObj.class);break;
-            default:assert(false);
         }
     }
 

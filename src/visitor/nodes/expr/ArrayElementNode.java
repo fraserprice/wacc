@@ -23,6 +23,14 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
         super(currentST, ctx);
         this.exprList = exprList;
         this.ident = ctx.IDENT().getText();
+
+        for(ExprNode expr : exprList) {
+            if(expr.hasErrors()) {
+                setError();
+                return;
+            }
+        }
+
         check();
     }
 
@@ -31,10 +39,6 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
 
         if (obj == null) {
             addSemanticError(CompileTimeError.VARIABLE_NOT_DECLARED_IN_THIS_SCOPE, ident);
-            return;
-        }
-
-        if (obj.getType() == null) {
             return;
         }
 
@@ -53,15 +57,9 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
         }
 
         for(ExprNode expr : exprList) {
-            if (expr == null) {
-                return;
-            }
-            if (expr.getType() == null) {
-                return;
-            }
-
             if(!(expr.getType() instanceof IntObj)) {
                 addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR, new IntObj().toString(), expr.getType().toString());
+                return;
             }
         }
     }

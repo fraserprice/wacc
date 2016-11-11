@@ -19,9 +19,12 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     // assignRhs: expr
     public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, ExprNode rhs) {
         super(currentST, ctx);
-        if (rhs.getType() == null) {
+
+        if(rhs.hasErrors()) {
+            setError();
             return;
         }
+
         this.type = rhs.getType();
     }
 
@@ -46,10 +49,9 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     // assignRhs: NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
     public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, ExprNode first, ExprNode second) {
         super(currentST, ctx);
-        if (first.getType() == null) {
-            return;
-        }
-        if (second.getType() == null) {
+
+        if(first.hasErrors() || second.hasErrors()) {
+            setError();
             return;
         }
 
