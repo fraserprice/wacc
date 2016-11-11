@@ -2,19 +2,15 @@ package visitor.nodes.util;
 
 import antlr.WACCParser;
 import main.CompileTimeError;
-import org.antlr.v4.runtime.ParserRuleContext;
-import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.TypeObj;
-import symobjects.identifierobj.VariableObj;
 import symobjects.identifierobj.typeobj.ArrayObj;
-import symobjects.identifierobj.typeobj.EmptyArrayObj;
+import symobjects.identifierobj.typeobj.GenericObj;
 import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.ExprNode;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
@@ -34,7 +30,7 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
         super(currentST, ctx);
 
         if (arrayArgs.isEmpty()) {
-            this.type = new EmptyArrayObj();
+            this.type = new GenericObj();
             return;
         }
 
@@ -87,6 +83,14 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
         for (int i = 0; i < func.getParams().size(); i++) {
             TypeObj param = func.getParams().get(i).getType();
             TypeObj argument = args.get(i).getType();
+
+            if (param == null) {
+                return;
+            }
+
+            if (argument == null) {
+                return;
+            }
 
             if (!param.equals(argument)) {
                 addSemanticError(CompileTimeError.PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE, "" + i,

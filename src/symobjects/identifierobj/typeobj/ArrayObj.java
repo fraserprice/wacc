@@ -8,7 +8,7 @@ public class ArrayObj extends TypeObj {
 
     public ArrayObj() {
         this.elementsNo = 0;
-        this.type = new EmptyArrayObj();
+        this.type = new GenericObj();
     }
 
     public ArrayObj(TypeObj type) {
@@ -26,6 +26,10 @@ public class ArrayObj extends TypeObj {
 
     public int getElementsNo() {
         return elementsNo;
+    }
+
+    public void setEmelentsNo(int no) {
+        this.elementsNo = no;
     }
 
     public TypeObj getTypeOfDim(int number) {
@@ -56,7 +60,7 @@ public class ArrayObj extends TypeObj {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof EmptyArrayObj) {
+        if (obj instanceof GenericObj) {
             return true;
         }
 

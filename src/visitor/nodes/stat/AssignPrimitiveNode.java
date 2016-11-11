@@ -7,6 +7,8 @@ import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.VariableObj;
+import symobjects.identifierobj.typeobj.ArrayObj;
+import symobjects.identifierobj.typeobj.GenericObj;
 import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.StatNode;
 import visitor.nodes.type.TypeNode;
@@ -49,6 +51,9 @@ public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStat
         }
 
         // we don't add the array type because it's size is 0
-        currentST.add(ident, new VariableObj(currentST, rhs.getType()));
+        if (type instanceof ArrayObj && !(rhs.getType() instanceof GenericObj)) {
+            ((ArrayObj) type).setEmelentsNo(((ArrayObj)rhs.getType()).getElementsNo());
+        }
+        currentST.add(ident, new VariableObj(currentST, type));
     }
 }

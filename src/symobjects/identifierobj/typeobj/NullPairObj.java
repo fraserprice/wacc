@@ -9,6 +9,6 @@ public class NullPairObj extends PairObj {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof PairObj;
+        return obj instanceof PairObj || obj instanceof GenericObj;
     }
 }

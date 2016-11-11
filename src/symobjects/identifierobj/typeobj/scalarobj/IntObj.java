@@ -1,5 +1,6 @@
 package symobjects.identifierobj.typeobj.scalarobj;
 
+import symobjects.identifierobj.typeobj.GenericObj;
 import symobjects.identifierobj.typeobj.ScalarObj;
 
 public class IntObj extends ScalarObj {
@@ -11,6 +12,6 @@ public class IntObj extends ScalarObj {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof IntObj;
+        return obj instanceof IntObj || obj instanceof GenericObj;
     }
 }

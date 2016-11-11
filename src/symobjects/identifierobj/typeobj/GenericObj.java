@@ -2,9 +2,9 @@ package symobjects.identifierobj.typeobj;
 
 import symobjects.identifierobj.TypeObj;
 
-public class EmptyArrayObj extends TypeObj {
+public class GenericObj extends TypeObj {
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof ArrayObj;
+        return obj instanceof TypeObj;
     }
 }

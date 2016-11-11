@@ -1,5 +1,4 @@
 package symobjects.identifierobj.typeobj;
-
 import symobjects.identifierobj.TypeObj;
 
 public class PairObj extends TypeObj {
@@ -7,6 +6,8 @@ public class PairObj extends TypeObj {
     private TypeObj type2;
 
     public PairObj() {
+        type1 = new GenericObj();
+        type2 = new GenericObj();
     }
 
     public PairObj(TypeObj type1, TypeObj type2) {
@@ -24,13 +25,16 @@ public class PairObj extends TypeObj {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("pair<" + type1 + ", " + type2 + ">");
-        return sb.toString();
+        if (type1 instanceof GenericObj && type2 instanceof GenericObj) {
+            return "pair";
+        } else {
+            return "pair<" + type1 + ", " + type2 + ">";
+        }
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof NullPairObj) {
+        if (obj instanceof GenericObj) {
             return true;
         }
 
@@ -40,8 +44,6 @@ public class PairObj extends TypeObj {
 
         PairObj pairObj = (PairObj) obj;
 
-        return (type1 == null && type2 == null) || (pairObj.getType1() == null && pairObj.getType2() == null) ||
-                (type1.equals(pairObj.getType1()) && type2.equals(pairObj.getType2()));
-
+        return (type1.equals(pairObj.getType1()) && type2.equals(pairObj.getType2()));
     }
 }

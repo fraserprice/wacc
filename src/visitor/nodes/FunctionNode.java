@@ -32,8 +32,6 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
     }
 
     private void check() {
-        // TODO: check for if as well and statBlock
-        // last statement is either exit or return
         StatNode current = body;
         List<ReturnNode> returnStatList = new LinkedList<>();
 
