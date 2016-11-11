@@ -17,10 +17,11 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     private TypeObj type;
 
     // assignRhs: expr
-    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, ExprNode rhs) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext
+            ctx, ExprNode rhs) {
         super(currentST, ctx);
 
-        if(rhs.hasErrors()) {
+        if (rhs.hasErrors()) {
             setError();
             return;
         }
@@ -29,11 +30,12 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     }
 
     // assignRhs: arrayLiteral
-    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, List<ExprNode> arrayArgs) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext
+            ctx, List<ExprNode> arrayArgs) {
         super(currentST, ctx);
 
-        for(ExprNode arg : arrayArgs) {
-            if(arg.hasErrors()) {
+        for (ExprNode arg : arrayArgs) {
+            if (arg.hasErrors()) {
                 setError();
                 return;
             }
@@ -44,7 +46,8 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
             return;
         }
 
-        int noSameTypeAsFirst = (int) arrayArgs.stream().filter(expr -> expr.getType().equals(arrayArgs.get(0).getType())).count();
+        int noSameTypeAsFirst = (int) arrayArgs.stream().filter(expr -> expr
+                .getType().equals(arrayArgs.get(0).getType())).count();
         if (noSameTypeAsFirst != arrayArgs.size()) {
             addSemanticError(CompileTimeError.ARRAY_LITERAL_TYPE_DONT_MATCH);
             return;
@@ -54,10 +57,11 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     }
 
     // assignRhs: NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
-    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, ExprNode first, ExprNode second) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext
+            ctx, ExprNode first, ExprNode second) {
         super(currentST, ctx);
 
-        if(first.hasErrors() || second.hasErrors()) {
+        if (first.hasErrors() || second.hasErrors()) {
             setError();
             return;
         }
@@ -66,10 +70,11 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     }
 
     // assignRhs: pairElem
-    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, PairElemNode pairElem) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext
+            ctx, PairElemNode pairElem) {
         super(currentST, ctx);
 
-        if(pairElem.hasErrors()) {
+        if (pairElem.hasErrors()) {
             setError();
             return;
         }
@@ -78,11 +83,12 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     }
 
     // CALL_FUNC IDENT OPEN_PARENTHESES argList? CLOSE_PARENTHESES
-    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext ctx, List<ExprNode> args, String ident) {
+    public AssignRhsNode(SymbolTable currentST, WACCParser.AssignRhsContext
+            ctx, List<ExprNode> args, String ident) {
         super(currentST, ctx);
 
         for (ExprNode exprNode : args) {
-            if(exprNode.hasErrors()) {
+            if (exprNode.hasErrors()) {
                 setError();
                 return;
             }
@@ -98,7 +104,8 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
         type = func.getReturnType();
 
         if (func.getParams().size() != args.size()) {
-            addSemanticError(CompileTimeError.WRONG_NUMBER_OF_PARAMS, "" + func.getParams().size(), "" + args.size());
+            addSemanticError(CompileTimeError.WRONG_NUMBER_OF_PARAMS, "" +
+                    func.getParams().size(), "" + args.size());
             return;
         }
 
@@ -112,7 +119,9 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
             }
 
             if (!param.equals(argument)) {
-                addSemanticError(CompileTimeError.PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE, "" + (i + 1),
+                addSemanticError(CompileTimeError
+                                .PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE, "" +
+                                (i + 1),
                         ident, param.toString(), argument.toString());
             }
         }

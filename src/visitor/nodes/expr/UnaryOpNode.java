@@ -17,7 +17,8 @@ import java.util.Map;
 public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
     private ExprNode argument;
     private String operator;
-    private static final Map<String, TypeObj> returnType = new HashMap<String, TypeObj>() {{
+    private static final Map<String, TypeObj> returnType = new
+            HashMap<String, TypeObj>() {{
         put("+", new IntObj());
         put("-", new IntObj());
         put("!", new BoolObj());
@@ -26,7 +27,8 @@ public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
         put("ord", new IntObj());
     }};
 
-    private static final Map<String, Class<? extends TypeObj>> operandType = new HashMap<String, Class<? extends TypeObj>>() {{
+    private static final Map<String, Class<? extends TypeObj>> operandType =
+            new HashMap<String, Class<? extends TypeObj>>() {{
         put("+", IntObj.class);
         put("-", IntObj.class);
         put("!", BoolObj.class);
@@ -35,10 +37,11 @@ public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
         put("ord", CharObj.class);
     }};
 
-    public UnaryOpNode(SymbolTable currentST, WACCParser.ExprContext ctx, String op, ExprNode argument) {
+    public UnaryOpNode(SymbolTable currentST, WACCParser.ExprContext ctx,
+                       String op, ExprNode argument) {
         super(currentST, ctx);
 
-        if(argument.hasErrors()) {
+        if (argument.hasErrors()) {
             setError();
             return;
         }
@@ -51,7 +54,8 @@ public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
 
     public void check() {
         if (!operandType.get(operator).isInstance(argument.getType())) {
-            addSemanticError(CompileTimeError.INVALID_OPERANDS, operator, argument.getType().toString());
+            addSemanticError(CompileTimeError.INVALID_OPERANDS, operator,
+                    argument.getType().toString());
             return;
         }
 

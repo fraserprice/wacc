@@ -10,10 +10,11 @@ import visitor.nodes.util.AssignLhsNode;
 
 public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
 
-    public ReadNode(SymbolTable currentST, WACCParser.ReadStatContext ctx, AssignLhsNode assignLhsNode) {
+    public ReadNode(SymbolTable currentST, WACCParser.ReadStatContext ctx,
+                    AssignLhsNode assignLhsNode) {
         super(currentST, ctx);
 
-        if(assignLhsNode.hasErrors()) {
+        if (assignLhsNode.hasErrors()) {
             setError();
             return;
         }
@@ -22,8 +23,10 @@ public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
     }
 
     private void check(AssignLhsNode assignLhsNode) {
-        if(!(assignLhsNode.getType() instanceof IntObj) && !(assignLhsNode.getType() instanceof CharObj)) {
-            addSemanticError(CompileTimeError.READ_ERROR, assignLhsNode.getType().toString());
+        if (!(assignLhsNode.getType() instanceof IntObj) && !(assignLhsNode
+                .getType() instanceof CharObj)) {
+            addSemanticError(CompileTimeError.READ_ERROR, assignLhsNode
+                    .getType().toString());
         }
     }
 }

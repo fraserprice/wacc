@@ -11,10 +11,11 @@ public class PairElemTypeNode extends Node<WACCParser.PairElemTypeContext> {
     private TypeObj type;
 
     // pairElemType: baseType
-    public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx, BaseTypeNode baseType) {
+    public PairElemTypeNode(SymbolTable currentST, WACCParser
+            .PairElemTypeContext ctx, BaseTypeNode baseType) {
         super(currentST, ctx);
 
-        if(baseType.hasErrors()) {
+        if (baseType.hasErrors()) {
             setError();
             return;
         }
@@ -23,10 +24,11 @@ public class PairElemTypeNode extends Node<WACCParser.PairElemTypeContext> {
     }
 
     // pairElemType: type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
-    public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx, TypeNode type) {
+    public PairElemTypeNode(SymbolTable currentST, WACCParser
+            .PairElemTypeContext ctx, TypeNode type) {
         super(currentST, ctx);
 
-        if(type.hasErrors()) {
+        if (type.hasErrors()) {
             setError();
             return;
         }
@@ -35,7 +37,8 @@ public class PairElemTypeNode extends Node<WACCParser.PairElemTypeContext> {
     }
 
     // pairElemType: PAIR
-    public PairElemTypeNode(SymbolTable currentST, WACCParser.PairElemTypeContext ctx) {
+    public PairElemTypeNode(SymbolTable currentST, WACCParser
+            .PairElemTypeContext ctx) {
         super(currentST, ctx);
 
         this.type = new PairObj();

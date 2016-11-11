@@ -1,4 +1,5 @@
 package symobjects.identifierobj.typeobj;
+
 import symobjects.identifierobj.TypeObj;
 
 public class PairObj extends TypeObj {
@@ -44,6 +45,7 @@ public class PairObj extends TypeObj {
 
         PairObj pairObj = (PairObj) obj;
 
-        return (type1.equals(pairObj.getType1()) && type2.equals(pairObj.getType2()));
+        return (type1.equals(pairObj.getType1()) && type2.equals(pairObj
+                .getType2()));
     }
 }

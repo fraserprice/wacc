@@ -23,10 +23,11 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
     private StatNode body;
     private String name;
 
-    public FunctionNode(SymbolTable currentST, WACCParser.FuncContext ctx, FunctionObj fObj, StatNode statNode) {
+    public FunctionNode(SymbolTable currentST, WACCParser.FuncContext ctx,
+                        FunctionObj fObj, StatNode statNode) {
         super(currentST, ctx);
 
-        if(statNode.hasErrors()) {
+        if (statNode.hasErrors()) {
             setError();
             return;
         }
@@ -42,34 +43,44 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
         StatNode current = body;
         List<ReturnNode> returnStatList = new LinkedList<>();
 
-        if(!lastStatIsReturn(current, returnStatList)) {
-            addSyntacticError(CompileTimeError.RETURN_STATEMENT_MISSING_FROM_LAST_LINE);
+        if (!lastStatIsReturn(current, returnStatList)) {
+            addSyntacticError(CompileTimeError
+                    .RETURN_STATEMENT_MISSING_FROM_LAST_LINE);
         }
 
-        for (ReturnNode retStat: returnStatList) {
+        for (ReturnNode retStat : returnStatList) {
             TypeObj returnStatementType = retStat.getReturnType();
 
             if (!returnStatementType.equals(fObj.getReturnType())) {
-                addSemanticError(retStat.getCtx().start.getLine(), retStat.getCtx().start.getCharPositionInLine(), CompileTimeError.RETURN_TYPE_MISMATCH,
-                                                fObj.getReturnType().toString(), returnStatementType.toString());
+                addSemanticError(retStat.getCtx().start.getLine(), retStat
+                                .getCtx().start.getCharPositionInLine(),
+                        CompileTimeError.RETURN_TYPE_MISMATCH,
+                        fObj.getReturnType().toString(), returnStatementType
+                                .toString());
                 return;
             }
         }
     }
 
-    private boolean lastStatIsReturn(StatNode current, List<ReturnNode> returns) {
+    private boolean lastStatIsReturn(StatNode current, List<ReturnNode>
+            returns) {
 
         while (current instanceof CompositionNode) {
             current = ((CompositionNode) current).getSecondStatNode();
         }
 
-        if(current instanceof IfNode) {
-            return lastStatIsReturn(((IfNode) current).getElseBlock(), returns) && lastStatIsReturn(((IfNode) current).getThenBlock(), returns);
-        } else if(current instanceof WhileNode) {
-            return lastStatIsReturn(((WhileNode) current).getStatNode(), returns);
-        } else if(current instanceof ScopeBlockNode) {
-            return lastStatIsReturn(((ScopeBlockNode) current).getBody(), returns);
-        } else if (!(current instanceof ExitNode) && !(current instanceof ReturnNode)) {
+        if (current instanceof IfNode) {
+            return lastStatIsReturn(((IfNode) current).getElseBlock(),
+                    returns) && lastStatIsReturn(((IfNode) current)
+                    .getThenBlock(), returns);
+        } else if (current instanceof WhileNode) {
+            return lastStatIsReturn(((WhileNode) current).getStatNode(),
+                    returns);
+        } else if (current instanceof ScopeBlockNode) {
+            return lastStatIsReturn(((ScopeBlockNode) current).getBody(),
+                    returns);
+        } else if (!(current instanceof ExitNode) && !(current instanceof
+                ReturnNode)) {
             return false;
         }
         if (current instanceof ReturnNode) {

@@ -9,10 +9,11 @@ import visitor.nodes.StatNode;
 
 public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
 
-    public FreeNode(SymbolTable currentST, WACCParser.FreeStatContext ctx, ExprNode exprNode) {
+    public FreeNode(SymbolTable currentST, WACCParser.FreeStatContext ctx,
+                    ExprNode exprNode) {
         super(currentST, ctx);
 
-        if(exprNode.hasErrors()) {
+        if (exprNode.hasErrors()) {
             setError();
             return;
         }
@@ -21,8 +22,9 @@ public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
     }
 
     private void check(ExprNode exprNode) {
-        if(!(exprNode.getType() instanceof PairObj)) {
-            addSemanticError(CompileTimeError.INVALID_FREE_VALUE, exprNode.getType().toString());
+        if (!(exprNode.getType() instanceof PairObj)) {
+            addSemanticError(CompileTimeError.INVALID_FREE_VALUE, exprNode
+                    .getType().toString());
         }
     }
 }

@@ -16,10 +16,18 @@ public class BaseTypeNode extends Node<WACCParser.BaseTypeContext> {
     public BaseTypeNode(SymbolTable currentST, WACCParser.BaseTypeContext ctx) {
         super(currentST, ctx);
         switch (ctx.getText()) {
-            case "int": type = currentST.lookupAll("int", IntObj.class);break;
-            case "bool": type = currentST.lookupAll("bool", BoolObj.class);break;
-            case "char": type = currentST.lookupAll("char", CharObj.class);break;
-            case "string": type = currentST.lookupAll("string", ArrayObj.class);break;
+            case "int":
+                type = currentST.lookupAll("int", IntObj.class);
+                break;
+            case "bool":
+                type = currentST.lookupAll("bool", BoolObj.class);
+                break;
+            case "char":
+                type = currentST.lookupAll("char", CharObj.class);
+                break;
+            case "string":
+                type = currentST.lookupAll("string", ArrayObj.class);
+                break;
         }
     }
 

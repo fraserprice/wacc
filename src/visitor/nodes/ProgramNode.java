@@ -12,17 +12,18 @@ import visitor.nodes.stat.ReturnNode;
 import java.util.List;
 
 public class ProgramNode extends Node<WACCParser.ProgramContext> {
-    public ProgramNode(SymbolTable currentST, WACCParser.ProgramContext ctx, List<FunctionNode> functionNodeList, StatNode statNode) {
+    public ProgramNode(SymbolTable currentST, WACCParser.ProgramContext ctx,
+                       List<FunctionNode> functionNodeList, StatNode statNode) {
         super(currentST, ctx);
 
-        for(FunctionNode fn : functionNodeList) {
-            if(fn.hasErrors()) {
+        for (FunctionNode fn : functionNodeList) {
+            if (fn.hasErrors()) {
                 setError();
                 return;
             }
         }
 
-        if(statNode.hasErrors()) {
+        if (statNode.hasErrors()) {
             setError();
             return;
         }
@@ -30,8 +31,10 @@ public class ProgramNode extends Node<WACCParser.ProgramContext> {
         StatNode current = statNode;
 
         while (current instanceof CompositionNode) {
-            if (((CompositionNode) current).getFirstStatNode() instanceof ReturnNode) {
-                addSemanticError(current.getCtx().getStart().getLine(), current.getCtx().getStart().getCharPositionInLine(),
+            if (((CompositionNode) current).getFirstStatNode() instanceof
+                    ReturnNode) {
+                addSemanticError(current.getCtx().getStart().getLine(),
+                        current.getCtx().getStart().getCharPositionInLine(),
                         CompileTimeError.MAIN_FUNCTION_CONTAINS_RETURN);
                 return;
             }
@@ -40,8 +43,9 @@ public class ProgramNode extends Node<WACCParser.ProgramContext> {
         }
 
         if (current instanceof ReturnNode) {
-            addSemanticError(current.getCtx().getStart().getLine(), current.getCtx().getStart().getCharPositionInLine(),
-                                                            CompileTimeError.MAIN_FUNCTION_CONTAINS_RETURN);
+            addSemanticError(current.getCtx().getStart().getLine(), current
+                            .getCtx().getStart().getCharPositionInLine(),
+                    CompileTimeError.MAIN_FUNCTION_CONTAINS_RETURN);
             return;
         }
     }

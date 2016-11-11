@@ -17,15 +17,18 @@ public class IdentNode extends ExprNode<WACCParser.IdentExprContext> {
     }
 
     private void check() {
-        IdentifierObj obj = currentST.lookupAll(ctx.getText(), IdentifierObj.class);
+        IdentifierObj obj = currentST.lookupAll(ctx.getText(), IdentifierObj
+                .class);
 
         if (obj == null) {
-            addSemanticError(CompileTimeError.UNDEFINED_IDENTIFIER, ctx.IDENT().toString());
+            addSemanticError(CompileTimeError.UNDEFINED_IDENTIFIER, ctx.IDENT
+                    ().toString());
             return;
         }
 
         if (!(obj instanceof VariableObj)) {
-            addSemanticError(CompileTimeError.NOT_VARIABLE, ctx.IDENT().toString());
+            addSemanticError(CompileTimeError.NOT_VARIABLE, ctx.IDENT()
+                    .toString());
             return;
         }
 

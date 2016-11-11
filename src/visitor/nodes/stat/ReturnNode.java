@@ -10,10 +10,11 @@ import visitor.nodes.StatNode;
 public class ReturnNode extends StatNode<WACCParser.ReturnStatContext> {
     private TypeObj returnType;
 
-    public ReturnNode(SymbolTable currentST, WACCParser.ReturnStatContext ctx, ExprNode exprNode) {
+    public ReturnNode(SymbolTable currentST, WACCParser.ReturnStatContext
+            ctx, ExprNode exprNode) {
         super(currentST, ctx);
 
-        if(exprNode.hasErrors()) {
+        if (exprNode.hasErrors()) {
             setError();
             return;
         }

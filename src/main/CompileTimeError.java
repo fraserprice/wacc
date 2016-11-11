@@ -1,6 +1,7 @@
 package main;
 
 import antlr.WACCParser;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,25 +36,29 @@ public enum CompileTimeError {
     public static final int EXIT_SEMANTIC_ERROR = 200;
     public static boolean hasSemanticErrors = false;
     public static final Set<String> invalidIdentifierVariableNames
-        = Arrays.stream(WACCParser.tokenNames)
-        .filter(token -> Character.isLowerCase(token.charAt(0)))
-        .collect(Collectors.toCollection(HashSet::new));
+            = Arrays.stream(WACCParser.tokenNames)
+            .filter(token -> Character.isLowerCase(token.charAt(0)))
+            .collect(Collectors.toCollection(HashSet::new));
 
     public void printSemantic(int line, int characterPos, String... tokens) {
         String errorMessage;
 
         switch (this) {
-            case INVALID_OPERANDS: errorMessage = "Operator " + tokens[0]
-                    + " doesn't work on " + tokens[1];
+            case INVALID_OPERANDS:
+                errorMessage = "Operator " + tokens[0]
+                        + " doesn't work on " + tokens[1];
                 break;
-            case FUNCTION_ALREADY_DEFINED: errorMessage = "Function "
-                    + tokens[0] + " already defined";
+            case FUNCTION_ALREADY_DEFINED:
+                errorMessage = "Function "
+                        + tokens[0] + " already defined";
                 break;
-            case MAIN_FUNCTION_CONTAINS_RETURN: errorMessage
-                    = "Main block can't have return statements";
+            case MAIN_FUNCTION_CONTAINS_RETURN:
+                errorMessage
+                        = "Main block can't have return statements";
                 break;
-            case ARRAY_LITERAL_TYPE_DONT_MATCH: errorMessage
-                    = "Elements in array literal don't have the same type";
+            case ARRAY_LITERAL_TYPE_DONT_MATCH:
+                errorMessage
+                        = "Elements in array literal don't have the same type";
                 break;
             case TYPE_MISMATCH_ERROR:
                 errorMessage = "Type Mismatch: Types " + tokens[0] + " and "
@@ -94,7 +99,7 @@ public enum CompileTimeError {
                 break;
             case INVALID_DIMENSION_NUMBER_ARRAY:
                 errorMessage = "Array reference has different dimensionality" +
-                    " from it's declaration!";
+                        " from it's declaration!";
                 break;
             case INVALID_EXIT_ARGUMENT:
                 errorMessage = "Expected: INT, actual: " + tokens[0];
@@ -120,8 +125,10 @@ public enum CompileTimeError {
                         " signature (expected: " + tokens[2] + ", actual: "
                         + tokens[3] + ")";
                 break;
-            default: errorMessage = null; assert(false): this +
-                    " is not a semantic error";
+            default:
+                errorMessage = null;
+                assert (false) : this +
+                        " is not a semantic error";
         }
 
         System.err.println("Error on line " + line + ":" + characterPos +
@@ -132,14 +139,18 @@ public enum CompileTimeError {
     public void printSyntactic(int line, int characterPos, String... tokens) {
         String errorMessage;
         switch (this) {
-            case INTEGER_OVERFLOW: errorMessage = "Integer Overflow: " +
-                    tokens[0]; break;
+            case INTEGER_OVERFLOW:
+                errorMessage = "Integer Overflow: " +
+                        tokens[0];
+                break;
             case RETURN_STATEMENT_MISSING_FROM_LAST_LINE:
                 errorMessage = "Last statement from function should be a"
                         + " return/exit statement!";
                 break;
-            default: errorMessage = null; assert(false): this +
-                    " is not a semantic error";
+            default:
+                errorMessage = null;
+                assert (false) : this +
+                        " is not a semantic error";
         }
 
         System.err.println("Error on line " + line + ":" + characterPos +

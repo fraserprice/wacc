@@ -8,10 +8,11 @@ import visitor.nodes.StatNode;
 public class ScopeBlockNode extends StatNode<WACCParser.ScopeBlockStatContext> {
     private StatNode body;
 
-    public ScopeBlockNode(SymbolTable currentST, WACCParser.ScopeBlockStatContext ctx, StatNode statNode) {
+    public ScopeBlockNode(SymbolTable currentST, WACCParser
+            .ScopeBlockStatContext ctx, StatNode statNode) {
         super(currentST, ctx);
 
-        if(statNode.hasErrors()) {
+        if (statNode.hasErrors()) {
             setError();
             return;
         }

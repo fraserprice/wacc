@@ -12,10 +12,11 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
 
     private StatNode statNode;
 
-    public WhileNode(SymbolTable currentST, WACCParser.WhileStatContext ctx, ExprNode exprNode, StatNode statNode) {
+    public WhileNode(SymbolTable currentST, WACCParser.WhileStatContext ctx,
+                     ExprNode exprNode, StatNode statNode) {
         super(currentST, ctx);
 
-        if(exprNode.hasErrors() || statNode.hasErrors()) {
+        if (exprNode.hasErrors() || statNode.hasErrors()) {
             setError();
             return;
         }
@@ -26,9 +27,10 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
     }
 
     private void checkWhileCondition(ExprNode exprNode) {
-        if(!(exprNode.getType() instanceof BoolObj)) {
+        if (!(exprNode.getType() instanceof BoolObj)) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
-                "while condition", "BOOL", exprNode.getCtx().getText(), exprNode.getType().toString());
+                    "while condition", "BOOL", exprNode.getCtx().getText(),
+                    exprNode.getType().toString());
         }
     }
 

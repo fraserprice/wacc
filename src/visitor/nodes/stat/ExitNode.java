@@ -11,10 +11,11 @@ import visitor.nodes.StatNode;
 public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
     private ExprNode expr;
 
-    public ExitNode(SymbolTable currentST, WACCParser.ExitStatContext ctx, ExprNode expr) {
+    public ExitNode(SymbolTable currentST, WACCParser.ExitStatContext ctx,
+                    ExprNode expr) {
         super(currentST, ctx);
 
-        if(expr.hasErrors()) {
+        if (expr.hasErrors()) {
             setError();
             return;
         }
@@ -26,7 +27,8 @@ public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
 
     private void check() {
         if (!expr.getType().equals(new IntObj())) {
-            addSemanticError(CompileTimeError.INVALID_EXIT_ARGUMENT, expr.getType().toString());
+            addSemanticError(CompileTimeError.INVALID_EXIT_ARGUMENT, expr
+                    .getType().toString());
         }
     }
 }

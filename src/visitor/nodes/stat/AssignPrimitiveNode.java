@@ -13,15 +13,18 @@ import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.StatNode;
 import visitor.nodes.type.TypeNode;
 
-public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStatContext> {
+public class AssignPrimitiveNode extends StatNode<WACCParser
+        .AssignPrimitiveStatContext> {
     private TypeObj type;
     private String ident;
     private AssignRhsNode rhs;
 
-    public AssignPrimitiveNode(SymbolTable currentST, WACCParser.AssignPrimitiveStatContext ctx, TypeNode type, AssignRhsNode assignRhs) {
+    public AssignPrimitiveNode(SymbolTable currentST, WACCParser
+            .AssignPrimitiveStatContext ctx, TypeNode type, AssignRhsNode
+            assignRhs) {
         super(currentST, ctx);
 
-        if(type.hasErrors() || assignRhs.hasErrors()) {
+        if (type.hasErrors() || assignRhs.hasErrors()) {
             setError();
             return;
         }
@@ -42,7 +45,8 @@ public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStat
 
         if (!type.equals(rhs.getType())) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE, ident,
-                type.toString(), "right hand side", rhs.getType().toString());
+                    type.toString(), "right hand side", rhs.getType()
+                            .toString());
             return;
         }
 
@@ -52,8 +56,10 @@ public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStat
         }
 
         // we don't add the array type because it's size is 0
-        if (type instanceof ArrayObj && !(rhs.getType() instanceof GenericObj)) {
-            ((ArrayObj) type).setEmelentsNo(((ArrayObj)rhs.getType()).getElementsNo());
+        if (type instanceof ArrayObj && !(rhs.getType() instanceof
+                GenericObj)) {
+            ((ArrayObj) type).setEmelentsNo(((ArrayObj) rhs.getType())
+                    .getElementsNo());
         }
         currentST.add(ident, new VariableObj(currentST, type));
     }

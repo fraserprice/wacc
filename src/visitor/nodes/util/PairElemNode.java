@@ -13,10 +13,11 @@ public class PairElemNode extends Node<WACCParser.PairElemContext> {
     private TypeObj type;
     private ExprNode expr;
 
-    public PairElemNode(SymbolTable currentST, WACCParser.PairElemContext ctx, ExprNode exprNode) {
+    public PairElemNode(SymbolTable currentST, WACCParser.PairElemContext
+            ctx, ExprNode exprNode) {
         super(currentST, ctx);
 
-        if(exprNode.hasErrors()) {
+        if (exprNode.hasErrors()) {
             setError();
             return;
         }
@@ -28,7 +29,8 @@ public class PairElemNode extends Node<WACCParser.PairElemContext> {
 
     private void check() {
         if (!(expr.getType() instanceof PairObj)) {
-            addSemanticError(CompileTimeError.INVALID_PAIR_ELEM_TYPE, expr.getType().toString());
+            addSemanticError(CompileTimeError.INVALID_PAIR_ELEM_TYPE, expr
+                    .getType().toString());
             return;
         }
 

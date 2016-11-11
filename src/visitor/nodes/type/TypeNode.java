@@ -12,10 +12,11 @@ public class TypeNode extends Node<WACCParser.TypeContext> {
     private TypeObj type;
 
     // type: baseType
-    public TypeNode(SymbolTable currentST, WACCParser.TypeContext ctx, BaseTypeNode baseType) {
+    public TypeNode(SymbolTable currentST, WACCParser.TypeContext ctx,
+                    BaseTypeNode baseType) {
         super(currentST, ctx);
 
-        if(baseType.hasErrors()) {
+        if (baseType.hasErrors()) {
             setError();
             return;
         }
@@ -24,10 +25,11 @@ public class TypeNode extends Node<WACCParser.TypeContext> {
     }
 
     // type: type OPEN_SQUARE_BRACKET CLOSE_SQUARE_BRACKET
-    public TypeNode(SymbolTable currentST, WACCParser.TypeContext ctx, TypeNode type) {
+    public TypeNode(SymbolTable currentST, WACCParser.TypeContext ctx,
+                    TypeNode type) {
         super(currentST, ctx);
 
-        if(type.hasErrors()) {
+        if (type.hasErrors()) {
             setError();
             return;
         }
@@ -35,11 +37,13 @@ public class TypeNode extends Node<WACCParser.TypeContext> {
         this.type = new ArrayObj(type.getType());
     }
 
-    // type: PAIR OPEN_PARENTHESES pairElemType COMMA pairElemType CLOSE_PARENTHESES
-    public TypeNode(SymbolTable currentST, WACCParser.TypeContext ctx, PairElemTypeNode fstType, PairElemTypeNode sndType) {
+    // type: PAIR OPEN_PARENTHESES pairElemType COMMA pairElemType
+    // CLOSE_PARENTHESES
+    public TypeNode(SymbolTable currentST, WACCParser.TypeContext ctx,
+                    PairElemTypeNode fstType, PairElemTypeNode sndType) {
         super(currentST, ctx);
 
-        if(fstType.hasErrors() || sndType.hasErrors()) {
+        if (fstType.hasErrors() || sndType.hasErrors()) {
             setError();
             return;
         }

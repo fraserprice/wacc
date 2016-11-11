@@ -8,10 +8,11 @@ import visitor.nodes.StatNode;
 
 public class PrintlnNode extends StatNode<WACCParser.PrintlnStatContext> {
 
-    public PrintlnNode(SymbolTable currentST, WACCParser.PrintlnStatContext ctx, ExprNode exprNode) {
+    public PrintlnNode(SymbolTable currentST, WACCParser.PrintlnStatContext
+            ctx, ExprNode exprNode) {
         super(currentST, ctx);
 
-        if(exprNode.hasErrors()) {
+        if (exprNode.hasErrors()) {
             setError();
             return;
         }

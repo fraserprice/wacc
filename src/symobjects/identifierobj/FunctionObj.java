@@ -11,7 +11,8 @@ public class FunctionObj extends IdentifierObj {
     private SymbolTable functionScope;
     private List<VariableObj> params;
 
-    public FunctionObj(SymbolTable currentST, SymbolTable functionScope, TypeObj returnType, List<VariableObj> params) {
+    public FunctionObj(SymbolTable currentST, SymbolTable functionScope,
+                       TypeObj returnType, List<VariableObj> params) {
         this.returnType = returnType;
         this.functionScope = functionScope;
         this.currentST = currentST;

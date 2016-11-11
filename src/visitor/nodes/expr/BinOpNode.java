@@ -20,7 +20,8 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
     private ExprNode lhs;
     private ExprNode rhs;
     private String operator;
-    private static final Map<String, TypeObj> returnType = new HashMap<String, TypeObj>() {{
+    private static final Map<String, TypeObj> returnType = new
+            HashMap<String, TypeObj>() {{
         put("*", new IntObj());
         put("/", new IntObj());
         put("%", new IntObj());
@@ -36,7 +37,9 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
         put("||", new BoolObj());
     }};
 
-    private static final Map<String, List<Class<? extends TypeObj>>> operatorType = new HashMap<String, List<Class<? extends TypeObj>>>() {{
+    private static final Map<String, List<Class<? extends TypeObj>>>
+            operatorType = new HashMap<String, List<Class<? extends
+            TypeObj>>>() {{
         put("*", Arrays.asList(IntObj.class));
         put("/", Arrays.asList(IntObj.class));
         put("%", Arrays.asList(IntObj.class));
@@ -46,16 +49,19 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
         put(">=", Arrays.asList(CharObj.class, IntObj.class));
         put("<", Arrays.asList(CharObj.class, IntObj.class));
         put("<=", Arrays.asList(CharObj.class, IntObj.class));
-        put("==", Arrays.asList(CharObj.class, IntObj.class, BoolObj.class, ArrayObj.class, PairObj.class));
-        put("!=", Arrays.asList(CharObj.class, IntObj.class, BoolObj.class, ArrayObj.class, PairObj.class));
+        put("==", Arrays.asList(CharObj.class, IntObj.class, BoolObj.class,
+                ArrayObj.class, PairObj.class));
+        put("!=", Arrays.asList(CharObj.class, IntObj.class, BoolObj.class,
+                ArrayObj.class, PairObj.class));
         put("&&", Arrays.asList(BoolObj.class));
         put("||", Arrays.asList(BoolObj.class));
     }};
 
-    public BinOpNode(SymbolTable currentST, WACCParser.ExprContext ctx, ExprNode lhs, String op, ExprNode rhs) {
+    public BinOpNode(SymbolTable currentST, WACCParser.ExprContext ctx,
+                     ExprNode lhs, String op, ExprNode rhs) {
         super(currentST, ctx);
 
-        if(lhs.hasErrors() || rhs.hasErrors()) {
+        if (lhs.hasErrors() || rhs.hasErrors()) {
             setError();
             return;
         }
@@ -71,13 +77,16 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
         TypeObj lhsType = lhs.getType();
         TypeObj rhsType = rhs.getType();
 
-        if(!lhsType.equals(rhsType)) {
-            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE, lhs.getCtx().getText(), lhsType.toString(), rhs.getCtx().getText(), rhsType.toString());
+        if (!lhsType.equals(rhsType)) {
+            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE, lhs.getCtx()
+                    .getText(), lhsType.toString(), rhs.getCtx().getText(),
+                    rhsType.toString());
             return;
         }
 
         if (!operatorType.get(operator).contains(lhsType.getClass())) {
-            addSemanticError(CompileTimeError.INVALID_OPERANDS, operator, lhsType.toString());
+            addSemanticError(CompileTimeError.INVALID_OPERANDS, operator,
+                    lhsType.toString());
             return;
         }
 

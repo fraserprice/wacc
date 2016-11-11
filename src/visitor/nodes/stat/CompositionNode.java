@@ -5,14 +5,17 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import visitor.nodes.StatNode;
 
-public class CompositionNode extends StatNode<WACCParser.CompositionStatContext> {
+public class CompositionNode extends StatNode<WACCParser
+        .CompositionStatContext> {
     private StatNode firstStatNode;
     private StatNode secondStatNode;
 
-    public CompositionNode(SymbolTable currentST, WACCParser.CompositionStatContext ctx, StatNode firstStatNode, StatNode secondStatNode) {
+    public CompositionNode(SymbolTable currentST, WACCParser
+            .CompositionStatContext ctx, StatNode firstStatNode, StatNode
+            secondStatNode) {
         super(currentST, ctx);
 
-        if(firstStatNode.hasErrors() || secondStatNode.hasErrors()) {
+        if (firstStatNode.hasErrors() || secondStatNode.hasErrors()) {
             setError();
             return;
         }

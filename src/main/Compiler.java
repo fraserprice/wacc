@@ -14,7 +14,7 @@ public class Compiler {
         ANTLRFileStream in = null;
         try {
             in = new ANTLRFileStream(args[0]);
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
             System.exit(CompileTimeError.EXIT_FILE_ERROR);
         }

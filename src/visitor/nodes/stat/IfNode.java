@@ -13,10 +13,11 @@ public class IfNode extends StatNode<WACCParser.IfStatContext> {
     private StatNode thenStat;
     private StatNode elseStat;
 
-    public IfNode(SymbolTable currentST, WACCParser.IfStatContext ctx, ExprNode exprNode, StatNode thenStat, StatNode elseStat) {
+    public IfNode(SymbolTable currentST, WACCParser.IfStatContext ctx,
+                  ExprNode exprNode, StatNode thenStat, StatNode elseStat) {
         super(currentST, ctx);
 
-        if(exprNode.hasErrors()) {
+        if (exprNode.hasErrors()) {
             setError();
             return;
         }
@@ -28,9 +29,10 @@ public class IfNode extends StatNode<WACCParser.IfStatContext> {
     }
 
     private void check(ExprNode exprNode) {
-        if(!(exprNode.getType() instanceof BoolObj)) {
+        if (!(exprNode.getType() instanceof BoolObj)) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
-                "If statement", "BOOL", exprNode.getCtx().getText(), exprNode.getType().toString());
+                    "If statement", "BOOL", exprNode.getCtx().getText(),
+                    exprNode.getType().toString());
         }
     }
 
