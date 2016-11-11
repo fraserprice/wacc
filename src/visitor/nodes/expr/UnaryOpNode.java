@@ -2,9 +2,9 @@ package visitor.nodes.expr;
 
 import antlr.WACCParser;
 import main.CompileTimeError;
-import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
+import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.scalarobj.BoolObj;
 import symobjects.identifierobj.typeobj.scalarobj.CharObj;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
@@ -17,13 +17,22 @@ import java.util.Map;
 public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
     private ExprNode argument;
     private String operator;
-    private static final Map<String, TypeObj> operatorToType = new HashMap<String, TypeObj>() {{
+    private static final Map<String, TypeObj> returnType = new HashMap<String, TypeObj>() {{
         put("+", new IntObj());
         put("-", new IntObj());
         put("!", new BoolObj());
         put("len", new IntObj());
         put("chr", new CharObj());
         put("ord", new IntObj());
+    }};
+
+    private static final Map<String, TypeObj> operandType = new HashMap<String, TypeObj>() {{
+        put("+", new IntObj());
+        put("-", new IntObj());
+        put("!", new BoolObj());
+        put("len", new ArrayObj());
+        put("chr", new IntObj());
+        put("ord", new CharObj());
     }};
 
     public UnaryOpNode(SymbolTable currentST, WACCParser.ExprContext ctx, String op, ExprNode argument) {
@@ -41,6 +50,11 @@ public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
             return;
         }
 
-        type = operatorToType.get(operator);
+        if (!operandType.get(operator).equals(argument.getType())) {
+            addSemanticError(CompileTimeError.INVALID_OPERANDS, operator, argument.getType().toString());
+            return;
+        }
+
+        type = returnType.get(operator);
     }
 }

@@ -56,4 +56,8 @@ public abstract class Node<T extends ParserRuleContext> {
         errors.add(error);
         error.printSemantic(line, characterPos, tokens);
     }
+
+    public T getCtx() {
+        return ctx;
+    }
 }

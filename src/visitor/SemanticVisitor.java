@@ -2,6 +2,7 @@ package visitor;
 
 import antlr.WACCParser;
 import antlr.WACCParserVisitor;
+import main.CompileTimeError;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import symobjects.SymbolTable;
@@ -75,6 +76,12 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node> implements W
 
             List<VariableObj> paramsObj = params.stream().map(ParamNode::getObj).collect(Collectors.toList());
             closeCurrentScope();
+
+            if (currentST.lookupAll(fCtx.IDENT().getText(), FunctionObj.class) != null) {
+                CompileTimeError.FUNCTION_ALREADY_DEFINED.printSemantic(fCtx.getStart().getLine(),
+                                            fCtx.getStart().getCharPositionInLine(), fCtx.IDENT().getText());
+            }
+
             currentST.add(fCtx.IDENT().getText(), new FunctionObj(currentST, functionScope, returnType.getType(), paramsObj));
         }
     }

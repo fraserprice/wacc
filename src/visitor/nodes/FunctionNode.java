@@ -37,12 +37,17 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
         StatNode current = body;
         List<ReturnNode> returnStatList = new LinkedList<>();
 
-        if(!lastStatIsReturn(current)) {
+        if(!lastStatIsReturn(current, returnStatList)) {
             addSyntacticError(CompileTimeError.RETURN_STATEMENT_MISSING_FROM_LAST_LINE);
         }
 
         for (ReturnNode retStat: returnStatList) {
             TypeObj returnStatementType = retStat.getReturnType();
+
+            if (returnStatementType == null) {
+                return;
+            }
+
             if (!returnStatementType.equals(fObj.getReturnType())) {
                 addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH,
                                                 fObj.getReturnType().toString(), returnStatementType.toString());
@@ -51,21 +56,22 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
         }
     }
 
-    private boolean lastStatIsReturn(StatNode current) {
+    private boolean lastStatIsReturn(StatNode current, List<ReturnNode> returns) {
 
         while (current instanceof CompositionNode) {
             current = ((CompositionNode) current).getSecondStatNode();
         }
 
         if(current instanceof IfNode) {
-            return lastStatIsReturn(((IfNode) current).getElseBlock()) && lastStatIsReturn(((IfNode) current).getThenBlock());
+            return lastStatIsReturn(((IfNode) current).getElseBlock(), returns) && lastStatIsReturn(((IfNode) current).getThenBlock(), returns);
         } else if(current instanceof WhileNode) {
-            return lastStatIsReturn(((WhileNode) current).getStatNode());
+            return lastStatIsReturn(((WhileNode) current).getStatNode(), returns);
         } else if(current instanceof ScopeBlockNode) {
-            return lastStatIsReturn(((ScopeBlockNode) current).getBody());
+            return lastStatIsReturn(((ScopeBlockNode) current).getBody(), returns);
         } else if (!(current instanceof ExitNode) && !(current instanceof ReturnNode)) {
             return false;
         }
+        returns.add((ReturnNode) current);
         return true;
     }
 }

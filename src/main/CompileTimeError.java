@@ -27,7 +27,7 @@ public enum CompileTimeError {
     NOT_A_FUNCTION,
     WRONG_NUMBER_OF_PARAMS,
     PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE,
-    INVALID_PARAMETER_USE, ARRAY_LITERAL_TYPE_DONT_MATCH;
+    INVALID_PARAMETER_USE, ARRAY_LITERAL_TYPE_DONT_MATCH, MAIN_FUNCTION_CONTAINS_RETURN, FUNCTION_ALREADY_DEFINED, INVALID_OPERANDS;
 
     public static final int EXIT_SUCCESS = 0;
     public static final int EXIT_FILE_ERROR = 1;
@@ -43,6 +43,9 @@ public enum CompileTimeError {
         String errorMessage;
 
         switch (this) {
+            case INVALID_OPERANDS: errorMessage = "Operator " + tokens[0] + " doesn't work on " + tokens[1]; break;
+            case FUNCTION_ALREADY_DEFINED: errorMessage = "Function " + tokens[0] + " already defined"; break;
+            case MAIN_FUNCTION_CONTAINS_RETURN: errorMessage = "Main block can't have return statements"; break;
             case ARRAY_LITERAL_TYPE_DONT_MATCH: errorMessage = "Elements in array literal don't have the same type"; break;
             case TYPE_MISMATCH_ERROR:
                 errorMessage = "Type Mismatch: Type " + tokens[0] + " " + tokens[1] + " don't match!";
@@ -73,7 +76,7 @@ public enum CompileTimeError {
                 errorMessage = tokens[0] + " of type " + tokens[1] + " and " + tokens[2] + " of type " + tokens[3] + " have incompatible types!";
                 break;
             case READ_ERROR:
-                errorMessage = "Reading a pair is not allowed! Expected: int, char, string, array!";
+                errorMessage = "Reading a " + tokens[0] + " is not valid. (expected: int or char)";
                 break;
             case UNDEFINED_IDENTIFIER:
                 errorMessage = tokens[0] + " was not previously defined!";
