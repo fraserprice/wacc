@@ -69,7 +69,9 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
         } else if (!(current instanceof ExitNode) && !(current instanceof ReturnNode)) {
             return false;
         }
-        returns.add((ReturnNode) current);
+        if (current instanceof ReturnNode) {
+            returns.add((ReturnNode) current);
+        }
         return true;
     }
 }
