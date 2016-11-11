@@ -4,6 +4,8 @@ import antlr.WACCParser;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
+import symobjects.identifierobj.typeobj.ArrayObj;
+import symobjects.identifierobj.typeobj.PairObj;
 import symobjects.identifierobj.typeobj.scalarobj.BoolObj;
 import symobjects.identifierobj.typeobj.scalarobj.CharObj;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
@@ -34,20 +36,20 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
         put("||", new BoolObj());
     }};
 
-    private static final Map<String, List<TypeObj>> operatorType = new HashMap<String, List<TypeObj>>() {{
-        put("*", Arrays.asList(new IntObj()));
-        put("/", Arrays.asList(new IntObj()));
-        put("%", Arrays.asList(new IntObj()));
-        put("+", Arrays.asList(new IntObj()));
-        put("-", Arrays.asList(new IntObj()));
-        put(">", Arrays.asList(new CharObj(), new IntObj()));
-        put(">=", Arrays.asList(new CharObj(), new IntObj()));
-        put("<", Arrays.asList(new CharObj(), new IntObj()));
-        put("<=", Arrays.asList(new CharObj(), new IntObj()));
-        put("==", Arrays.asList(new CharObj(), new IntObj(), new BoolObj()));
-        put("!=", Arrays.asList(new CharObj(), new IntObj(), new BoolObj()));
-        put("&&", Arrays.asList(new BoolObj()));
-        put("||", Arrays.asList(new BoolObj()));
+    private static final Map<String, List<Class<? extends TypeObj>>> operatorType = new HashMap<String, List<Class<? extends TypeObj>>>() {{
+        put("*", Arrays.asList(IntObj.class));
+        put("/", Arrays.asList(IntObj.class));
+        put("%", Arrays.asList(IntObj.class));
+        put("+", Arrays.asList(IntObj.class));
+        put("-", Arrays.asList(IntObj.class));
+        put(">", Arrays.asList(CharObj.class, IntObj.class));
+        put(">=", Arrays.asList(CharObj.class, IntObj.class));
+        put("<", Arrays.asList(CharObj.class, IntObj.class));
+        put("<=", Arrays.asList(CharObj.class, IntObj.class));
+        put("==", Arrays.asList(CharObj.class, IntObj.class, BoolObj.class, ArrayObj.class, PairObj.class));
+        put("!=", Arrays.asList(CharObj.class, IntObj.class, BoolObj.class, ArrayObj.class, PairObj.class));
+        put("&&", Arrays.asList(BoolObj.class));
+        put("||", Arrays.asList(BoolObj.class));
     }};
 
     public BinOpNode(SymbolTable currentST, WACCParser.ExprContext ctx, ExprNode lhs, String op, ExprNode rhs) {
@@ -83,7 +85,7 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
             return;
         }
 
-        if (!operatorType.get(operator).contains(lhsType)) {
+        if (!operatorType.get(operator).contains(lhsType.getClass())) {
             addSemanticError(CompileTimeError.INVALID_OPERANDS, operator, lhsType.toString());
             return;
         }
