@@ -17,23 +17,16 @@ public class AssignPairArrayNode extends StatNode<WACCParser.AssignPairArrayStat
         super(currentST, ctx);
         this.lhs = assignLhsNode;
         this.rhs = assignRhsNode;
+
+        if(assignLhsNode.hasErrors() || assignRhsNode.hasErrors()) {
+            setError();
+            return;
+        }
+
         check();
     }
 
     private void check() {
-        if (lhs == null) {
-            return;
-        }
-        if (lhs.getType() == null) {
-            return;
-        }
-        if (rhs == null) {
-            return;
-        }
-        if (rhs.getType() == null) {
-            return;
-        }
-
         if (!lhs.getType().equals(rhs.getType())) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
                 "Left hand side: ", lhs.getType().toString(), "Right hand side: ", rhs.getType().toString());

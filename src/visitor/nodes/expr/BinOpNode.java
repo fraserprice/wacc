@@ -57,26 +57,16 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
         this.lhs = lhs;
         this.rhs = rhs;
         this.operator = op;
+
+        if(lhs.hasErrors() || rhs.hasErrors()) {
+            setError();
+            return;
+        }
+
         check();
     }
 
     private void check() {
-        if (lhs == null) {
-            return;
-        }
-
-        if (rhs == null) {
-            return;
-        }
-
-        if (lhs.getType() == null) {
-            return;
-        }
-
-        if (rhs.getType() == null) {
-            return;
-        }
-
         TypeObj lhsType = lhs.getType();
         TypeObj rhsType = rhs.getType();
 

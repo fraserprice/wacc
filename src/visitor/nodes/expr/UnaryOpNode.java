@@ -39,17 +39,16 @@ public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
         super(currentST, ctx);
         this.argument = argument;
         this.operator = op;
+
+        if(argument.hasErrors()) {
+            setError();
+            return;
+        }
+
         check();
     }
 
     public void check() {
-        if (argument == null) {
-            return;
-        }
-        if (argument.getType() == null) {
-            return;
-        }
-
         if (!operandType.get(operator).isInstance(argument.getType())) {
             addSemanticError(CompileTimeError.INVALID_OPERANDS, operator, argument.getType().toString());
             return;

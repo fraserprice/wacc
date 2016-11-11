@@ -14,17 +14,16 @@ public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
 
     public ReadNode(SymbolTable currentST, WACCParser.ReadStatContext ctx, AssignLhsNode assignLhsNode) {
         super(currentST, ctx);
+
+        if(assignLhsNode.hasErrors()) {
+            setError();
+            return;
+        }
+
         checkRead(assignLhsNode);
     }
 
     private void checkRead(AssignLhsNode assignLhsNode) {
-        if  (assignLhsNode == null) {
-            return;
-        }
-        if (assignLhsNode.getType() == null) {
-            return;
-        }
-
         if(!(assignLhsNode.getType() instanceof IntObj) && !(assignLhsNode.getType() instanceof CharObj)) {
             addSemanticError(CompileTimeError.READ_ERROR, assignLhsNode.getType().toString());
         }

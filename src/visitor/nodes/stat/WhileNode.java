@@ -14,18 +14,17 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
 
     public WhileNode(SymbolTable currentST, WACCParser.WhileStatContext ctx, ExprNode exprNode, StatNode statNode) {
         super(currentST, ctx);
-        checkWhileCondition(exprNode);
         this.statNode = statNode;
+
+        if(exprNode.hasErrors()) {
+            setError();
+            return;
+        }
+
+        checkWhileCondition(exprNode);
     }
 
     private void checkWhileCondition(ExprNode exprNode) {
-        if  (exprNode == null) {
-            return;
-        }
-        if (exprNode.getType() == null) {
-            return;
-        }
-
         if(!(exprNode.getType() instanceof BoolObj)) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
                 "while condition", "BOOL", exprNode.getCtx().getText(), exprNode.getType().toString());
