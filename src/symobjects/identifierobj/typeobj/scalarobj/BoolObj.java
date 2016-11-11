@@ -7,7 +7,7 @@ public class BoolObj extends ScalarObj {
 
     @Override
     public String toString() {
-        return "bool";
+        return "BOOL";
     }
 
     @Override

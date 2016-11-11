@@ -30,7 +30,7 @@ public class IfNode extends StatNode<WACCParser.IfStatContext> {
 
         if(!(exprNode.getType() instanceof BoolObj)) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE,
-                "If statement", "bool", "actual", exprNode.getType().toString());
+                "If statement", "BOOL", exprNode.getCtx().getText(), exprNode.getType().toString());
         }
     }
 

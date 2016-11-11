@@ -47,7 +47,7 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
             }
 
             if (!returnStatementType.equals(fObj.getReturnType())) {
-                addSemanticError(CompileTimeError.RETURN_TYPE_MISMATCH,
+                addSemanticError(retStat.getCtx().start.getLine(), retStat.getCtx().start.getCharPositionInLine(), CompileTimeError.RETURN_TYPE_MISMATCH,
                                                 fObj.getReturnType().toString(), returnStatementType.toString());
                 return;
             }
