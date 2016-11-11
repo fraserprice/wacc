@@ -42,7 +42,7 @@ public class AssignPrimitiveNode extends StatNode<WACCParser.AssignPrimitiveStat
 
         if (!type.equals(rhs.getType())) {
             addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE, ident,
-                type.toString(), "Right hand side: ", rhs.getType().toString());
+                type.toString(), "right hand side", rhs.getType().toString());
             return;
         }
 

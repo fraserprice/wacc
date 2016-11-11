@@ -52,10 +52,16 @@ public class ArrayObj extends TypeObj {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("array: [");
-        sb.append(type).append(" ");
-        sb.append("], elementsNo=").append(elementsNo);
-        return sb.toString();
+        TypeObj current = this;
+
+        String brackets = "";
+
+        do {
+            brackets += "[" + ((ArrayObj) current).elementsNo + "]";
+            current = ((ArrayObj) current).getType();
+        } while(current instanceof ArrayObj);
+
+        return current.toString() + brackets;
     }
 
     @Override

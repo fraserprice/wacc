@@ -112,7 +112,7 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
             }
 
             if (!param.equals(argument)) {
-                addSemanticError(CompileTimeError.PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE, "" + i,
+                addSemanticError(CompileTimeError.PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE, "" + (i + 1),
                         ident, param.toString(), argument.toString());
             }
         }

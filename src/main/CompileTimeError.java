@@ -61,7 +61,7 @@ public enum CompileTimeError {
                 break;
             case RETURN_TYPE_MISMATCH:
                 errorMessage = "Expected return type: " + tokens[0]
-                        + "; Actual return type: " + tokens[1];
+                        + ", actual return type: " + tokens[1];
                 break;
             case VARIABLE_NOT_DECLARED_IN_THIS_SCOPE:
                 errorMessage = "Variable: " + tokens[0]
@@ -72,21 +72,16 @@ public enum CompileTimeError {
                 break;
             case INVALID_FREE_VALUE:
                 errorMessage = tokens[0]
-                        + " is an invalid free value; Expected: pair!";
+                        + " is an invalid free value (expected: pair)!";
                 break;
             case INCOMPATIBLE_TYPE:
-                if (tokens.length < 4) {
-                    System.out.println(tokens[0] + " " + tokens[1] + " "
-                            + tokens[2]);
-                    System.exit(0);
-                }
                 errorMessage = tokens[0] + " of type " + tokens[1] + " and "
                         + tokens[2] + " of type " + tokens[3]
                         + " have incompatible types!";
                 break;
             case READ_ERROR:
                 errorMessage = "Reading a " + tokens[0]
-                        + " is not valid. (expected: int or char)";
+                        + " is not valid. (expected: INT or CHAR)";
                 break;
             case UNDEFINED_IDENTIFIER:
                 errorMessage = tokens[0] + " was not previously defined!";
@@ -102,13 +97,13 @@ public enum CompileTimeError {
                     " from it's declaration!";
                 break;
             case INVALID_EXIT_ARGUMENT:
-                errorMessage = "Expected: int; Actual: " + tokens[0];
+                errorMessage = "Expected: INT, actual: " + tokens[0];
                 break;
             case INVALID_VARIABLE_NAME:
                 errorMessage = "Illegal variable name for: " + tokens[0];
                 break;
             case INVALID_PAIR_ELEM_TYPE:
-                errorMessage = "FST/SND expected argument: pair; Actual: "
+                errorMessage = "FST/SND expected argument: pair, actual: "
                         + tokens[0];
                 break;
             case FUNCTION_NOT_DEFINED:
@@ -120,8 +115,8 @@ public enum CompileTimeError {
                         + tokens[1] + ")";
                 break;
             case PARAMS_TYPE_DONT_MATCH_WITH_SIGNATURE:
-                errorMessage = "Parameter at index " + tokens[0] +
-                        " doesn't match with function + " + tokens[1] +
+                errorMessage = "Parameter at position " + tokens[0] +
+                        " doesn't match with function " + tokens[1] +
                         " signature (expected: " + tokens[2] + ", actual: "
                         + tokens[3] + ")";
                 break;

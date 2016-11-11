@@ -26,9 +26,9 @@ public class PairObj extends TypeObj {
     @Override
     public String toString() {
         if (type1 instanceof GenericObj && type2 instanceof GenericObj) {
-            return "pair";
+            return "PAIR";
         } else {
-            return "pair<" + type1 + ", " + type2 + ">";
+            return "PAIR<" + type1 + ", " + type2 + ">";
         }
     }
 

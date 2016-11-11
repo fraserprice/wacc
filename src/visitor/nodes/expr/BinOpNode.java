@@ -72,7 +72,7 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
         TypeObj rhsType = rhs.getType();
 
         if(!lhsType.equals(rhsType)) {
-            addSemanticError(CompileTimeError.TYPE_MISMATCH_ERROR, lhsType.toString(), rhsType.toString());
+            addSemanticError(CompileTimeError.INCOMPATIBLE_TYPE, lhs.getCtx().getText(), lhsType.toString(), rhs.getCtx().getText(), rhsType.toString());
             return;
         }
 
