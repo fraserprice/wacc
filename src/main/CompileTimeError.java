@@ -136,7 +136,6 @@ public enum CompileTimeError {
 
     public void printSyntactic(int line, int characterPos, String... tokens) {
         String errorMessage;
-
         switch (this) {
             case INTEGER_OVERFLOW: errorMessage = "Integer Overflow: " +
                     tokens[0]; break;
