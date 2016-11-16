@@ -1,14 +1,15 @@
 package visitor.nodes;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.RegisterSet;
 import main.CompileTimeError;
-import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
-import symobjects.identifierobj.typeobj.scalarobj.*;
 import visitor.Node;
 import visitor.nodes.stat.CompositionNode;
 import visitor.nodes.stat.ReturnNode;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ProgramNode extends Node<WACCParser.ProgramContext> {
@@ -48,5 +49,10 @@ public class ProgramNode extends Node<WACCParser.ProgramContext> {
                     CompileTimeError.MAIN_FUNCTION_CONTAINS_RETURN);
             return;
         }
+    }
+
+    @Override
+    public LinkedList<Instruction> generateInstructions(RegisterSet availableRegisters) {
+        return null;
     }
 }

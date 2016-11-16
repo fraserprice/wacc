@@ -1,6 +1,7 @@
 package visitor;
 
-import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.RegisterSet;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
@@ -60,4 +61,7 @@ public abstract class Node<T extends ParserRuleContext> {
     public T getCtx() {
         return ctx;
     }
+
+    public abstract LinkedList<Instruction> generateInstructions(RegisterSet availableRegisters);
+
 }

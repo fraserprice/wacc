@@ -101,7 +101,7 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
             return;
         }
 
-        type = func.getReturnType();
+        this.type = func.getReturnType();
 
         if (func.getParams().size() != args.size()) {
             addSemanticError(CompileTimeError.WRONG_NUMBER_OF_PARAMS, "" +

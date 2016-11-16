@@ -34,6 +34,7 @@ public class Compiler {
         SemanticVisitor visitor = new SemanticVisitor();
         visitor.visit(tree);
 
+
         if (CompileTimeError.hasSemanticErrors) {
             System.exit(CompileTimeError.EXIT_SEMANTIC_ERROR);
         }

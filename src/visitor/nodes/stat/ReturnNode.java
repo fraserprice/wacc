@@ -1,7 +1,6 @@
 package visitor.nodes.stat;
 
 import antlr.WACCParser;
-import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
 import visitor.nodes.ExprNode;
