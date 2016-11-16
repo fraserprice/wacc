@@ -5,18 +5,18 @@ import codegen.Instruction;
 
 public class Mov implements Instruction {
 
-    private Register dest;
-    private Register src;
+    private String dest;
+    private String src;
 
     public Mov(Register dest, Register src) {
-        this.dest = dest;
-        this.src = src;
+        this.dest = dest.toString();
+        this.src = src.toString();
     }
 
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("MOV ").append(dest.toString()).append(", ").append(src.toString());
+        sb.append("MOV ").append(dest).append(", ").append(src);
         return sb.toString();
     }
 }

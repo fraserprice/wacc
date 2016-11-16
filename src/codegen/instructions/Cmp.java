@@ -3,6 +3,7 @@ package codegen.instructions;
 import codegen.Operand;
 import codegen.operands.Register;
 import codegen.Instruction;
+import codegen.operands.StackLocation;
 
 public class Cmp implements Instruction {
 
@@ -10,6 +11,7 @@ public class Cmp implements Instruction {
     private String secondOperand;
 
     public Cmp(Register r1, Operand operand) {
+        assert(!(operand instanceof StackLocation));
         this.firstOperand = r1.toString();
         this.secondOperand = operand.toString();
     }

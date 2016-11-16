@@ -1,6 +1,8 @@
 package visitor.nodes.util;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
@@ -10,6 +12,9 @@ import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.expr.ArrayElementNode;
+
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
 
@@ -31,6 +36,11 @@ public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
         }
 
         type = identObj.getType();
+    }
+
+    @Override
+    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
+        return null;
     }
 
     // assignLhs: arrayElem

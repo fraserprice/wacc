@@ -1,9 +1,14 @@
 package visitor.nodes.stat;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import symobjects.SymbolTable;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
+
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 public class PrintNode extends StatNode<WACCParser.PrintStatContext> {
 
@@ -15,5 +20,10 @@ public class PrintNode extends StatNode<WACCParser.PrintStatContext> {
             setError();
             return;
         }
+    }
+
+    @Override
+    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
+        return null;
     }
 }

@@ -2,12 +2,12 @@ package codegen.operands;
 
 import codegen.Operand;
 
-public class Immediate implements Operand {
+public class Offset implements Operand {
 
     private String value;
 
-    public Immediate(int value) {
-        this.value = "=" + value;
+    public Offset(int value) {
+        this.value = "#" + value;
     }
 
     @Override

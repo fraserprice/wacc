@@ -1,6 +1,8 @@
 package visitor.nodes.expr;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.IdentifierObj;
@@ -8,12 +10,20 @@ import symobjects.SymbolTable;
 import symobjects.identifierobj.VariableObj;
 import visitor.nodes.ExprNode;
 
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+
 public class IdentNode extends ExprNode<WACCParser.IdentExprContext> {
 
     public IdentNode(SymbolTable currentST, WACCParser.IdentExprContext ctx) {
         super(currentST, ctx);
 
         check();
+    }
+
+    @Override
+    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
+        return null;
     }
 
     private void check() {

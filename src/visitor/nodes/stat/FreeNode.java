@@ -1,11 +1,16 @@
 package visitor.nodes.stat;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.PairObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
+
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
 
@@ -26,5 +31,10 @@ public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
             addSemanticError(CompileTimeError.INVALID_FREE_VALUE, exprNode
                     .getType().toString());
         }
+    }
+
+    @Override
+    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
+        return null;
     }
 }

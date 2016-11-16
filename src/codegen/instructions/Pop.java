@@ -7,13 +7,9 @@ import java.util.List;
 
 public class Pop implements Instruction {
 
-    private List<Register> registers;
+    private String registers;
 
     public Pop(List<Register> registers) {
-        this.registers = registers;
-    }
-
-    private String registerString() {
         StringBuffer sb = new StringBuffer();
         sb.append("{").append(registers.get(0).toString());
         for(int i = 1; i < registers.size(); i++) {
@@ -21,13 +17,13 @@ public class Pop implements Instruction {
             sb.append(registers.get(i).toString());
         }
         sb.append("}");
-        return sb.toString();
+        this.registers = sb.toString();
     }
 
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("POP ").append(registerString());
+        sb.append("POP ").append(registers);
         return sb.toString();
     }
 }
