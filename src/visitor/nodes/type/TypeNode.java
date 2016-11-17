@@ -59,9 +59,4 @@ public class TypeNode extends Node<WACCParser.TypeContext> {
     public TypeObj getType() {
         return type;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

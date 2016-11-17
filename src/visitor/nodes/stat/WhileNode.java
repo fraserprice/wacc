@@ -41,9 +41,4 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
     public StatNode getStatNode() {
         return statNode;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

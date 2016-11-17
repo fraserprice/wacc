@@ -6,8 +6,8 @@ public class Immediate implements Operand {
 
     private String value;
 
-    public Immediate(int value) {
-        this.value = "=" + Integer.toString(value);
+    public Immediate(String value) {
+        this.value = "=" + value;
     }
 
     @Override

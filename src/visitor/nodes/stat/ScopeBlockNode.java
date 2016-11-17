@@ -27,9 +27,4 @@ public class ScopeBlockNode extends StatNode<WACCParser.ScopeBlockStatContext> {
     public StatNode getBody() {
         return body;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

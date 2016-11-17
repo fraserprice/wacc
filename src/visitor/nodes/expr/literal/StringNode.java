@@ -17,9 +17,4 @@ public class StringNode extends LiteralNode<WACCParser.StrLiteralContext> {
         super(currentST, ctx);
         this.type = currentST.lookupAll("string", ArrayObj.class);
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

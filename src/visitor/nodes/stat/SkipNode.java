@@ -13,9 +13,4 @@ public class SkipNode extends StatNode<WACCParser.SkipStatContext> {
     public SkipNode(SymbolTable currentST, WACCParser.SkipStatContext ctx) {
         super(currentST, ctx);
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

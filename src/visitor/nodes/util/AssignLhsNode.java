@@ -38,11 +38,6 @@ public class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
         type = identObj.getType();
     }
 
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
-
     // assignLhs: arrayElem
     public AssignLhsNode(SymbolTable currentST, WACCParser.AssignLhsContext
             ctx, ArrayElementNode arrayElem) {

@@ -65,9 +65,4 @@ public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
 
         type = returnType.get(operator);
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

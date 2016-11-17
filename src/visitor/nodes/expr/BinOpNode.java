@@ -91,9 +91,4 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
 
         this.type = returnType.get(operator);
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

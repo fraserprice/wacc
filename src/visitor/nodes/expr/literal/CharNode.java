@@ -17,9 +17,4 @@ public class CharNode extends LiteralNode<WACCParser.CharLiteralContext> {
 
         this.type = currentST.lookupAll("char", CharObj.class);
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

@@ -67,9 +67,4 @@ public class AssignPrimitiveNode extends StatNode<WACCParser
         }
         currentST.add(ident, new VariableObj(currentST, type));
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

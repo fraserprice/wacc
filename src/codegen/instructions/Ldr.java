@@ -1,5 +1,6 @@
 package codegen.instructions;
 
+import codegen.CodeGenerator;
 import codegen.Instruction;
 import codegen.Operand;
 import codegen.operands.Register;
@@ -18,7 +19,8 @@ public class Ldr implements Instruction {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("LDR ").append(firstOperand).append(", ").append(secondOperand);
+        sb.append("\t").append(String.format(CodeGenerator.INSTRUCTION_NAME_FORMAT, "LDR"))
+                .append(firstOperand).append(", ").append(secondOperand).append("\n");
         return sb.toString();
     }
 }

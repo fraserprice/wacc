@@ -134,9 +134,4 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
     public TypeObj getType() {
         return type;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

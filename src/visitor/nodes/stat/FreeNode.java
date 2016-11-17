@@ -32,9 +32,4 @@ public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
                     .getType().toString());
         }
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

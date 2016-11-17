@@ -36,11 +36,6 @@ public class BaseTypeNode extends Node<WACCParser.BaseTypeContext> {
         }
     }
 
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
-
     public TypeObj getType() {
         return type;
     }

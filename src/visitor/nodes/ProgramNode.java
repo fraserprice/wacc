@@ -51,9 +51,4 @@ public class ProgramNode extends Node<WACCParser.ProgramContext> {
             return;
         }
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

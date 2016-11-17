@@ -47,9 +47,4 @@ public class IfNode extends StatNode<WACCParser.IfStatContext> {
     public StatNode getElseBlock() {
         return elseStat;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

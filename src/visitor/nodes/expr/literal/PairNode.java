@@ -16,9 +16,4 @@ public class PairNode extends LiteralNode<WACCParser.PairLiteralContext> {
         super(currentST, ctx);
         this.type = currentST.lookupAll("null", NullPairObj.class);
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

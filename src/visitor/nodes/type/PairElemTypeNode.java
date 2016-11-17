@@ -49,11 +49,6 @@ public class PairElemTypeNode extends Node<WACCParser.PairElemTypeContext> {
         this.type = new PairObj();
     }
 
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
-
     public TypeObj getType() {
         return type;
     }

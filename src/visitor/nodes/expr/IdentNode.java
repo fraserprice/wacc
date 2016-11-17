@@ -21,11 +21,6 @@ public class IdentNode extends ExprNode<WACCParser.IdentExprContext> {
         check();
     }
 
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
-
     private void check() {
         IdentifierObj obj = currentST.lookupAll(ctx.getText(), IdentifierObj
                 .class);

@@ -35,9 +35,4 @@ public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
                     .getType().toString());
         }
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

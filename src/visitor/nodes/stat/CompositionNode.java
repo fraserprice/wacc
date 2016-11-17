@@ -35,9 +35,4 @@ public class CompositionNode extends StatNode<WACCParser
     public StatNode getSecondStatNode() {
         return secondStatNode;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

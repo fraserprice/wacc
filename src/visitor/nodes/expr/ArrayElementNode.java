@@ -72,9 +72,4 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
     public String getIdent() {
         return ident;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

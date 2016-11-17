@@ -1,5 +1,6 @@
 package visitor;
 
+import codegen.CodeGenerator;
 import codegen.Instruction;
 import codegen.operands.Register;
 import main.CompileTimeError;
@@ -63,6 +64,8 @@ public abstract class Node<T extends ParserRuleContext> {
         return ctx;
     }
 
-    public abstract LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters);
-
+    public LinkedList<Instruction> generateInstructions(CodeGenerator codeGenRef,
+                                                                 LinkedHashSet<Register> availableRegisters) {
+        return new LinkedList<>();
+    }
 }

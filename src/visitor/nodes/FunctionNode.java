@@ -91,9 +91,4 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
         }
         return true;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

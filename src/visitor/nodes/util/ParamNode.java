@@ -45,9 +45,4 @@ public class ParamNode extends Node<WACCParser.ParamContext> {
     public VariableObj getObj() {
         return obj;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

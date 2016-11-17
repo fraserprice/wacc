@@ -29,9 +29,4 @@ public class ReturnNode extends StatNode<WACCParser.ReturnStatContext> {
     public TypeObj getReturnType() {
         return returnType;
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

@@ -1,17 +1,19 @@
 package codegen.instructions;
 
+import codegen.CodeGenerator;
 import codegen.Instruction;
+import codegen.operands.LabelOp;
 
 public class Bl implements Instruction {
 
-    private String label;
+    private LabelOp label;
 
-    public Bl(String label) {
+    public Bl(LabelOp label) {
         this.label = label;
     }
 
     @Override
     public String toString() {
-        return "BL " + label;
+        return "\t" + String.format(CodeGenerator.INSTRUCTION_NAME_FORMAT, "BL") + label.toString() + "\n";
     }
 }

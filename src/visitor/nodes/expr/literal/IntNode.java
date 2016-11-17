@@ -20,11 +20,6 @@ public class IntNode extends LiteralNode<WACCParser.IntLiteralContext> {
         check(ctx.getText());
     }
 
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
-
     public IntNode(SymbolTable currentST, String value) {
         super(currentST, null);
         this.type = currentST.lookupAll("int", IntObj.class);

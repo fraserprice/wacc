@@ -24,9 +24,4 @@ public class ParenthesisNode extends ExprNode<WACCParser
         this.type = argument.getType();
 
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

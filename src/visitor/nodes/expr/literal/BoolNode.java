@@ -16,9 +16,4 @@ public class BoolNode extends LiteralNode<WACCParser.BoolLiteralContext> {
 
         type = currentST.lookupAll("bool", BoolObj.class);
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

@@ -21,9 +21,4 @@ public class PrintNode extends StatNode<WACCParser.PrintStatContext> {
             return;
         }
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }

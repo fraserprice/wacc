@@ -40,9 +40,4 @@ public class AssignPairArrayNode extends StatNode<WACCParser
                             " side: ", rhs.getType().toString());
         }
     }
-
-    @Override
-    public LinkedList<Instruction> generateInstructions(LinkedHashSet<Register> availableRegisters) {
-        return null;
-    }
 }
