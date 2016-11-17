@@ -1,7 +1,6 @@
 package codegen.operands;
 
 import codegen.Operand;
-
 import java.util.LinkedHashSet;
 
 public enum Register implements Operand {
