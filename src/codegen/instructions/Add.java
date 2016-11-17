@@ -6,9 +6,9 @@ import codegen.operands.Register;
 
 public class Add implements Instruction {
 
-    private String dest;
-    private String src1;
-    private String src2;
+    protected String dest;
+    protected String src1;
+    protected String src2;
 
     /**
      * This instruction will do addition without regardless to the state of
