@@ -1,7 +1,13 @@
 package visitor;
+
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
+
+import codegen.CodeGenerator;
+import codegen.Instruction;
+import codegen.operands.Register;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,5 +62,10 @@ public abstract class Node<T extends ParserRuleContext> {
 
     public T getCtx() {
         return ctx;
+    }
+
+    public LinkedList<Instruction> generateInstructions(CodeGenerator codeGenRef,
+                                                                 LinkedHashSet<Register> availableRegisters) {
+        return new LinkedList<>();
     }
 }

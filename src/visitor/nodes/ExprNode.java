@@ -11,6 +11,7 @@ import visitor.Node;
  */
 public abstract class ExprNode<T extends ParserRuleContext> extends Node<T> {
     protected TypeObj type;
+    protected int weight;
 
     public ExprNode(SymbolTable currentST, T ctx) {
         super(currentST, ctx);
@@ -18,5 +19,9 @@ public abstract class ExprNode<T extends ParserRuleContext> extends Node<T> {
 
     public TypeObj getType() {
         return type;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 }

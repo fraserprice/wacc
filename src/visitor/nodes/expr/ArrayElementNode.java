@@ -1,6 +1,8 @@
 package visitor.nodes.expr;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.VariableObj;
@@ -8,6 +10,8 @@ import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {

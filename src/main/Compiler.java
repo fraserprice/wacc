@@ -2,10 +2,12 @@ package main;
 
 import antlr.WACCLexer;
 import antlr.WACCParser;
+import codegen.CodeGenerator;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.*;
 import visitor.SemanticVisitor;
+import visitor.nodes.ProgramNode;
 
 import java.io.IOException;
 
@@ -32,11 +34,14 @@ public class Compiler {
 
         // Syntax and Semantic check
         SemanticVisitor visitor = new SemanticVisitor();
-        visitor.visit(tree);
+        ProgramNode programNode = (ProgramNode) visitor.visit(tree);
 
         if (CompileTimeError.hasSemanticErrors) {
             System.exit(CompileTimeError.EXIT_SEMANTIC_ERROR);
         }
+
+        CodeGenerator generator = new CodeGenerator(programNode);
+        System.out.println(generator.toString());
 
         System.exit(CompileTimeError.EXIT_SUCCESS);
     }

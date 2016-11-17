@@ -1,6 +1,8 @@
 package visitor.nodes.util;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.IdentifierObj;
@@ -9,6 +11,9 @@ import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.VariableObj;
 import visitor.Node;
 import visitor.nodes.type.TypeNode;
+
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 public class ParamNode extends Node<WACCParser.ParamContext> {
     private VariableObj obj;

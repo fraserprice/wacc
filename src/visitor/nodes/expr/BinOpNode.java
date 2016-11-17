@@ -1,6 +1,8 @@
 package visitor.nodes.expr;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
@@ -11,10 +13,7 @@ import symobjects.identifierobj.typeobj.scalarobj.CharObj;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
     private ExprNode lhs;
@@ -92,5 +91,4 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
 
         this.type = returnType.get(operator);
     }
-
 }

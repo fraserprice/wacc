@@ -1,6 +1,8 @@
 package visitor.nodes;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
@@ -13,6 +15,7 @@ import visitor.nodes.util.ParamNode;
 import visitor.nodes.type.TypeNode;
 
 import java.lang.reflect.Type;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,6 +1,8 @@
 package visitor.nodes.stat;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
@@ -11,6 +13,9 @@ import symobjects.identifierobj.typeobj.GenericObj;
 import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.StatNode;
 import visitor.nodes.type.TypeNode;
+
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 public class AssignPrimitiveNode extends StatNode<WACCParser
         .AssignPrimitiveStatContext> {

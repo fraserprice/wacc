@@ -1,6 +1,8 @@
 package visitor.nodes.util;
 
 import antlr.WACCParser;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
@@ -11,6 +13,8 @@ import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.ExprNode;
 
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
@@ -101,7 +105,7 @@ public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {
             return;
         }
 
-        type = func.getReturnType();
+        this.type = func.getReturnType();
 
         if (func.getParams().size() != args.size()) {
             addSemanticError(CompileTimeError.WRONG_NUMBER_OF_PARAMS, "" +
