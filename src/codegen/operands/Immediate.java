@@ -7,7 +7,7 @@ public class Immediate implements Operand {
     private String value;
 
     public Immediate(int value) {
-        this.value = "=" + value;
+        this.value = "=" + Integer.toString(value);
     }
 
     @Override
