@@ -15,7 +15,7 @@ public class Adds implements Instruction {
      * instruction. This will update the state of the conditional flags.
      * NB: Use this instruction when generation runtime error checking code.
      */
-    public Adds(Register r0, Operand src1, Operand r2) {
+    public Adds(Register dest, Operand src1, Operand src2) {
         this.dest = dest.toString();
         this.src1 = src1.toString();
         this.src2 = src2.toString();

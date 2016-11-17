@@ -14,7 +14,7 @@ public class Add implements Instruction {
      * This instruction will do addition without regardless to the state of
      * the flags and it won't change their state
      */
-    public Add(Register r0, Operand src1, Operand r2) {
+    public Add(Register dest, Operand src1, Operand src2) {
         this.dest = dest.toString();
         this.src1 = src1.toString();
         this.src2 = src2.toString();
