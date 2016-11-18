@@ -42,6 +42,7 @@ public class Compiler {
 
         CodeGenerator generator = new CodeGenerator(programNode);
         File file = new File(args[1] + "/" + (args[0].split("\\."))[0] + ".s");
+        file.createNewFile();
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
         bw.write(generator.toString());
         bw.close();
