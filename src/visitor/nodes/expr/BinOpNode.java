@@ -1,8 +1,6 @@
 package visitor.nodes.expr;
 
 import antlr.WACCParser;
-import codegen.Instruction;
-import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;

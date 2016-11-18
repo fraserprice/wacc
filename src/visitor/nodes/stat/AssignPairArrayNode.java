@@ -1,16 +1,11 @@
 package visitor.nodes.stat;
 
 import antlr.WACCParser;
-import codegen.Instruction;
-import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import visitor.nodes.util.AssignLhsNode;
 import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.StatNode;
-
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 
 public class AssignPairArrayNode extends StatNode<WACCParser
         .AssignPairArrayStatContext> {

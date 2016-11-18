@@ -1,8 +1,6 @@
 package visitor.nodes.expr;
 
 import antlr.WACCParser;
-import codegen.Instruction;
-import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
@@ -13,8 +11,6 @@ import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 
 import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.Map;
 
 // TODO: ADD ERROR FOR TYPE MISMATCH

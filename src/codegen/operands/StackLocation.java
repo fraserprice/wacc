@@ -3,25 +3,31 @@ package codegen.operands;
 import codegen.Operand;
 
 public class StackLocation implements Operand {
+    private Operand[] ops;
+    private boolean withExclamation;
 
-    private String offset;
-
-    public StackLocation(Offset offset) {
-        this.offset = offset.toString();
+    public StackLocation(Operand... ops) {
+        this(false, ops);
     }
 
-    public StackLocation() {
-        this.offset = "";
+    public StackLocation(boolean withExclamation, Operand... ops) {
+        assert (ops.length >= 1): "StackLocation should take at least one operand";
+        this.ops = ops;
+        this.withExclamation = withExclamation;
     }
 
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
-        if(offset.equals("")) {
-            sb.append("[sp, #").append(offset).append("]");
-        } else {
-            sb.append("[sp]");
+        StringBuilder sb = new StringBuilder("[");
+        for(int i = 0; i < ops.length - 1; i++) {
+            sb.append(ops[i].toString()).append(", ");
         }
+        sb.append(ops[ops.length - 1]).append("]");
+
+        if (withExclamation) {
+            sb.append("!");
+        }
+
         return sb.toString();
     }
 

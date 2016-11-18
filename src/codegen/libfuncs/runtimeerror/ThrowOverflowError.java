@@ -1,11 +1,6 @@
 package codegen.libfuncs.runtimeerror;
 
-import codegen.DataDir;
-import codegen.Instruction;
-import codegen.LibFunc;
-import codegen.instructions.Bl;
-import codegen.instructions.LabelIns;
-import codegen.instructions.Ldr;
+import codegen.*;
 import codegen.operands.Immediate;
 import codegen.operands.LabelOp;
 import codegen.operands.Register;
@@ -27,8 +22,8 @@ public class ThrowOverflowError extends LibFunc {
     public List<Instruction> getInstructions() {
         return new ArrayList<Instruction>() {{
             add(new LabelIns(FUNC_NAME));
-            add(new Ldr(Register.R0, new Immediate(dataDir.get(ERROR_MESSAGE))));
-            add(new Bl(new LabelOp(ThrowRuntimeError.FUNC_NAME)));
+            add(new BaseInstruction(Ins.LDR, Register.R0, new Immediate(dataDir.get(ERROR_MESSAGE))));
+            add(new BaseInstruction(Ins.BL, new LabelOp(ThrowRuntimeError.FUNC_NAME)));
         }};
     }
 
