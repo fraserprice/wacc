@@ -1,24 +1,24 @@
 package visitor.nodes;
 
 import antlr.WACCParser;
+import codegen.CodeGenerator;
 import codegen.Instruction;
+import codegen.instructions.BaseInstruction;
+import codegen.instructions.Ins;
+import codegen.instructions.LabelIns;
+import codegen.instructions.Ltorg;
+import codegen.operands.RegList;
 import codegen.operands.Register;
 import main.CompileTimeError;
-import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.TypeObj;
-import symobjects.identifierobj.VariableObj;
 import visitor.Node;
 import visitor.nodes.stat.*;
-import visitor.nodes.util.ParamNode;
-import visitor.nodes.type.TypeNode;
 
-import java.lang.reflect.Type;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FunctionNode extends Node<WACCParser.FuncContext> {
 
@@ -90,5 +90,18 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
             returns.add((ReturnNode) current);
         }
         return true;
+    }
+
+    @Override
+    public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
+        List<Instruction> ins = new ArrayList<>();
+
+        ins.add(new LabelIns("f_" + name));
+        ins.add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
+        ins.addAll(body.generateInstructions(codeGenRef, availableRegisters));
+        ins.add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
+        ins.add(new Ltorg());
+
+        return ins;
     }
 }

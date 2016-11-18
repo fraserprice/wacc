@@ -42,7 +42,7 @@ public class CodeGenerator {
 
         sb.append(dataDir.toString());
 
-        sb.append(".text\n\n.global main:\n");
+        sb.append(".text\n\n.global main\n");
 
         for (Instruction ins : mainDir) {
             sb.append(ins.toString());

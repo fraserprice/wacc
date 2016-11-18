@@ -1,13 +1,8 @@
 package visitor.nodes.stat;
 
 import antlr.WACCParser;
-import codegen.Instruction;
-import codegen.operands.Register;
 import symobjects.SymbolTable;
 import visitor.nodes.StatNode;
-
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 
 public class ScopeBlockNode extends StatNode<WACCParser.ScopeBlockStatContext> {
     private StatNode body;

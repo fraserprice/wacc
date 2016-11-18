@@ -1,8 +1,6 @@
 package visitor.nodes.util;
 
 import antlr.WACCParser;
-import codegen.Instruction;
-import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
@@ -13,8 +11,6 @@ import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.ExprNode;
 
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AssignRhsNode extends Node<WACCParser.AssignRhsContext> {

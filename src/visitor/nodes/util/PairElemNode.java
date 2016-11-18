@@ -1,18 +1,12 @@
 package visitor.nodes.util;
 
 import antlr.WACCParser;
-import codegen.Instruction;
-import codegen.operands.Register;
 import main.CompileTimeError;
-import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.typeobj.PairObj;
 import visitor.Node;
 import visitor.nodes.ExprNode;
-
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 
 public class PairElemNode extends Node<WACCParser.PairElemContext> {
     private TypeObj type;
