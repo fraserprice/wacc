@@ -9,10 +9,10 @@ import org.antlr.v4.runtime.tree.*;
 import visitor.SemanticVisitor;
 import visitor.nodes.ProgramNode;
 
-import java.io.IOException;
+import java.io.*;
 
 public class Compiler {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ANTLRFileStream in = null;
         try {
             in = new ANTLRFileStream(args[0]);
@@ -41,8 +41,10 @@ public class Compiler {
         }
 
         CodeGenerator generator = new CodeGenerator(programNode);
-        System.out.println(generator.toString());
-
+        File file = new File(args[1] + "/" + (args[0].split("\\."))[0] + ".s");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+        bw.write(generator.toString());
+        bw.close();
         System.exit(CompileTimeError.EXIT_SUCCESS);
     }
 }

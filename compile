@@ -8,10 +8,13 @@ if ARGV.length != 1
   exit 1
 end
 
-error = `java -ea -cp bin:lib/antlr-4.4-complete.jar main.Compiler #{ARGV[0]}`
-
+output = `java -ea -cp bin:lib/antlr-4.4-complete.jar main.Compiler #{ARGV[0]} #{`pwd`}`
 exit_status = $?.exitstatus
 
-STDERR.printf error
+if exit_status == 0
+    STDOUT.printf output
+else
+    STDERR.printf output
+end
 
 exit exit_status
