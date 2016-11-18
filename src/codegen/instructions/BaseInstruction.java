@@ -1,4 +1,9 @@
-package codegen;
+package codegen.instructions;
+
+import codegen.CodeGenerator;
+import codegen.Instruction;
+import codegen.Operand;
+import codegen.instructions.Ins;
 
 public class BaseInstruction implements Instruction {
     private Operand[] ops;

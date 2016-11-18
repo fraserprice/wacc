@@ -19,7 +19,7 @@ public class DataDir {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(".data\n\n");
+        StringBuilder sb = new StringBuilder(".data\n");
 
         for(int i = 0; i < currentMessageNumber; i++) {
             String message = messages.get(i);

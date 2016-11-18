@@ -1,6 +1,5 @@
 package codegen.libfuncs.runtimeerror;
 
-import codegen.BaseInstruction;
 import codegen.DataDir;
 import codegen.Instruction;
 import codegen.LibFunc;

@@ -1,6 +1,5 @@
 package codegen.libfuncs.io;
 
-import codegen.BaseInstruction;
 import codegen.DataDir;
 import codegen.Instruction;
 import codegen.LibFunc;

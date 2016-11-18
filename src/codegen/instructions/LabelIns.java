@@ -1,4 +1,6 @@
-package codegen;
+package codegen.instructions;
+
+import codegen.Instruction;
 
 public class LabelIns implements Instruction {
     private String name;

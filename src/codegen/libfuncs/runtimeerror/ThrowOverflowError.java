@@ -1,6 +1,9 @@
 package codegen.libfuncs.runtimeerror;
 
 import codegen.*;
+import codegen.instructions.BaseInstruction;
+import codegen.instructions.Ins;
+import codegen.instructions.LabelIns;
 import codegen.operands.Immediate;
 import codegen.operands.LabelOp;
 import codegen.operands.Register;
