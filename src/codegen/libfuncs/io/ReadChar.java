@@ -7,6 +7,7 @@ import codegen.LibFunc;
 import java.util.List;
 
 public class ReadChar extends LibFunc {
+
     public ReadChar(DataDir dataDir) {
         super(dataDir);
     }

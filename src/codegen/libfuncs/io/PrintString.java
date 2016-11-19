@@ -7,6 +7,7 @@ import codegen.LibFunc;
 import java.util.List;
 
 public class PrintString extends LibFunc {
+
     public PrintString(DataDir dataDir) {
         super(dataDir);
     }

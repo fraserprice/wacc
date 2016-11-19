@@ -9,6 +9,12 @@ public class BaseInstruction implements Instruction {
     private Operand[] ops;
     private Ins instr;
 
+    /**
+     * BaseInstruction is class which deals with all possible instructions defined
+     * for WACC (Example: ADD, ADDS, BEQ, BL, CMP, LDR, etc.)
+     * @param instr name
+     * @param ops - optional list of operands (Example: immediate operand, constants, etc.)
+     */
     public BaseInstruction(Ins instr, Operand... ops) {
         assert (ops.length >= 1): "BaseInstruction needs at least 1 operand";
         this.ops = ops;

@@ -3,6 +3,7 @@ package codegen.operands;
 import codegen.Operand;
 
 public class StackLocation implements Operand {
+
     private Operand[] ops;
     private boolean withExclamation;
 
