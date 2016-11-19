@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CodeGenerator {
+    /**
+     * Main class responsible for generation the assembly
+     */
     public static final String INSTRUCTION_NAME_FORMAT = "%-5s";
-    private DataDir dataDir;
-    private List<Instruction> mainDir;
-    private List<LibFunc> libDir;
+    private DataDir dataDir; // contains the labels between .data and .text
+    private List<Instruction> mainDir; // contains the labels after .global main
+    private List<LibFunc> libDir; // contains all the lib functions used
 
     public CodeGenerator(ProgramNode start) {
         this.dataDir = new DataDir();

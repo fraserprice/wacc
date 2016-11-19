@@ -9,7 +9,7 @@ import java.util.List;
 public class CheckNullPointer extends LibFunc {
     public static final String FUNC_NAME = "lib_check_null_pointer";
     public static final String ERROR_MESSAGE
-      = "NullPointerException: Tried to access a null reference.\\n\\0";
+      = "NullReferenceError: dereference a null reference.\\n\\0";
 
     public CheckNullPointer(DataDir dataDir) {
         super(dataDir);

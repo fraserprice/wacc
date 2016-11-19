@@ -9,7 +9,7 @@ import java.util.List;
 public class FreePair extends LibFunc {
     public static final String FUNC_NAME = "lib_free_pair";
     public static final String ERROR_MESSAGE
-      = "FreePair: free is not defined for pairs.\\n\\0";
+      = "NullReferenceError: dereference a null reference.\\n\\0";
 
     public FreePair(DataDir dataDir) {
         super(dataDir);
