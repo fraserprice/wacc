@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThrowRuntimeError extends LibFunc {
-    public static String FUNC_NAME = "lib_throw_runtime_error";
+    public static final String FUNC_NAME = "lib_throw_runtime_error";
 
     public ThrowRuntimeError(DataDir dataDir) {
         super(dataDir);

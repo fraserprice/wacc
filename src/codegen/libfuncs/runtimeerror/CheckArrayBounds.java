@@ -7,8 +7,13 @@ import codegen.LibFunc;
 import java.util.List;
 
 public class CheckArrayBounds extends LibFunc {
+    public static final String FUNC_NAME = "lib_check_array_bounds";
+    public static final String ERROR_MESSAGE
+      = "ArrayIndexOutOfBounds: the index you are trying to access is not valid.\\n\\0";
+
     public CheckArrayBounds(DataDir dataDir) {
         super(dataDir);
+        this.dataDir.put(ERROR_MESSAGE);
     }
 
     @Override

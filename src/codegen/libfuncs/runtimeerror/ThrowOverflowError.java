@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThrowOverflowError extends LibFunc {
-    public static String FUNC_NAME = "lib_throw_overflow_error";
-    public static String ERROR_MESSAGE
+    public static final String FUNC_NAME = "lib_throw_overflow_error";
+    public static final String ERROR_MESSAGE
             = "OverflowError: the result is too small/large to store in a 4-byte signed-integer.\\n\\0";
 
     public ThrowOverflowError(DataDir dataDir) {
