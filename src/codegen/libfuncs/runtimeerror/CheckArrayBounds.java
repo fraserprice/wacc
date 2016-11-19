@@ -23,7 +23,7 @@ public class CheckArrayBounds extends LibFunc {
     }
 
     /**
-     * check_array_bounds:
+     * lib_check_array_bounds:
      *		PUSH {lr}
      *		CMP r0, #0
      *		LDRLT r0, =msg_0

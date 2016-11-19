@@ -25,7 +25,7 @@ public class CheckDivideByZero extends LibFunc {
     }
 
     /**
-     * p_check_divide_by_zero:
+     * lib_check_divide_by_zero:
      *		PUSH {lr}
      *		CMP r1, #0
      *		LDREQ r0, =msg_0

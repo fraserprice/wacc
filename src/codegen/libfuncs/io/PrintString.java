@@ -8,6 +8,8 @@ import java.util.List;
 
 public class PrintString extends LibFunc {
 
+    public static final String FUNC_NAME = "lib_print_string";
+
     public PrintString(DataDir dataDir) {
         super(dataDir);
     }

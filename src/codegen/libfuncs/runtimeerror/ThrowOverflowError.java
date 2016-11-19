@@ -23,7 +23,7 @@ public class ThrowOverflowError extends LibFunc {
     }
 
     /**
-     * throw_overflow_error:
+     * lib_throw_overflow_error:
      *		LDR r0, =msg_2
      *		BL p_throw_runtime_error
      * @return list of instructions for throw_overflow_error label

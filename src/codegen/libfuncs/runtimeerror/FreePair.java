@@ -22,7 +22,7 @@ public class FreePair extends LibFunc {
     }
 
     /**
-     * p_free_pair:
+     * lib_free_pair:
      *		PUSH {lr}
      *		CMP r0, #0
      *		LDREQ r0, =msg_0
