@@ -53,6 +53,11 @@ public class CheckArrayBounds extends LibFunc {
     }
 
     @Override
+    public List<Class<? extends LibFunc>> getDependencies() {
+        return new ArrayList<Class<? extends LibFunc>>() {{ add(ThrowRuntimeError.class); }};
+    }
+
+    @Override
     public String toString() {
         return "CheckArrayBounds{}";
     }

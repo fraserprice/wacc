@@ -31,7 +31,7 @@ public class CheckDivideByZero extends LibFunc {
      *		LDREQ r0, =msg_0
      *		BLEQ p_throw_runtime_error
      *		POP {pc}
-     * @return list of instructions needed for the check_divide_by_zero
+     * @return list of instructions needed for the check_divide_by_zero label
      */
     @Override
     public List<Instruction> getInstructions() {
@@ -43,6 +43,11 @@ public class CheckDivideByZero extends LibFunc {
             add(new BaseInstruction(Ins.POP, Register.PC));
         }
         };
+    }
+
+    @Override
+    public List<Class<? extends LibFunc>> getDependencies() {
+        return new ArrayList<Class<? extends LibFunc>>() {{ add(ThrowRuntimeError.class); }};
     }
 
     @Override

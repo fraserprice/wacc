@@ -3,6 +3,7 @@ package codegen.operands;
 import codegen.Operand;
 
 public class RegList implements Operand {
+
     private Operand[] ops;
 
     public RegList(Operand... ops) {

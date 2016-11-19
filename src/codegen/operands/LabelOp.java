@@ -3,6 +3,7 @@ package codegen.operands;
 import codegen.Operand;
 
 public class LabelOp implements Operand {
+
     private String name;
 
     public LabelOp(String name) {
