@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PrintInt extends LibFunc {
 
-    public static final String FUNC_NAME = "lib_print_string";
+    public static final String FUNC_NAME = "lib_print_int";
     public static final String ARGUMENT_MESSAGE = "%d\\0";
 
     public PrintInt(DataDir dataDir) {
