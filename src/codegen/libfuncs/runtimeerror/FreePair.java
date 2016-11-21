@@ -59,7 +59,7 @@ public class FreePair extends LibFunc {
                     , new StackLocation(Register.R0)));
             add(new BaseInstruction(Ins.BL, new LabelOp("free")));
             add(new BaseInstruction(Ins.LDR, Register.R0
-                    , new StackLocation(new StackOp())));
+                    , new StackLocation(Register.SP)));
             add(new BaseInstruction(Ins.LDR
                     , new StackLocation(Register.R0, new Offset(4))));
             add(new BaseInstruction(Ins.BL, new LabelOp("free")));
