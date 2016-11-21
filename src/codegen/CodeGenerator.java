@@ -11,11 +11,19 @@ public class CodeGenerator {
     private DataDir dataDir;
     private List<Instruction> mainDir;
     private List<LibFunc> libDir;
+    private int labelCount;
 
     public CodeGenerator(ProgramNode start) {
         this.dataDir = new DataDir();
         this.mainDir = start.generateInstructions(this, Register.allRegisters());
         this.libDir = new ArrayList<>();
+        this.labelCount = 0;
+    }
+
+    public String getNextLabel() {
+        String labelName = "LB_" + labelCount;
+        labelCount++;
+        return labelName;
     }
 
     public void useLibFunc(Class<? extends LibFunc> funcClass) {

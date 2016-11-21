@@ -10,7 +10,6 @@ import codegen.instructions.Ltorg;
 import codegen.operands.Offset;
 import codegen.operands.RegList;
 import codegen.operands.Register;
-import codegen.operands.StackOp;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
@@ -103,10 +102,10 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
 
         ins.add(new LabelIns("f_" + name));
         ins.add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
-        ins.add(new BaseInstruction(Ins.SUB, new StackOp(), new StackOp(),
+        ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP,
                 new Offset(usedVariableSpace)));
         ins.addAll(body.generateInstructions(codeGenRef, availableRegisters));
-        ins.add(new BaseInstruction(Ins.ADD, new StackOp(), new StackOp(),
+        ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP,
                 new Offset(usedVariableSpace)));
         ins.add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
         ins.add(new Ltorg());
