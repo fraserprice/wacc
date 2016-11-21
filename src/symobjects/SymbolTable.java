@@ -1,11 +1,14 @@
 package symobjects;
 
+import symobjects.identifierobj.VariableObj;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SymbolTable {
     private Map<String, IdentifierObj> map;
     private SymbolTable parent;
+    private int offsetLocation = 0;
 
     public SymbolTable() {
         this.parent = null;
@@ -58,6 +61,9 @@ public class SymbolTable {
     }
 
     public void add(String key, IdentifierObj obj) {
+        if (obj instanceof VariableObj) {
+
+        }
         this.map.put(key, obj);
     }
 }

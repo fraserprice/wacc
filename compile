@@ -8,7 +8,7 @@ if ARGV.length != 1
   exit 1
 end
 
-output = `java -ea -cp bin:lib/antlr-4.4-complete.jar main.Compiler #{ARGV[0]} #{`pwd`}`
+output = `java -ea -cp bin:lib/antlr-4.4-complete.jar main.Compiler #{ARGV[0]}`
 exit_status = $?.exitstatus
 
 if exit_status == 0
