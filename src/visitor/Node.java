@@ -68,4 +68,8 @@ public abstract class Node<T extends ParserRuleContext> {
                                                         List<Register> availableRegisters) {
         return new ArrayList<>();
     }
+
+    public SymbolTable getCurrentST() {
+        return currentST;
+    }
 }

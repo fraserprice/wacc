@@ -1,10 +1,14 @@
 package codegen;
 
+import codegen.instructions.BaseInstruction;
+import codegen.instructions.Ins;
 import codegen.libfuncs.io.PrintBool;
 import codegen.libfuncs.io.PrintReference;
 import codegen.libfuncs.io.PrintString;
 import codegen.libfuncs.runtimeerror.CheckArrayBounds;
+import codegen.operands.Offset;
 import codegen.operands.Register;
+import symobjects.SymbolTable;
 import visitor.nodes.ProgramNode;
 
 import java.util.ArrayList;
@@ -39,6 +43,17 @@ public class CodeGenerator {
         String labelName = "LB_" + labelCount;
         labelCount++;
         return labelName;
+    }
+
+    public static List<Instruction> makeSpaceOnStack(SymbolTable currentST, List<Instruction> inBetween) {
+        List<Instruction> ins = new ArrayList<>();
+        if (currentST.getOffsetLocation() == 0) {
+            return inBetween;
+        }
+        ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP, new Offset(currentST.getOffsetLocation())));
+        ins.addAll(inBetween);
+        ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP, new Offset(currentST.getOffsetLocation())));
+        return ins;
     }
 
     public void useLibFunc(Class<? extends LibFunc> funcClass) {

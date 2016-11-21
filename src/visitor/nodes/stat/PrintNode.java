@@ -7,6 +7,7 @@ import codegen.operands.Register;
 import symobjects.SymbolTable;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
+import visitor.nodes.expr.literal.IntNode;
 
 import java.util.List;
 
@@ -25,5 +26,4 @@ public class PrintNode extends StatNode<WACCParser.PrintStatContext> {
             return;
         }
     }
-
 }
