@@ -1,11 +1,14 @@
 package symobjects;
 
-import java.util.HashMap;
-import java.util.Map;
+import symobjects.identifierobj.VariableObj;
+
+import java.util.*;
 
 public class SymbolTable {
+    public static final String LR_SENTINEL = "$LR_SENTINEL";
     private Map<String, IdentifierObj> map;
     private SymbolTable parent;
+    private int offsetLocation = 0;
 
     public SymbolTable() {
         this.parent = null;
@@ -58,6 +61,23 @@ public class SymbolTable {
     }
 
     public void add(String key, IdentifierObj obj) {
+        if (obj instanceof VariableObj) {
+            VariableObj varObj = (VariableObj) obj;
+            varObj.setOffset(0);
+            int varObjTypeSize = varObj.getType().getSize();
+            map.entrySet().stream()
+                    .filter(e -> e.getValue() instanceof VariableObj)
+                    .forEach(e -> {
+                        VariableObj elementVarObj = (VariableObj) e.getValue();
+                        elementVarObj.setOffset(elementVarObj.getOffset() +
+                                varObjTypeSize);
+                    });
+            offsetLocation += varObjTypeSize;
+        }
         this.map.put(key, obj);
+    }
+
+    public int getOffsetLocation() {
+        return offsetLocation;
     }
 }

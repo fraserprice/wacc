@@ -41,11 +41,14 @@ public class Compiler {
         }
 
         CodeGenerator generator = new CodeGenerator(programNode);
-        File file = new File(args[1] + "/" + (args[0].split("\\."))[0] + ".s");
-        file.createNewFile();
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+        // write to file
+        String[] paths = args[0].split("/");
+        String fileName = paths[paths.length - 1].replaceAll(".wacc", ".s");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
         bw.write(generator.toString());
         bw.close();
+
         System.exit(CompileTimeError.EXIT_SUCCESS);
     }
 }

@@ -6,6 +6,7 @@ import symobjects.SymbolTable;
 public class VariableObj extends IdentifierObj {
     private TypeObj type;
     private SymbolTable currentST;
+    private int offset;
 
     public VariableObj(SymbolTable currentST, TypeObj type) {
         this.type = type;
@@ -18,6 +19,14 @@ public class VariableObj extends IdentifierObj {
 
     public SymbolTable getCurrentST() {
         return currentST;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 
     @Override
