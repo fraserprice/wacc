@@ -38,9 +38,12 @@ public class PrintBool extends LibFunc {
         return new ArrayList<Instruction>() {{
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.CMP, Register.R0, new Offset(0)));
-            add(new BaseInstruction(Ins.LDRNE, Register.R0, new Immediate(dataDir.get(ARGUMENT_MESSAGE_TRUE))));
-            add(new BaseInstruction(Ins.LDREQ, Register.R0, new Immediate(dataDir.get(ARGUMENT_MESSAGE_FALSE))));
-            add(new BaseInstruction(Ins.ADD, Register.R0, Register.R0, new Offset(4)));
+            add(new BaseInstruction(Ins.LDRNE, Register.R0
+                    , new Immediate(dataDir.get(ARGUMENT_MESSAGE_TRUE))));
+            add(new BaseInstruction(Ins.LDREQ, Register.R0
+                    , new Immediate(dataDir.get(ARGUMENT_MESSAGE_FALSE))));
+            add(new BaseInstruction(Ins.ADD, Register.R0, Register.R0
+                    , new Offset(4)));
             add(new BaseInstruction(Ins.BL, new LabelOp("printf")));
             add(new BaseInstruction(Ins.MOV, Register.R0, new Offset(0)));
             add(new BaseInstruction(Ins.BL, new LabelOp("fflush")));

@@ -10,37 +10,37 @@ import codegen.operands.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Println extends LibFunc {
+public abstract class Readable extends LibFunc {
 
-    public static final String FUNC_NAME = "lib_print_ln";
-    public static final String ARGUMENT_MESSAGE = "\\0";
+    public static final String ARGUMENT_MESSAGE_READ_INT = "%d\\0";
+    public static final String ARGUMENT_MESSAGE_READ_CHAR = " %c\\0";
 
-    public Println(DataDir dataDir) {
+    public Readable(DataDir dataDir) {
         super(dataDir);
     }
 
     /**
-     * lib_print_ln:
+     * lib_read:         only msg differs between lib_read_int and lib_read_char
      *		PUSH {lr}
-     *		LDR r0, =msg_1
+     *		MOV r1, r0
+     *		LDR r0, =msg_3
      *		ADD r0, r0, #4
-     *		BL puts
-     *		MOV r0, #0
-     *		BL fflush
+     *		BL scanf
      *		POP {pc}
-     * @return list of instructions needed for the lib_print_ln label
+     * @return list of instructions needed for the lib_read label
      */
     @Override
     public List<Instruction> getInstructions() {
+        final String argument_message = (getClass().equals(ReadInt.class))
+                ? ARGUMENT_MESSAGE_READ_INT : ARGUMENT_MESSAGE_READ_CHAR;
         return new ArrayList<Instruction>() {{
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
+            add(new BaseInstruction(Ins.MOV, Register.R1, Register.R0));
             add(new BaseInstruction(Ins.LDR, Register.R0
-                    , new Immediate(dataDir.get(ARGUMENT_MESSAGE))));
+                    , new Immediate(dataDir.get(argument_message))));
             add(new BaseInstruction(Ins.ADD, Register.R0, Register.R0
                     , new Offset(4)));
-            add(new BaseInstruction(Ins.BL, new LabelOp("puts")));
-            add(new BaseInstruction(Ins.MOV, Register.R0, new Offset(0)));
-            add(new BaseInstruction(Ins.BL, new LabelOp("fflush")));
+            add(new BaseInstruction(Ins.BL, new LabelOp("scanf")));
             add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
         }
         };
@@ -48,6 +48,6 @@ public class Println extends LibFunc {
 
     @Override
     public String toString() {
-        return "Println{}";
+        return (getClass().equals(ReadInt.class)) ? "ReadInt{}" : "ReadChar{}";
     }
 }
