@@ -6,6 +6,7 @@ import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
 import codegen.instructions.LabelIns;
 import codegen.instructions.Ltorg;
+import codegen.operands.Immediate;
 import codegen.operands.RegList;
 import codegen.operands.Register;
 import main.CompileTimeError;
@@ -72,6 +73,7 @@ public class ProgramNode extends Node<WACCParser.ProgramContext> {
         ins.add(new LabelIns("main"));
         ins.add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
         ins.addAll(body.generateInstructions(codeGenRef, availableRegisters));
+        ins.add(new BaseInstruction(Ins.LDR, Register.R0, new Immediate("0")));
         ins.add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
         ins.add(new Ltorg());
 
