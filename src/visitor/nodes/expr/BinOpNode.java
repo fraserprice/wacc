@@ -3,7 +3,6 @@ package visitor.nodes.expr;
 import antlr.WACCParser;
 import codegen.CodeGenerator;
 import codegen.Instruction;
-<<<<<<< HEAD
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
 import codegen.libfuncs.runtimeerror.CheckDivideByZero;
@@ -12,10 +11,6 @@ import codegen.operands.LabelOp;
 import codegen.operands.Offset;
 import codegen.operands.Register;
 import codegen.operands.ShiftOp;
-=======
-import codegen.instructions.Ins;
-import codegen.operands.Register;
->>>>>>> f3473d30984caf688619bae5bb4a09129cfa78ca
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
