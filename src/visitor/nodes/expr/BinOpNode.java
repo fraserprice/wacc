@@ -127,6 +127,7 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
                 instructions.add(new BaseInstruction(Ins.SMULL, lhsR, rhsR, lhsR, rhsR));
                 instructions.add(new BaseInstruction(Ins.CMP, rhsR, lhsR, new ShiftOp(Ins.ASR, new Offset(31))));
                 instructions.add(new BaseInstruction(Ins.BLNE, new LabelOp(ThrowOverflowError.FUNC_NAME)));
+                break;
             case "/":
                 codeGenRef.useLibFunc(CheckDivideByZero.class);
                 instructions.add(new BaseInstruction(Ins.MOV, Register.R0, lhsR));
@@ -134,6 +135,7 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
                 instructions.add(new BaseInstruction(Ins.BL, new LabelOp(CheckDivideByZero.FUNC_NAME)));
                 instructions.add(new BaseInstruction(Ins.BL, new LabelOp("__aeabi_idiv")));
                 instructions.add(new BaseInstruction(Ins.MOV, lhsR, Register.R0));
+                break;
             case "%":
                 codeGenRef.useLibFunc(CheckDivideByZero.class);
                 instructions.add(new BaseInstruction(Ins.MOV, Register.R0, lhsR));
@@ -141,42 +143,53 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
                 instructions.add(new BaseInstruction(Ins.BL, new LabelOp(CheckDivideByZero.FUNC_NAME)));
                 instructions.add(new BaseInstruction(Ins.BL, new LabelOp("__aeabi_idivmod")));
                 instructions.add(new BaseInstruction(Ins.MOV, lhsR, Register.R1));
+                break;
             case "+":
                 codeGenRef.useLibFunc(ThrowOverflowError.class);
                 instructions.add(new BaseInstruction(Ins.ADDS, lhsR, lhsR, rhsR));
                 instructions.add(new BaseInstruction(Ins.BLVS, new LabelOp(ThrowOverflowError.FUNC_NAME)));
+                break;
             case "-":
                 codeGenRef.useLibFunc(ThrowOverflowError.class);
                 instructions.add(new BaseInstruction(Ins.SUBS, lhsR, lhsR, rhsR));
                 instructions.add(new BaseInstruction(Ins.BLVS, new LabelOp(ThrowOverflowError.FUNC_NAME)));
+                break;
             case ">":
                 instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
                 instructions.add(new BaseInstruction(Ins.MOVGT, lhsR, new Offset(1)));
                 instructions.add(new BaseInstruction(Ins.MOVLE, lhsR, new Offset(0)));
+                break;
             case ">=":
                 instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
                 instructions.add(new BaseInstruction(Ins.MOVGE, lhsR, new Offset(1)));
                 instructions.add(new BaseInstruction(Ins.MOVLT, lhsR, new Offset(0)));
+                break;
             case "<":
                 instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
                 instructions.add(new BaseInstruction(Ins.MOVLT, lhsR, new Offset(1)));
                 instructions.add(new BaseInstruction(Ins.MOVGE, lhsR, new Offset(0)));
+                break;
             case "<=":
                 instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
                 instructions.add(new BaseInstruction(Ins.MOVLE, lhsR, new Offset(1)));
                 instructions.add(new BaseInstruction(Ins.MOVGT, lhsR, new Offset(0)));
+                break;
             case "==":
                 instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
                 instructions.add(new BaseInstruction(Ins.MOVEQ, lhsR, new Offset(1)));
                 instructions.add(new BaseInstruction(Ins.MOVNE, lhsR, new Offset(0)));
+                break;
             case "!=":
                 instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
                 instructions.add(new BaseInstruction(Ins.MOVNE, lhsR, new Offset(1)));
                 instructions.add(new BaseInstruction(Ins.MOVEQ, lhsR, new Offset(0)));
+                break;
             case "&&":
                 instructions.add(new BaseInstruction(Ins.AND, lhsR, lhsR, rhsR));
+                break;
             case "||":
                 instructions.add(new BaseInstruction(Ins.ORR, lhsR, lhsR, rhsR));
+                break;
         }
 
         return instructions;
