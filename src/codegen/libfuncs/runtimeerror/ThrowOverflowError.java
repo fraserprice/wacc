@@ -21,7 +21,7 @@ public class ThrowOverflowError extends LibFunc {
     /**
      * Constructor for CheckDivideByZero
      * Has a label for throwing an error if user tries to use a number which is
-     * not in the range: −2^31 to 2^31 − 1
+     * not in the range -2^31 and 2^31 - 1
      */
     public ThrowOverflowError(DataDir dataDir) {
         super(dataDir);
