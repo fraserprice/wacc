@@ -62,8 +62,7 @@ public class PrintlnNode extends StatNode<WACCParser.PrintlnStatContext> {
             codeGenRef.useLibFunc(PrintReference.class);
         }
         instructions.add(branch);
-        instructions.add(new BaseInstruction(Ins.BL, new LabelOp
-                ("p_print_ln")));
+        instructions.add(new BaseInstruction(Ins.BL, new LabelOp(Println.FUNC_NAME)));
         codeGenRef.useLibFunc(Println.class);
         return instructions;
     }
