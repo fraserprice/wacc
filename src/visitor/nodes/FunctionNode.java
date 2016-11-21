@@ -7,8 +7,10 @@ import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
 import codegen.instructions.LabelIns;
 import codegen.instructions.Ltorg;
+import codegen.operands.Offset;
 import codegen.operands.RegList;
 import codegen.operands.Register;
+import codegen.operands.StackOp;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
@@ -19,6 +21,7 @@ import visitor.nodes.stat.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class FunctionNode extends Node<WACCParser.FuncContext> {
 
@@ -96,9 +99,15 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         List<Instruction> ins = new ArrayList<>();
 
+        int usedVariableSpace = fObj.getVariableSpace();
+
         ins.add(new LabelIns("f_" + name));
         ins.add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
+        ins.add(new BaseInstruction(Ins.SUB, new StackOp(), new StackOp(),
+                new Offset(usedVariableSpace)));
         ins.addAll(body.generateInstructions(codeGenRef, availableRegisters));
+        ins.add(new BaseInstruction(Ins.ADD, new StackOp(), new StackOp(),
+                new Offset(usedVariableSpace)));
         ins.add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
         ins.add(new Ltorg());
 

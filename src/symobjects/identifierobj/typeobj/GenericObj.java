@@ -7,4 +7,9 @@ public class GenericObj extends TypeObj {
     public boolean equals(Object obj) {
         return obj instanceof TypeObj;
     }
+
+    @Override
+    public int getSize() {
+        return 4;
+    }
 }

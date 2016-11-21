@@ -9,6 +9,7 @@ import symobjects.SymbolTable;
 import symobjects.identifierobj.FunctionObj;
 import symobjects.identifierobj.VariableObj;
 import symobjects.identifierobj.typeobj.ArrayObj;
+import symobjects.identifierobj.typeobj.GenericObj;
 import symobjects.identifierobj.typeobj.NullPairObj;
 import symobjects.identifierobj.typeobj.scalarobj.*;
 import visitor.nodes.ExprNode;
@@ -74,6 +75,9 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node>
             List<ParamNode> params = fCtx.param().stream()
                     .map(p -> (ParamNode) visit(p))
                     .collect(Collectors.toList());
+
+            currentST.add(SymbolTable.LR_SENTINEL, new VariableObj(currentST,
+                    new GenericObj()));
 
             List<VariableObj> paramsObj = params.stream().map
                     (ParamNode::getObj).collect(Collectors.toList());
@@ -462,7 +466,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node>
         StatNode statBlock = visitStatNode(ctx.stat());
         currentST = previousST;
 
-        return new FunctionNode(currentST, ctx, fObj, statBlock);
+        return new FunctionNode(fObj.getFunctionScope(), ctx, fObj, statBlock);
     }
 
     @Override

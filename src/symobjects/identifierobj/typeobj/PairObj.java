@@ -34,6 +34,11 @@ public class PairObj extends TypeObj {
     }
 
     @Override
+    public int getSize() {
+        return 4;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof GenericObj) {
             return true;

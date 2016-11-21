@@ -14,4 +14,9 @@ public class IntObj extends ScalarObj {
     public boolean equals(Object obj) {
         return obj instanceof IntObj || obj instanceof GenericObj;
     }
+
+    @Override
+    public int getSize() {
+        return 4;
+    }
 }

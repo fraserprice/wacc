@@ -15,4 +15,9 @@ public class CharObj extends ScalarObj {
     public boolean equals(Object obj) {
         return obj instanceof CharObj || obj instanceof GenericObj;
     }
+
+    @Override
+    public int getSize() {
+        return 1;
+    }
 }
