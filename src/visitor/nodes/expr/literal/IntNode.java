@@ -47,7 +47,7 @@ public class IntNode extends LiteralNode<WACCParser.IntLiteralContext> {
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         return new LinkedList<Instruction>() {{
-            add(new BaseInstruction(Ins.MOV, availableRegisters.get(0), new Offset(value)));
+            add(new BaseInstruction(Ins.LDR, availableRegisters.get(0), new Immediate(value)));
         }};
     }
 }

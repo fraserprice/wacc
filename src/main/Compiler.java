@@ -39,7 +39,7 @@ public class Compiler {
         if (CompileTimeError.hasSemanticErrors) {
             System.exit(CompileTimeError.EXIT_SEMANTIC_ERROR);
         }
-/*
+
         CodeGenerator generator = new CodeGenerator(programNode);
 
         // write to file
@@ -47,7 +47,7 @@ public class Compiler {
         String fileName = paths[paths.length - 1].replaceAll(".wacc", ".s");
         BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
         bw.write(generator.toString());
-        bw.close();*/
+        bw.close();
 
         System.exit(CompileTimeError.EXIT_SUCCESS);
     }

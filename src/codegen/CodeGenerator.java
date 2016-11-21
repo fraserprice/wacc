@@ -2,10 +2,6 @@ package codegen;
 
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
-import codegen.libfuncs.io.PrintBool;
-import codegen.libfuncs.io.PrintReference;
-import codegen.libfuncs.io.PrintString;
-import codegen.libfuncs.runtimeerror.CheckArrayBounds;
 import codegen.operands.Offset;
 import codegen.operands.Register;
 import symobjects.SymbolTable;
@@ -28,8 +24,13 @@ public class CodeGenerator {
         this.dataDir = new DataDir();
         this.libDir = new ArrayList<>();
         this.labelCount = 0;
+        List<Register> availableRegisters = Register.allRegisters();
+        availableRegisters.remove(Register.R0);
+        availableRegisters.remove(Register.R1);
+        availableRegisters.remove(Register.R2);
+        availableRegisters.remove(Register.R3);
         this.mainDir
-                = start.generateInstructions(this, Register.allRegisters());
+                = start.generateInstructions(this, availableRegisters);
     }
 
     public void addMessage(String message) {
