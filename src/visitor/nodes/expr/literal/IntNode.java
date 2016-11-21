@@ -6,6 +6,7 @@ import codegen.Instruction;
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
 import codegen.operands.Immediate;
+import codegen.operands.Offset;
 import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
@@ -46,7 +47,7 @@ public class IntNode extends LiteralNode<WACCParser.IntLiteralContext> {
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         return new LinkedList<Instruction>() {{
-            add(new BaseInstruction(Ins.MOV, availableRegisters.get(0), new Immediate(value)));
+            add(new BaseInstruction(Ins.MOV, availableRegisters.get(0), new Offset(value)));
         }};
     }
 }

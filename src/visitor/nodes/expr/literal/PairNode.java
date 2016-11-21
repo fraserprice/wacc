@@ -6,6 +6,7 @@ import codegen.Instruction;
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
 import codegen.operands.Immediate;
+import codegen.operands.Offset;
 import codegen.operands.Register;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.NullPairObj;
