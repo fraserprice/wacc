@@ -25,6 +25,14 @@ public class ParamNode extends Node<WACCParser.ParamContext> {
     }
 
     private void check(WACCParser.ParamContext ctx, TypeObj type) {
+        VariableObj duplicate = currentST.lookup(ctx.IDENT().getText(),
+                VariableObj.class);
+
+        if (duplicate != null) {
+            addSemanticError(CompileTimeError.VARIABLE_ALREADY_DEFINED, ctx
+                    .IDENT().getText());
+        }
+
         if (!IdentifierObj.isValidIdentifierName(ctx.IDENT().getText())) {
             addSemanticError(CompileTimeError.INVALID_VARIABLE_NAME, ctx
                     .IDENT().toString());
