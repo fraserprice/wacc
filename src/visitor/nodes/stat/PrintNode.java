@@ -46,34 +46,26 @@ public class PrintNode extends StatNode<WACCParser.PrintStatContext> {
         List<Instruction> instructions = new ArrayList<>();
         TypeObj exprType = exprNode.getType();
         BaseInstruction branch = null;
+        instructions.add(new BaseInstruction(Ins.MOV,Register.R0 ,
+                    availableRegisters.get(0)));
         if (exprType instanceof IntObj) {
             branch = new BaseInstruction(Ins.BL,
                     new LabelOp(Printable.FUNC_NAME_PRINT_INT));
             codeGenRef.useLibFunc(PrintInt.class);
-            instructions.add(new BaseInstruction(Ins.MOV, Register.R0,
-                    availableRegisters.get(0)));
         } else if (exprType instanceof CharObj) {
             branch = new BaseInstruction(Ins.BL, new LabelOp("putchar"));
-            instructions.add(new BaseInstruction(Ins.MOV, Register.R0,
-                    availableRegisters.get(0)));
         } else if (exprType instanceof BoolObj) {
             branch  = new BaseInstruction(Ins.BL, new LabelOp
                     (PrintBool.FUNC_NAME));
             codeGenRef.useLibFunc(PrintBool.class);
-            instructions.add(new BaseInstruction(Ins.MOV, Register
-                    .R0, availableRegisters.get(0)));
         } else if (exprType instanceof ArrayObj && ((ArrayObj)exprType).isString()) {
             branch = new BaseInstruction(Ins.BL, new LabelOp
                     (PrintString.FUNC_NAME));
             codeGenRef.useLibFunc(PrintString.class);
-            instructions.add(new BaseInstruction(Ins.MOV, Register.R0,
-                    availableRegisters.get(0)));
         } else {
             branch = new BaseInstruction(Ins.BL, new LabelOp
                     (Printable.FUNC_NAME_PRINT_REFERENCE));
             codeGenRef.useLibFunc(PrintReference.class);
-            instructions.add(new BaseInstruction(Ins.MOV,Register.R0 ,
-                    availableRegisters.get(0)));
         }
         instructions.add(branch);
         return instructions;
