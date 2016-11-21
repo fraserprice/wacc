@@ -43,7 +43,8 @@ public class Compiler {
         CodeGenerator generator = new CodeGenerator(programNode);
 
         // write to file
-        String fileName = args[0].replaceAll(".wacc", ".s");
+        String[] paths = args[0].split("/");
+        String fileName = paths[paths.length - 1].replaceAll(".wacc", ".s");
         BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
         bw.write(generator.toString());
         bw.close();
