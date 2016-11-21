@@ -19,16 +19,17 @@ public class CodeGenerator {
      * Main class responsible for generation the assembly
      */
 
-    private DataDir dataDir; // contains the labels between .data and .text
-    private List<Instruction> mainDir; // contains the labels after .global main
-    private List<LibFunc> libDir; // contains all the lib functions used
-    private int labelCount;
+    private DataDir dataDir; // Contains the labels between .data and .text
+    private List<Instruction> mainDir; // Contains the labels after .global main
+    private List<LibFunc> libDir; // Contains all the lib functions used
+    private int labelCount; // How many labels where defined so far
 
     public CodeGenerator(ProgramNode start) {
         this.dataDir = new DataDir();
         this.libDir = new ArrayList<>();
         this.labelCount = 0;
-        this.mainDir = start.generateInstructions(this, Register.allRegisters());
+        this.mainDir
+                = start.generateInstructions(this, Register.allRegisters());
     }
 
     public void addMessage(String message) {
@@ -39,20 +40,25 @@ public class CodeGenerator {
         return dataDir.get(message);
     }
 
+    // Get the next label name available
     public String getNextLabel() {
         String labelName = "LB_" + labelCount;
         labelCount++;
         return labelName;
     }
 
-    public static List<Instruction> makeSpaceOnStack(SymbolTable currentST, List<Instruction> inBetween) {
+    public static List<Instruction> makeSpaceOnStack(SymbolTable currentST
+            , List<Instruction> inBetween) {
+
         List<Instruction> ins = new ArrayList<>();
         if (currentST.getOffsetLocation() == 0) {
             return inBetween;
         }
-        ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP, new Offset(currentST.getOffsetLocation())));
+        ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP
+                , new Offset(currentST.getOffsetLocation())));
         ins.addAll(inBetween);
-        ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP, new Offset(currentST.getOffsetLocation())));
+        ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP
+                , new Offset(currentST.getOffsetLocation())));
         return ins;
     }
 
@@ -71,7 +77,9 @@ public class CodeGenerator {
             for (Class<? extends LibFunc> dep : func.getDependencies()) {
                 useLibFunc(dep);
             }
-        } catch(Exception e) { assert(false): "CodeGenerator: Should not get here"; }
+        } catch(Exception e) {
+            assert(false): "CodeGenerator: Should not get here";
+        }
     }
 
     @Override

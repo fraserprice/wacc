@@ -21,7 +21,10 @@ public abstract class Printable extends LibFunc {
             = "lib_print_reference";
     public static final String ARGUMENT_MESSAGE_PRINT_REFERENCE = "%p\\0";
 
-    // Note: Only msg differs between lib_print_int and lib_print_reference
+    /**
+     * Constructor for PrintInt or PrintReference
+     * Note: Only msg differs between lib_print_int and lib_print_reference
+     */
     public Printable(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ARGUMENT_MESSAGE_PRINT_INT);

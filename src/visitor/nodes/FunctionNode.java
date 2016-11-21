@@ -20,7 +20,6 @@ import visitor.nodes.stat.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class FunctionNode extends Node<WACCParser.FuncContext> {
 
@@ -79,7 +78,7 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
                     returns) && lastStatIsReturn(((IfNode) current)
                     .getThenBlock(), returns);
         } else if (current instanceof WhileNode) {
-            return lastStatIsReturn(((WhileNode) current).getStatNode(),
+            return lastStatIsReturn(((WhileNode) current).getBody(),
                     returns);
         } else if (current instanceof ScopeBlockNode) {
             return lastStatIsReturn(((ScopeBlockNode) current).getBody(),

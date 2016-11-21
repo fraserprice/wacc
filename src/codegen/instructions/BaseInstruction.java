@@ -1,9 +1,7 @@
 package codegen.instructions;
 
-import codegen.CodeGenerator;
 import codegen.Instruction;
 import codegen.Operand;
-import codegen.instructions.Ins;
 
 public class BaseInstruction implements Instruction {
     public static final String INSTRUCTION_NAME_FORMAT = "%-6s";

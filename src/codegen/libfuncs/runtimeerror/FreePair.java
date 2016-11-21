@@ -17,6 +17,11 @@ public class FreePair extends LibFunc {
     public static final String ERROR_MESSAGE
       = "NullReferenceError: dereference a null reference.\\n\\0";
 
+    /**
+     * Constructor for FreePair
+     * Has a label for throwing an error if user tries to free an address which
+     * doesn't contain anything.
+     */
     public FreePair(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ERROR_MESSAGE);
@@ -54,7 +59,7 @@ public class FreePair extends LibFunc {
                     , new StackLocation(Register.R0)));
             add(new BaseInstruction(Ins.BL, new LabelOp("free")));
             add(new BaseInstruction(Ins.LDR, Register.R0
-                    , new StackLocation(new StackOp())));
+                    , new StackLocation(Register.SP)));
             add(new BaseInstruction(Ins.LDR
                     , new StackLocation(Register.R0, new Offset(4))));
             add(new BaseInstruction(Ins.BL, new LabelOp("free")));
