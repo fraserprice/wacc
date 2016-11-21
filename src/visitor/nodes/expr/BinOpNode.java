@@ -1,6 +1,16 @@
 package visitor.nodes.expr;
 
 import antlr.WACCParser;
+import codegen.CodeGenerator;
+import codegen.Instruction;
+import codegen.instructions.BaseInstruction;
+import codegen.instructions.Ins;
+import codegen.libfuncs.runtimeerror.CheckDivideByZero;
+import codegen.libfuncs.runtimeerror.ThrowOverflowError;
+import codegen.operands.LabelOp;
+import codegen.operands.Offset;
+import codegen.operands.Register;
+import codegen.operands.ShiftOp;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
@@ -88,5 +98,87 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
         }
 
         this.type = returnType.get(operator);
+    }
+
+    @Override
+    public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
+        Register lhsR = availableRegisters.get(0);
+        Register rhsR = availableRegisters.get(1);
+
+        List<Instruction> instructions = new LinkedList<Instruction>() {{
+            if(lhs.getWeight() > rhs.getWeight()) {
+                addAll(lhs.generateInstructions(codeGenRef, availableRegisters));
+                List<Register> availableRhs = availableRegisters;
+                availableRhs.remove(0);
+                addAll(rhs.generateInstructions(codeGenRef, availableRhs));
+            } else {
+                List<Register> availableTemp = availableRegisters;
+                availableTemp.remove(0);
+                availableTemp.add(1, lhsR);
+                addAll(rhs.generateInstructions(codeGenRef, availableTemp));
+                availableTemp.remove(0);
+                addAll(lhs.generateInstructions(codeGenRef, availableTemp));
+            }
+        }};
+
+        switch (operator) {
+            case "*":
+                codeGenRef.useLibFunc(ThrowOverflowError.class);
+                instructions.add(new BaseInstruction(Ins.SMULL, lhsR, rhsR, lhsR, rhsR));
+                instructions.add(new BaseInstruction(Ins.CMP, rhsR, lhsR, new ShiftOp(Ins.ASR, new Offset(31))));
+                instructions.add(new BaseInstruction(Ins.BLNE, new LabelOp(ThrowOverflowError.FUNC_NAME)));
+            case "/":
+                codeGenRef.useLibFunc(CheckDivideByZero.class);
+                instructions.add(new BaseInstruction(Ins.MOV, Register.R0, lhsR));
+                instructions.add(new BaseInstruction(Ins.MOV, Register.R1, rhsR));
+                instructions.add(new BaseInstruction(Ins.BL, new LabelOp(CheckDivideByZero.FUNC_NAME)));
+                instructions.add(new BaseInstruction(Ins.BL, new LabelOp("__aeabi_idiv")));
+                instructions.add(new BaseInstruction(Ins.MOV, lhsR, Register.R0));
+            case "%":
+                codeGenRef.useLibFunc(CheckDivideByZero.class);
+                instructions.add(new BaseInstruction(Ins.MOV, Register.R0, lhsR));
+                instructions.add(new BaseInstruction(Ins.MOV, Register.R1, rhsR));
+                instructions.add(new BaseInstruction(Ins.BL, new LabelOp(CheckDivideByZero.FUNC_NAME)));
+                instructions.add(new BaseInstruction(Ins.BL, new LabelOp("__aeabi_idivmod")));
+                instructions.add(new BaseInstruction(Ins.MOV, lhsR, Register.R1));
+            case "+":
+                codeGenRef.useLibFunc(ThrowOverflowError.class);
+                instructions.add(new BaseInstruction(Ins.ADDS, lhsR, lhsR, rhsR));
+                instructions.add(new BaseInstruction(Ins.BLVS, new LabelOp(ThrowOverflowError.FUNC_NAME)));
+            case "-":
+                codeGenRef.useLibFunc(ThrowOverflowError.class);
+                instructions.add(new BaseInstruction(Ins.SUBS, lhsR, lhsR, rhsR));
+                instructions.add(new BaseInstruction(Ins.BLVS, new LabelOp(ThrowOverflowError.FUNC_NAME)));
+            case ">":
+                instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
+                instructions.add(new BaseInstruction(Ins.MOVGT, lhsR, new Offset(1)));
+                instructions.add(new BaseInstruction(Ins.MOVLE, lhsR, new Offset(0)));
+            case ">=":
+                instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
+                instructions.add(new BaseInstruction(Ins.MOVGE, lhsR, new Offset(1)));
+                instructions.add(new BaseInstruction(Ins.MOVLT, lhsR, new Offset(0)));
+            case "<":
+                instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
+                instructions.add(new BaseInstruction(Ins.MOVLT, lhsR, new Offset(1)));
+                instructions.add(new BaseInstruction(Ins.MOVGE, lhsR, new Offset(0)));
+            case "<=":
+                instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
+                instructions.add(new BaseInstruction(Ins.MOVLE, lhsR, new Offset(1)));
+                instructions.add(new BaseInstruction(Ins.MOVGT, lhsR, new Offset(0)));
+            case "==":
+                instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
+                instructions.add(new BaseInstruction(Ins.MOVEQ, lhsR, new Offset(1)));
+                instructions.add(new BaseInstruction(Ins.MOVNE, lhsR, new Offset(0)));
+            case "!=":
+                instructions.add(new BaseInstruction(Ins.CMP, lhsR, rhsR));
+                instructions.add(new BaseInstruction(Ins.MOVNE, lhsR, new Offset(1)));
+                instructions.add(new BaseInstruction(Ins.MOVEQ, lhsR, new Offset(0)));
+            case "&&":
+                instructions.add(new BaseInstruction(Ins.AND, lhsR, lhsR, rhsR));
+            case "||":
+                instructions.add(new BaseInstruction(Ins.ORR, lhsR, lhsR, rhsR));
+        }
+
+        return instructions;
     }
 }
