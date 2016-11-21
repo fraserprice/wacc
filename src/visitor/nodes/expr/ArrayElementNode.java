@@ -1,6 +1,9 @@
 package visitor.nodes.expr;
 
 import antlr.WACCParser;
+import codegen.CodeGenerator;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.VariableObj;
@@ -8,6 +11,7 @@ import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
@@ -67,5 +71,11 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
 
     public String getIdent() {
         return ident;
+    }
+
+    @Override
+    public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
+        List<Instruction> instructions = new LinkedList<>();
+        return instructions;
     }
 }
