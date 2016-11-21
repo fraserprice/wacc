@@ -29,6 +29,8 @@ public class IntNode extends LiteralNode<WACCParser.IntLiteralContext> {
     public IntNode(SymbolTable currentST, String value) {
         super(currentST, null);
         this.type = currentST.lookupAll("int", IntObj.class);
+        this.value = value;
+
         check();
     }
 
