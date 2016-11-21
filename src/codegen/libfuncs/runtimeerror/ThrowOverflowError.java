@@ -15,7 +15,8 @@ public class ThrowOverflowError extends LibFunc {
 
     public static final String FUNC_NAME = "lib_throw_overflow_error";
     public static final String ERROR_MESSAGE
-            = "OverflowError: the result is too small/large to store in a 4-byte signed-integer.\\n\\0";
+            = "OverflowError: the result is too small/large " +
+              "to store in a 4-byte signed-integer.\\n\\0";
 
     public ThrowOverflowError(DataDir dataDir) {
         super(dataDir);
@@ -32,13 +33,17 @@ public class ThrowOverflowError extends LibFunc {
     public List<Instruction> getInstructions() {
         return new ArrayList<Instruction>() {{
             add(new LabelIns(FUNC_NAME));
-            add(new BaseInstruction(Ins.LDR, Register.R0, new Immediate(dataDir.get(ERROR_MESSAGE))));
-            add(new BaseInstruction(Ins.BL, new LabelOp(ThrowRuntimeError.FUNC_NAME)));
+            add(new BaseInstruction(Ins.LDR, Register.R0
+                    , new Immediate(dataDir.get(ERROR_MESSAGE))));
+            add(new BaseInstruction(Ins.BL
+                    , new LabelOp(ThrowRuntimeError.FUNC_NAME)));
         }};
     }
 
     @Override
     public List<Class<? extends LibFunc>> getDependencies() {
-        return new ArrayList<Class<? extends LibFunc>>() {{ add(ThrowRuntimeError.class); }};
+        return new ArrayList<Class<? extends LibFunc>>() {{
+            add(ThrowRuntimeError.class);
+        }};
     }
 }

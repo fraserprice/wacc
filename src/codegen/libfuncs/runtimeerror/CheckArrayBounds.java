@@ -41,12 +41,17 @@ public class CheckArrayBounds extends LibFunc {
             add(new LabelIns(FUNC_NAME));
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.CMP, Register.R0, new Offset(0)));
-            add(new BaseInstruction(Ins.LDRLT, Register.R0, new Immediate(dataDir.get(ERROR_MESSAGE))));
-            add(new BaseInstruction(Ins.BLLT, new LabelOp(ThrowRuntimeError.FUNC_NAME)));
-            add(new BaseInstruction(Ins.LDR, Register.R1, new StackLocation(Register.R1)));
+            add(new BaseInstruction(Ins.LDRLT, Register.R0
+                    , new Immediate(dataDir.get(ERROR_MESSAGE))));
+            add(new BaseInstruction(Ins.BLLT
+                    , new LabelOp(ThrowRuntimeError.FUNC_NAME)));
+            add(new BaseInstruction(Ins.LDR, Register.R1
+                    , new StackLocation(Register.R1)));
             add(new BaseInstruction(Ins.CMP, Register.R0, Register.R1));
-            add(new BaseInstruction(Ins.LDRCS, Register.R0, new Immediate(dataDir.get(ERROR_MESSAGE))));
-            add(new BaseInstruction(Ins.BLCS, new LabelOp(ThrowRuntimeError.FUNC_NAME)));
+            add(new BaseInstruction(Ins.LDRCS, Register.R0
+                    , new Immediate(dataDir.get(ERROR_MESSAGE))));
+            add(new BaseInstruction(Ins.BLCS
+                    , new LabelOp(ThrowRuntimeError.FUNC_NAME)));
             add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
         }
         };
@@ -54,7 +59,9 @@ public class CheckArrayBounds extends LibFunc {
 
     @Override
     public List<Class<? extends LibFunc>> getDependencies() {
-        return new ArrayList<Class<? extends LibFunc>>() {{ add(ThrowRuntimeError.class); }};
+        return new ArrayList<Class<? extends LibFunc>>() {{
+            add(ThrowRuntimeError.class);
+        }};
     }
 
     @Override

@@ -5,6 +5,7 @@ import codegen.Instruction;
 import codegen.LibFunc;
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
+import codegen.instructions.LabelIns;
 import codegen.operands.*;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class Println extends LibFunc {
     @Override
     public List<Instruction> getInstructions() {
         return new ArrayList<Instruction>() {{
+            add(new LabelIns(FUNC_NAME));
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.LDR, Register.R0
                     , new Immediate(dataDir.get(ARGUMENT_MESSAGE))));

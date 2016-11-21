@@ -5,6 +5,7 @@ import codegen.Instruction;
 import codegen.LibFunc;
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
+import codegen.instructions.LabelIns;
 import codegen.libfuncs.io.PrintString;
 import codegen.operands.LabelOp;
 import codegen.operands.Offset;
@@ -31,7 +32,9 @@ public class ThrowRuntimeError extends LibFunc {
     @Override
     public List<Instruction> getInstructions() {
         return new ArrayList<Instruction>() {{
-            add(new BaseInstruction(Ins.BL, new LabelOp(PrintString.FUNC_NAME)));
+            add(new LabelIns(FUNC_NAME));
+            add(new BaseInstruction(Ins.BL
+                    , new LabelOp(PrintString.FUNC_NAME)));
             add(new BaseInstruction(Ins.MOV, Register.R0, new Offset(-1)));
             add(new BaseInstruction(Ins.BL, new LabelOp("exit")));
         }
@@ -40,7 +43,9 @@ public class ThrowRuntimeError extends LibFunc {
 
     @Override
     public List<Class<? extends LibFunc>> getDependencies() {
-        return new ArrayList<Class<? extends LibFunc>>() {{ add(PrintString.class); }};
+        return new ArrayList<Class<? extends LibFunc>>() {{
+            add(PrintString.class);
+        }};
     }
 
     @Override

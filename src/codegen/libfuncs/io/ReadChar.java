@@ -12,8 +12,6 @@ import java.util.List;
 
 public class ReadChar extends Readable {
 
-    public static final String FUNC_NAME = "lib_read_char";
-
     public ReadChar(DataDir dataDir) {
         super(dataDir);
     }

@@ -5,6 +5,7 @@ import codegen.Instruction;
 import codegen.LibFunc;
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
+import codegen.instructions.LabelIns;
 import codegen.operands.*;
 
 import java.util.ArrayList;
@@ -12,15 +13,18 @@ import java.util.List;
 
 public abstract class Readable extends LibFunc {
 
+    public static final String FUNC_NAME_READ_INT = "lib_read_int";
     public static final String ARGUMENT_MESSAGE_READ_INT = "%d\\0";
+    public static final String FUNC_NAME_READ_CHAR = "lib_read_char";
     public static final String ARGUMENT_MESSAGE_READ_CHAR = " %c\\0";
 
+    // Note: Only msg differs between lib_read_int and lib_read_char
     public Readable(DataDir dataDir) {
         super(dataDir);
     }
 
     /**
-     * lib_read:         only msg differs between lib_read_int and lib_read_char
+     * lib_read_int/char:
      *		PUSH {lr}
      *		MOV r1, r0
      *		LDR r0, =msg_3
@@ -31,13 +35,17 @@ public abstract class Readable extends LibFunc {
      */
     @Override
     public List<Instruction> getInstructions() {
-        final String argument_message = (getClass().equals(ReadInt.class))
+        final String argumenMessage = (getClass().equals(ReadInt.class))
                 ? ARGUMENT_MESSAGE_READ_INT : ARGUMENT_MESSAGE_READ_CHAR;
+        final String labelName = (getClass().equals(ReadInt.class))
+                ? FUNC_NAME_READ_INT : FUNC_NAME_READ_CHAR;
+
         return new ArrayList<Instruction>() {{
+            add(new LabelIns(labelName));
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.MOV, Register.R1, Register.R0));
             add(new BaseInstruction(Ins.LDR, Register.R0
-                    , new Immediate(dataDir.get(argument_message))));
+                    , new Immediate(dataDir.get(argumenMessage))));
             add(new BaseInstruction(Ins.ADD, Register.R0, Register.R0
                     , new Offset(4)));
             add(new BaseInstruction(Ins.BL, new LabelOp("scanf")));

@@ -12,8 +12,6 @@ import java.util.List;
 
 public class ReadInt extends Readable {
 
-    public static final String FUNC_NAME = "lib_read_int";
-
     public ReadInt(DataDir dataDir) {
         super(dataDir);
     }
