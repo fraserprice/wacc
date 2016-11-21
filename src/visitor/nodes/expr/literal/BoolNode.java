@@ -27,7 +27,7 @@ public class BoolNode extends LiteralNode<WACCParser.BoolLiteralContext> {
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         return new LinkedList<Instruction>() {{
-            add(new BaseInstruction(Ins.LDR, availableRegisters.get(0), new Immediate(value)));
+            add(new BaseInstruction(Ins.getLdrInstruction(type), availableRegisters.get(0), new Immediate(value)));
         }};
     }
 }

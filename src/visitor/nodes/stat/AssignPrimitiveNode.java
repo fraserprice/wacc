@@ -87,7 +87,7 @@ public class AssignPrimitiveNode extends StatNode<WACCParser
             location = new StackLocation(Register.SP, new Offset(offset));
         }
 
-        instructions.add(new BaseInstruction(Ins.STR, availableRegisters.get(0), location));
+        instructions.add(new BaseInstruction(Ins.getStrInstruciton(type), availableRegisters.get(0), location));
 
         return instructions;
 

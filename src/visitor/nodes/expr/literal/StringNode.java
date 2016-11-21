@@ -29,7 +29,7 @@ public class StringNode extends LiteralNode<WACCParser.StrLiteralContext> {
         codeGenRef.addMessage(value);
 
         return new LinkedList<Instruction>() {{
-            add(new BaseInstruction(Ins.LDR, availableRegisters.get(0), new Immediate(codeGenRef.getMessage(value))));
+            add(new BaseInstruction(Ins.getLdrInstruction(type), availableRegisters.get(0), new Immediate(codeGenRef.getMessage(value))));
         }};
     }
 }
