@@ -71,16 +71,4 @@ public class CodeGenerator {
 
         return sb.toString();
     }
-    /**
-     * p_check_array_bounds:
-     142		PUSH {lr}
-     143		CMP r0, #0
-     144		LDRLT r0, =msg_5
-     145		BLLT p_throw_runtime_error
-     146		LDR r1, [r1]
-     147		CMP r0, r1
-     148		LDRCS r0, =msg_6
-     149		BLCS p_throw_runtime_error
-     150		POP {pc}
-     */
 }
