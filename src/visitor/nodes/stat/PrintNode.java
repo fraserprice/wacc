@@ -46,6 +46,7 @@ public class PrintNode extends StatNode<WACCParser.PrintStatContext> {
         List<Instruction> instructions = new ArrayList<>();
         TypeObj exprType = exprNode.getType();
         BaseInstruction branch = null;
+        instructions.addAll(exprNode.generateInstructions(codeGenRef, availableRegisters));
         instructions.add(new BaseInstruction(Ins.MOV,Register.R0 ,
                     availableRegisters.get(0)));
         if (exprType instanceof IntObj) {

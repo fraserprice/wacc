@@ -27,26 +27,26 @@ import java.util.List;
 public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
 
     private TypeObj typeObj;
+    private AssignLhsNode lhs;
 
     public ReadNode(SymbolTable currentST, WACCParser.ReadStatContext ctx,
                     AssignLhsNode assignLhsNode) {
         super(currentST, ctx);
 
         this.typeObj = assignLhsNode.getType();
+        this.lhs = assignLhsNode;
 
         if (assignLhsNode.hasErrors()) {
             setError();
             return;
         }
 
-        check(assignLhsNode);
+        check();
     }
 
-    private void check(AssignLhsNode assignLhsNode) {
-        if (!(assignLhsNode.getType() instanceof IntObj) && !(assignLhsNode
-                .getType() instanceof CharObj)) {
-            addSemanticError(CompileTimeError.READ_ERROR, assignLhsNode
-                    .getType().toString());
+    private void check() {
+        if (!(lhs.getType() instanceof IntObj) && !(lhs.getType() instanceof CharObj)) {
+            addSemanticError(CompileTimeError.READ_ERROR, lhs.getType().toString());
         }
     }
 
@@ -62,6 +62,7 @@ public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
             labelOp = new LabelOp(ReadChar.FUNC_NAME_READ_CHAR);
         }
 
+        instructions.addAll(lhs.generateInstructions(codeGenRef, availableRegisters));
         instructions.add(new BaseInstruction(Ins.MOV, Register
                 .R0, availableRegisters.get(0)));
         instructions.add(new BaseInstruction(Ins.BL, labelOp));

@@ -17,6 +17,7 @@ import java.util.List;
 
 public class ReturnNode extends StatNode<WACCParser.ReturnStatContext> {
     private TypeObj returnType;
+    private ExprNode retrunExpr;
 
     public ReturnNode(SymbolTable currentST, WACCParser.ReturnStatContext
             ctx, ExprNode exprNode) {
@@ -28,6 +29,7 @@ public class ReturnNode extends StatNode<WACCParser.ReturnStatContext> {
         }
 
         this.returnType = exprNode.getType();
+        this.retrunExpr = exprNode;
     }
 
     public TypeObj getReturnType() {
@@ -37,6 +39,7 @@ public class ReturnNode extends StatNode<WACCParser.ReturnStatContext> {
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         List<Instruction> instructions = new ArrayList<>();
+        instructions.addAll(retrunExpr.generateInstructions(codeGenRef, availableRegisters));
         instructions.add(new BaseInstruction(Ins.MOV, Register.R0,
                 availableRegisters.get(0)));
         return instructions;

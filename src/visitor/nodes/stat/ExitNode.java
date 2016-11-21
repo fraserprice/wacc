@@ -43,8 +43,7 @@ public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         List<Instruction> instructions = new ArrayList<>();
-        instructions.add(new BaseInstruction(Ins.LDR, new LabelOp(expr.getCtx()
-                .getText())));
+        instructions.addAll(expr.generateInstructions(codeGenRef, availableRegisters));
         instructions.add(new BaseInstruction(Ins.MOV, Register.R0,
                 availableRegisters.get(0)));
         instructions.add(new BaseInstruction(Ins.BL, new LabelOp("exit")));
