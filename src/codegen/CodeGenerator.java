@@ -25,7 +25,6 @@ public class CodeGenerator {
         this.mainDir = start.generateInstructions(this, Register.allRegisters());
         this.libDir = new ArrayList<>();
         this.labelCount = 0;
-        useLibFunc(CheckArrayBounds.class);
     }
 
     public String getNextLabel() {
