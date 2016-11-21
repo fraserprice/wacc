@@ -25,12 +25,6 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArrayElem(@NotNull WACCParser.ArrayElemContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#assignRhs}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAssignRhs(@NotNull WACCParser.AssignRhsContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link WACCParser#assignLhs}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -49,6 +43,13 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBinAndExpr(@NotNull WACCParser.BinAndExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AssignRhsCallFunc}
+	 * labeled alternative in {@link WACCParser#assignRhs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignRhsCallFunc(@NotNull WACCParser.AssignRhsCallFuncContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#type}.
 	 * @param ctx the parse tree
@@ -116,6 +117,13 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCompositionStat(@NotNull WACCParser.CompositionStatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AssignRhsPairElem}
+	 * labeled alternative in {@link WACCParser#assignRhs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignRhsPairElem(@NotNull WACCParser.AssignRhsPairElemContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code PrintStat}
 	 * labeled alternative in {@link WACCParser#stat}.
@@ -193,12 +201,26 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIfStat(@NotNull WACCParser.IfStatContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code AssignRhsExpr}
+	 * labeled alternative in {@link WACCParser#assignRhs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignRhsExpr(@NotNull WACCParser.AssignRhsExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code FreeStat}
 	 * labeled alternative in {@link WACCParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitFreeStat(@NotNull WACCParser.FreeStatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AssignRhsNewPair}
+	 * labeled alternative in {@link WACCParser#assignRhs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignRhsNewPair(@NotNull WACCParser.AssignRhsNewPairContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code SkipStat}
 	 * labeled alternative in {@link WACCParser#stat}.
@@ -213,6 +235,13 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitWhileStat(@NotNull WACCParser.WhileStatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AssignRhsArrayLiteral}
+	 * labeled alternative in {@link WACCParser#assignRhs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignRhsArrayLiteral(@NotNull WACCParser.AssignRhsArrayLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BinPlusMinusExpr}
 	 * labeled alternative in {@link WACCParser#expr}.

@@ -676,8 +676,57 @@ public class WACCParser extends Parser {
 	}
 
 	public static class AssignRhsContext extends ParserRuleContext {
+		public AssignRhsContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_assignRhs; }
+	 
+		public AssignRhsContext() { }
+		public void copyFrom(AssignRhsContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class AssignRhsPairElemContext extends AssignRhsContext {
+		public PairElemContext pairElem() {
+			return getRuleContext(PairElemContext.class,0);
+		}
+		public AssignRhsPairElemContext(AssignRhsContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitAssignRhsPairElem(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AssignRhsExprContext extends AssignRhsContext {
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public AssignRhsExprContext(AssignRhsContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitAssignRhsExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AssignRhsNewPairContext extends AssignRhsContext {
 		public TerminalNode NEWPAIR() { return getToken(WACCParser.NEWPAIR, 0); }
 		public TerminalNode CLOSE_PARENTHESES() { return getToken(WACCParser.CLOSE_PARENTHESES, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode COMMA() { return getToken(WACCParser.COMMA, 0); }
+		public TerminalNode OPEN_PARENTHESES() { return getToken(WACCParser.OPEN_PARENTHESES, 0); }
+		public AssignRhsNewPairContext(AssignRhsContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitAssignRhsNewPair(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AssignRhsArrayLiteralContext extends AssignRhsContext {
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
@@ -687,22 +736,35 @@ public class WACCParser extends Parser {
 		public List<TerminalNode> COMMA() { return getTokens(WACCParser.COMMA); }
 		public TerminalNode OPEN_SQUARE_BRACKET() { return getToken(WACCParser.OPEN_SQUARE_BRACKET, 0); }
 		public TerminalNode CLOSE_SQUARE_BRACKET() { return getToken(WACCParser.CLOSE_SQUARE_BRACKET, 0); }
-		public TerminalNode CALL_FUNC() { return getToken(WACCParser.CALL_FUNC, 0); }
 		public TerminalNode COMMA(int i) {
 			return getToken(WACCParser.COMMA, i);
 		}
-		public TerminalNode IDENT() { return getToken(WACCParser.IDENT, 0); }
-		public TerminalNode OPEN_PARENTHESES() { return getToken(WACCParser.OPEN_PARENTHESES, 0); }
-		public PairElemContext pairElem() {
-			return getRuleContext(PairElemContext.class,0);
-		}
-		public AssignRhsContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_assignRhs; }
+		public AssignRhsArrayLiteralContext(AssignRhsContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitAssignRhs(this);
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitAssignRhsArrayLiteral(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AssignRhsCallFuncContext extends AssignRhsContext {
+		public TerminalNode CLOSE_PARENTHESES() { return getToken(WACCParser.CLOSE_PARENTHESES, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public List<TerminalNode> COMMA() { return getTokens(WACCParser.COMMA); }
+		public TerminalNode CALL_FUNC() { return getToken(WACCParser.CALL_FUNC, 0); }
+		public TerminalNode IDENT() { return getToken(WACCParser.IDENT, 0); }
+		public TerminalNode COMMA(int i) {
+			return getToken(WACCParser.COMMA, i);
+		}
+		public TerminalNode OPEN_PARENTHESES() { return getToken(WACCParser.OPEN_PARENTHESES, 0); }
+		public AssignRhsCallFuncContext(AssignRhsContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WACCParserVisitor ) return ((WACCParserVisitor<? extends T>)visitor).visitAssignRhsCallFunc(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -727,12 +789,14 @@ public class WACCParser extends Parser {
 			case STR_LITERAL:
 			case PAIR_LITERAL:
 			case IDENT:
+				_localctx = new AssignRhsExprContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(114); expr(0);
 				}
 				break;
 			case OPEN_SQUARE_BRACKET:
+				_localctx = new AssignRhsArrayLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(115); match(OPEN_SQUARE_BRACKET);
@@ -762,6 +826,7 @@ public class WACCParser extends Parser {
 				}
 				break;
 			case NEWPAIR:
+				_localctx = new AssignRhsNewPairContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(127); match(NEWPAIR);
@@ -774,12 +839,14 @@ public class WACCParser extends Parser {
 				break;
 			case FST:
 			case SND:
+				_localctx = new AssignRhsPairElemContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(134); pairElem();
 				}
 				break;
 			case CALL_FUNC:
+				_localctx = new AssignRhsCallFuncContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(135); match(CALL_FUNC);

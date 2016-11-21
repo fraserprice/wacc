@@ -26,6 +26,7 @@ import visitor.nodes.util.AssignLhsNode;
 import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.util.PairElemNode;
 import visitor.nodes.util.ParamNode;
+import visitor.nodes.util.assignrhs.*;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -124,29 +125,35 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node>
     }
 
     @Override
-    public AssignRhsNode visitAssignRhs(
-            @NotNull WACCParser.AssignRhsContext ctx) {
-        if (ctx.OPEN_SQUARE_BRACKET() != null) {
-            List<ExprNode> exprNodes = ctx.expr().stream()
-                    .map(e -> visitExprNodes(e))
-                    .collect(Collectors.toList());
-            return new AssignRhsNode(currentST, ctx, exprNodes);
-        } else if (ctx.NEWPAIR() != null) {
-            return new AssignRhsNode(currentST, ctx, visitExprNodes(ctx.expr
-                    (0)), visitExprNodes(ctx.expr(1)));
-        } else if (ctx.pairElem() != null) {
-            return new AssignRhsNode(currentST, ctx, visitPairElem(ctx
-                    .pairElem()));
-        } else if (ctx.CALL_FUNC() != null) {
-            List<ExprNode> args = ctx.expr().stream()
-                    .map(e -> visitExprNodes(e))
-                    .collect(Collectors.toList());
-            return new AssignRhsNode(currentST, ctx, args, ctx.IDENT()
-                    .getText());
-        } else {
-            return new AssignRhsNode(currentST, ctx, visitExprNodes(ctx.expr
-                    (0)));
-        }
+    public AssignRhsCallFuncNode visitAssignRhsCallFunc(@NotNull WACCParser.AssignRhsCallFuncContext ctx) {
+        List<ExprNode> args = ctx.expr().stream()
+                .map(e -> visitExprNodes(e))
+                .collect(Collectors.toList());
+        return new AssignRhsCallFuncNode(currentST, ctx, args);
+    }
+
+    @Override
+    public AssignRhsPairElemNode visitAssignRhsPairElem(@NotNull WACCParser.AssignRhsPairElemContext ctx) {
+        return new AssignRhsPairElemNode(currentST, ctx, visitPairElem(ctx.pairElem()));
+    }
+
+    @Override
+    public AssignRhsExprNode visitAssignRhsExpr(@NotNull WACCParser.AssignRhsExprContext ctx) {
+        return new AssignRhsExprNode(currentST, ctx, visitExprNodes(ctx.expr()));
+    }
+
+    @Override
+    public AssignRhsNewPairNode visitAssignRhsNewPair(@NotNull WACCParser.AssignRhsNewPairContext ctx) {
+        return new AssignRhsNewPairNode(currentST, ctx, visitExprNodes(ctx.expr
+                (0)), visitExprNodes(ctx.expr(1)));
+    }
+
+    @Override
+    public AssignRhsArrayLiteralNode visitAssignRhsArrayLiteral(@NotNull WACCParser.AssignRhsArrayLiteralContext ctx) {
+        List<ExprNode> exprNodes = ctx.expr().stream()
+                .map(e -> visitExprNodes(e))
+                .collect(Collectors.toList());
+        return new AssignRhsArrayLiteralNode(currentST, ctx, exprNodes);
     }
 
     @Override
@@ -183,7 +190,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node>
     public AssignPairArrayNode visitAssignPairArrayStat(
             @NotNull WACCParser.AssignPairArrayStatContext ctx) {
         return new AssignPairArrayNode(currentST, ctx, visitAssignLhs(
-                ctx.assignLhs()), visitAssignRhs(ctx.assignRhs()));
+                ctx.assignLhs()), (AssignRhsNode) visit(ctx.assignRhs()));
     }
 
     @Override
@@ -453,7 +460,7 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node>
     public AssignPrimitiveNode visitAssignPrimitiveStat(
             @NotNull WACCParser.AssignPrimitiveStatContext ctx) {
         return new AssignPrimitiveNode(currentST, ctx, visitType(ctx.type()),
-                visitAssignRhs(ctx.assignRhs()));
+                (AssignRhsNode) visit(ctx.assignRhs()));
     }
 
     @Override

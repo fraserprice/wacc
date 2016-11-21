@@ -34,11 +34,11 @@ assignLhs: IDENT
          | pairElem
          ;
 
-assignRhs: expr
-         | OPEN_SQUARE_BRACKET (expr (COMMA expr)*)? CLOSE_SQUARE_BRACKET
-         | NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES
-         | pairElem
-         | CALL_FUNC IDENT OPEN_PARENTHESES (expr (COMMA expr)*)? CLOSE_PARENTHESES
+assignRhs: expr                                                                      #AssignRhsExpr
+         | OPEN_SQUARE_BRACKET (expr (COMMA expr)*)? CLOSE_SQUARE_BRACKET            #AssignRhsArrayLiteral
+         | NEWPAIR OPEN_PARENTHESES expr COMMA expr CLOSE_PARENTHESES                #AssignRhsNewPair
+         | pairElem                                                                  #AssignRhsPairElem
+         | CALL_FUNC IDENT OPEN_PARENTHESES (expr (COMMA expr)*)? CLOSE_PARENTHESES  #AssignRhsCallFunc
          ;
 
 pairElem: FST expr
