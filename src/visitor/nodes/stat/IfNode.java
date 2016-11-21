@@ -57,23 +57,31 @@ public class IfNode extends StatNode<WACCParser.IfStatContext> {
     }
 
     @Override
-    public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
-        assert (!availableRegisters.isEmpty()): "Available Registers should always have at least one element";
+    public List<Instruction> generateInstructions(CodeGenerator codeGenRef
+            , List<Register> availableRegisters) {
+
+        assert (!availableRegisters.isEmpty())
+                : "Available Registers should always have at least one element";
         List<Instruction> instructions = new ArrayList<>();
 
+        // Get the first and second label names
         String label1 = codeGenRef.getNextLabel();
         String label2 = codeGenRef.getNextLabel();
-        instructions.addAll(exprNode.generateInstructions(codeGenRef, availableRegisters));
+        // Get every instruction form exprNode and add to result
+        instructions.addAll
+                (exprNode.generateInstructions(codeGenRef, availableRegisters));
         Register exprResult = availableRegisters.get(0);
         instructions.add(new BaseInstruction(Ins.CMP, exprResult, new Offset(0)));
         instructions.add(new BaseInstruction(Ins.BEQ, new LabelOp(label1)));
 
+        // Get the instructions in the first block
         List<Instruction> inBetweenThen = thenStat.generateInstructions(codeGenRef, availableRegisters);
         instructions.addAll(CodeGenerator.makeSpaceOnStack(thenStat.getCurrentST(), inBetweenThen));
 
         instructions.add(new BaseInstruction(Ins.BL, new LabelOp(label2)));
         instructions.add(new LabelIns(label1));
 
+        // Get the instructions in the second block
         List<Instruction> inBetweenElse = elseStat.generateInstructions(codeGenRef, availableRegisters);
         instructions.addAll(CodeGenerator.makeSpaceOnStack(elseStat.getCurrentST(), inBetweenElse));
 

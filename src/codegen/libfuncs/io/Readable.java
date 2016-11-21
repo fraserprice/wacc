@@ -15,10 +15,14 @@ public abstract class Readable extends LibFunc {
 
     public static final String FUNC_NAME_READ_INT = "lib_read_int";
     public static final String ARGUMENT_MESSAGE_READ_INT = "%d\\0";
+
     public static final String FUNC_NAME_READ_CHAR = "lib_read_char";
     public static final String ARGUMENT_MESSAGE_READ_CHAR = " %c\\0";
 
-    // Note: Only msg differs between lib_read_int and lib_read_char
+    /**
+     * Constructor for ReadInt and ReadChar
+     * Note: Only msg differs between lib_read_int and lib_read_char
+     */
     public Readable(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ARGUMENT_MESSAGE_READ_CHAR);
