@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Println extends LibFunc {
 
-    public static final String FUNC_NAME = "lib_println";
+    public static final String FUNC_NAME = "lib_print_ln";
     public static final String ARGUMENT_MESSAGE = "\\0";
 
     public Println(DataDir dataDir) {
@@ -20,7 +20,7 @@ public class Println extends LibFunc {
     }
 
     /**
-     * lib_println:
+     * lib_print_ln:
      *		PUSH {lr}
      *		LDR r0, =msg_1
      *		ADD r0, r0, #4

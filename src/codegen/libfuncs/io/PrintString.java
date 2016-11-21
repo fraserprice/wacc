@@ -30,7 +30,7 @@ public class PrintString extends LibFunc {
      *		MOV r0, #0
      *		BL fflush
      *		POP {pc}
-     * @return
+     * @return list of instructions needed for the lib_print_string label
      */
     @Override
     public List<Instruction> getInstructions() {
