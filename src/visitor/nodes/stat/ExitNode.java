@@ -1,11 +1,20 @@
 package visitor.nodes.stat;
 
 import antlr.WACCParser;
+import codegen.CodeGenerator;
+import codegen.Instruction;
+import codegen.instructions.BaseInstruction;
+import codegen.instructions.Ins;
+import codegen.operands.LabelOp;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
     private ExprNode expr;
@@ -29,5 +38,16 @@ public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
             addSemanticError(CompileTimeError.INVALID_EXIT_ARGUMENT, expr
                     .getType().toString());
         }
+    }
+
+    @Override
+    public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
+        List<Instruction> instructions = new ArrayList<>();
+        instructions.add(new BaseInstruction(Ins.LDR, new LabelOp(expr.getCtx()
+                .getText())));
+        instructions.add(new BaseInstruction(Ins.MOV, Register.R0,
+                availableRegisters.get(0)));
+        instructions.add(new BaseInstruction(Ins.BL, new LabelOp("exit")));
+        return instructions;
     }
 }

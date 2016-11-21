@@ -29,4 +29,6 @@ public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
                     .getType().toString());
         }
     }
+
+
 }
