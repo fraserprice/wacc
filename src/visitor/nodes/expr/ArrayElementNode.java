@@ -3,6 +3,8 @@ package visitor.nodes.expr;
 import antlr.WACCParser;
 import codegen.CodeGenerator;
 import codegen.Instruction;
+import codegen.instructions.BaseInstruction;
+import codegen.instructions.Ins;
 import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
@@ -76,6 +78,17 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         List<Instruction> instructions = new LinkedList<>();
+        Register reg1 = availableRegisters.get(0);
+        Register reg2 = availableRegisters.get(1);
+        int elemSize = type.getSize();
+        int offset = currentST.lookupOffset(ident);
+
+        instructions.add(new BaseInstruction(Ins.ADD, reg1, ));
+
+        for(ExprNode expr : exprNodeList) {
+
+        }
+
         return instructions;
     }
 }

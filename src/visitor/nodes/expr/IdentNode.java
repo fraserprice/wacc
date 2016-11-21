@@ -53,7 +53,7 @@ public class IdentNode extends ExprNode<WACCParser.IdentExprContext> {
 
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
-        int offset = currentST.lookup(ident, VariableObj.class).getOffset();
+        int offset = currentST.lookupOffset(ident);
 
         List<Instruction> instructions = new LinkedList<Instruction>() {{
             add(new BaseInstruction(Ins.LDR, availableRegisters.get(0),
