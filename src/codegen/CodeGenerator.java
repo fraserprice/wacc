@@ -22,9 +22,17 @@ public class CodeGenerator {
 
     public CodeGenerator(ProgramNode start) {
         this.dataDir = new DataDir();
-        this.mainDir = start.generateInstructions(this, Register.allRegisters());
         this.libDir = new ArrayList<>();
         this.labelCount = 0;
+        this.mainDir = start.generateInstructions(this, Register.allRegisters());
+    }
+
+    public void addMessage(String message) {
+        dataDir.put(message);
+    }
+
+    public String getMessage(String message) {
+        return dataDir.get(message);
     }
 
     public String getNextLabel() {
@@ -39,16 +47,16 @@ public class CodeGenerator {
                 return;
             }
         }
-        LibFunc func = null;
+
         try {
-            func = funcClass.getConstructor(DataDir.class).newInstance(dataDir);
+            LibFunc func = funcClass.getConstructor(DataDir.class).newInstance
+                    (dataDir);
+            libDir.add(func);
+
+            for (Class<? extends LibFunc> dep : func.getDependencies()) {
+                useLibFunc(dep);
+            }
         } catch(Exception e) { assert(false): "CodeGenerator: Should not get here"; }
-
-        libDir.add(func);
-
-        for (Class<? extends LibFunc> dep : func.getDependencies()) {
-            useLibFunc(dep);
-        }
     }
 
     @Override
