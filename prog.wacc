@@ -1,0 +1,5 @@
+begin
+    bool[] a = [];
+    bool[][] b = [a];
+    bool c = b[2][3]
+end

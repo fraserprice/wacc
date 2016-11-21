@@ -40,7 +40,6 @@ public class CodeGenerator {
         return dataDir.get(message);
     }
 
-    // Get the next label name available
     public String getNextLabel() {
         String labelName = "LB_" + labelCount;
         labelCount++;
