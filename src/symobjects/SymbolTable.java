@@ -77,6 +77,15 @@ public class SymbolTable {
         this.map.put(key, obj);
     }
 
+    public int lookupOffset(String key) {
+        VariableObj vObj = lookup(key, VariableObj.class);
+        assert (parent != null || vObj != null): "parent != null || vObj != null";
+        if (vObj != null) {
+            return vObj.getOffset();
+        }
+        return offsetLocation + parent.lookupOffset(key);
+    }
+
     public int getOffsetLocation() {
         return offsetLocation;
     }
