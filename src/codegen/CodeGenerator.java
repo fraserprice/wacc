@@ -40,6 +40,14 @@ public class CodeGenerator {
         return dataDir.get(message);
     }
 
+    public void addMessage(String message) {
+        dataDir.put(message);
+    }
+
+    public String getMessage(String message) {
+        return dataDir.get(message);
+    }
+
     public String getNextLabel() {
         String labelName = "LB_" + labelCount;
         labelCount++;
