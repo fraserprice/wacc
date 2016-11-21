@@ -29,7 +29,7 @@ public class PrintInt extends LibFunc {
      *		MOV r0, #0
      *		BL fflush
      *		POP {pc}
-     * @return
+     * @return list of instructions needed for the lib_print_int label
      */
     @Override
     public List<Instruction> getInstructions() {
