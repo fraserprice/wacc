@@ -16,6 +16,8 @@ import symobjects.identifierobj.typeobj.scalarobj.CharObj;
 import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class PrintlnNode extends StatNode<WACCParser.PrintlnStatContext> {
 
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
-                List<Instruction> instructions = new LinkedList<>();
+                List<Instruction> instructions = new ArrayList<>();
         TypeObj exprType = exprNode.getType();
         BaseInstruction branch = null;
         if (exprType instanceof IntObj) {

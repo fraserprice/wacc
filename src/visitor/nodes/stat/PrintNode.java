@@ -21,6 +21,7 @@ import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
 import visitor.nodes.expr.literal.IntNode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class PrintNode extends StatNode<WACCParser.PrintStatContext> {
 
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
-        List<Instruction> instructions = new LinkedList<>();
+        List<Instruction> instructions = new ArrayList<>();
         TypeObj exprType = exprNode.getType();
         BaseInstruction branch = null;
         if (exprType instanceof IntObj) {
