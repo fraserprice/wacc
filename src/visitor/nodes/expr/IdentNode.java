@@ -8,7 +8,6 @@ import codegen.instructions.Ins;
 import codegen.operands.Offset;
 import codegen.operands.Register;
 import codegen.operands.StackLocation;
-import codegen.operands.StackOp;
 import main.CompileTimeError;
 import symobjects.IdentifierObj;
 import symobjects.SymbolTable;
@@ -57,7 +56,7 @@ public class IdentNode extends ExprNode<WACCParser.IdentExprContext> {
 
         List<Instruction> instructions = new LinkedList<Instruction>() {{
             add(new BaseInstruction(Ins.LDR, availableRegisters.get(0),
-                    new StackLocation(new StackOp(), new Offset(offset))));
+                    new StackLocation(Register.SP, new Offset(offset))));
         }};
 
         return instructions;

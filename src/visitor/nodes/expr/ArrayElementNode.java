@@ -5,7 +5,11 @@ import codegen.CodeGenerator;
 import codegen.Instruction;
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
+import codegen.libfuncs.runtimeerror.CheckArrayBounds;
+import codegen.operands.LabelOp;
+import codegen.operands.Offset;
 import codegen.operands.Register;
+import codegen.operands.StackLocation;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.VariableObj;
@@ -83,11 +87,25 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
         int elemSize = type.getSize();
         int offset = currentST.lookupOffset(ident);
 
-        instructions.add(new BaseInstruction(Ins.ADD, reg1, ));
+        instructions.add(new BaseInstruction(Ins.ADD, reg1, new Offset(offset)));
 
-        for(ExprNode expr : exprNodeList) {
-
+        for(int i = 0; i < exprNodeList.size(); i++) {
+            List<Register> temp = availableRegisters;
+            temp.remove(0);
+            instructions.addAll(exprNodeList.get(i).generateInstructions(codeGenRef, temp));
+            instructions.add(new BaseInstruction(Ins.LDR, reg1, new StackLocation(reg1)));
+            instructions.add(new BaseInstruction(Ins.MOV, Register.R0, reg2));
+            instructions.add(new BaseInstruction(Ins.MOV, Register.R1, reg1));
+            instructions.add(new BaseInstruction(Ins.BL, new LabelOp(CheckArrayBounds.FUNC_NAME)));
+            instructions.add(new BaseInstruction(Ins.AND, reg1, reg1, new Offset(4)));
+            if(i == exprNodeList.size() - 1 && elemSize < 4) {
+                instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, reg2));
+            } else {
+                instructions.add(new BaseInstruction(Ins.ADD, reg1 , reg1, reg2));
+            }
         }
+
+        instructions.add(new BaseInstruction(Ins.LDR, reg1, new StackLocation(reg1)));
 
         return instructions;
     }
