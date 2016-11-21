@@ -18,6 +18,7 @@ public class Println extends LibFunc {
 
     public Println(DataDir dataDir) {
         super(dataDir);
+        this.dataDir.put(ARGUMENT_MESSAGE);
     }
 
     /**

@@ -21,6 +21,8 @@ public abstract class Readable extends LibFunc {
     // Note: Only msg differs between lib_read_int and lib_read_char
     public Readable(DataDir dataDir) {
         super(dataDir);
+        this.dataDir.put(ARGUMENT_MESSAGE_READ_CHAR);
+        this.dataDir.put(ARGUMENT_MESSAGE_READ_INT);
     }
 
     /**

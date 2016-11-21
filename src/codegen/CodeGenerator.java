@@ -1,5 +1,9 @@
 package codegen;
 
+import codegen.libfuncs.io.PrintBool;
+import codegen.libfuncs.io.PrintReference;
+import codegen.libfuncs.io.PrintString;
+import codegen.libfuncs.runtimeerror.CheckArrayBounds;
 import codegen.operands.Register;
 import visitor.nodes.ProgramNode;
 
@@ -10,15 +14,24 @@ public class CodeGenerator {
     /**
      * Main class responsible for generation the assembly
      */
-    public static final String INSTRUCTION_NAME_FORMAT = "%-5s";
+
     private DataDir dataDir; // contains the labels between .data and .text
     private List<Instruction> mainDir; // contains the labels after .global main
     private List<LibFunc> libDir; // contains all the lib functions used
+    private int labelCount;
 
     public CodeGenerator(ProgramNode start) {
         this.dataDir = new DataDir();
         this.mainDir = start.generateInstructions(this, Register.allRegisters());
         this.libDir = new ArrayList<>();
+        this.labelCount = 0;
+        useLibFunc(CheckArrayBounds.class);
+    }
+
+    public String getNextLabel() {
+        String labelName = "LB_" + labelCount;
+        labelCount++;
+        return labelName;
     }
 
     public void useLibFunc(Class<? extends LibFunc> funcClass) {
@@ -59,4 +72,16 @@ public class CodeGenerator {
 
         return sb.toString();
     }
+    /**
+     * p_check_array_bounds:
+     142		PUSH {lr}
+     143		CMP r0, #0
+     144		LDRLT r0, =msg_5
+     145		BLLT p_throw_runtime_error
+     146		LDR r1, [r1]
+     147		CMP r0, r1
+     148		LDRCS r0, =msg_6
+     149		BLCS p_throw_runtime_error
+     150		POP {pc}
+     */
 }

@@ -19,6 +19,8 @@ public class PrintBool extends LibFunc {
 
     public PrintBool(DataDir dataDir) {
         super(dataDir);
+        this.dataDir.put(ARGUMENT_MESSAGE_TRUE);
+        this.dataDir.put(ARGUMENT_MESSAGE_FALSE);
     }
 
     /**

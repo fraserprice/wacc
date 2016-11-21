@@ -6,6 +6,7 @@ import codegen.Operand;
 import codegen.instructions.Ins;
 
 public class BaseInstruction implements Instruction {
+    public static final String INSTRUCTION_NAME_FORMAT = "%-6s";
     private Operand[] ops;
     private Ins instr;
 
@@ -24,7 +25,7 @@ public class BaseInstruction implements Instruction {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\t").append(String.format(CodeGenerator.INSTRUCTION_NAME_FORMAT, instr.toString()));
+        sb.append("\t").append(String.format(INSTRUCTION_NAME_FORMAT, instr.toString()));
 
         for (int i = 0; i < ops.length - 1; i++) {
             sb.append(ops[i].toString()).append(", ");

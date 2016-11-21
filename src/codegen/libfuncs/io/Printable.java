@@ -24,6 +24,8 @@ public abstract class Printable extends LibFunc {
     // Note: Only msg differs between lib_print_int and lib_print_reference
     public Printable(DataDir dataDir) {
         super(dataDir);
+        this.dataDir.put(ARGUMENT_MESSAGE_PRINT_INT);
+        this.dataDir.put(ARGUMENT_MESSAGE_PRINT_REFERENCE);
     }
 
     /**
