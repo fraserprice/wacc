@@ -6,6 +6,10 @@ public class Offset implements Operand {
 
     private String value;
 
+    public Offset(String value) {
+        this.value = "#" + value;
+    }
+
     public Offset(int value) {
         this.value = "#" + Integer.toString(value);
     }

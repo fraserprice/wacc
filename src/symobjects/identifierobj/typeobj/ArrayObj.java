@@ -1,6 +1,7 @@
 package symobjects.identifierobj.typeobj;
 
 import symobjects.identifierobj.TypeObj;
+import symobjects.identifierobj.typeobj.scalarobj.CharObj;
 
 public class ArrayObj extends TypeObj {
     private TypeObj type;
@@ -18,6 +19,10 @@ public class ArrayObj extends TypeObj {
     public ArrayObj(TypeObj type, int elementsNo) {
         this.type = type;
         this.elementsNo = elementsNo;
+    }
+
+    public boolean isString() {
+        return type instanceof CharObj;
     }
 
     public TypeObj getType() {
