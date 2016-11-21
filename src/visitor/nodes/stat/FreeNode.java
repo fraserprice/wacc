@@ -45,13 +45,17 @@ public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
     }
 
     @Override
-    public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
-        assert (!availableRegisters.isEmpty()): "Available Registers should always have at least one element";
+    public List<Instruction> generateInstructions(CodeGenerator codeGenRef
+            , List<Register> availableRegisters) {
+
+        assert (!availableRegisters.isEmpty())
+                : "Available Registers should always have at least one element";
         List<Instruction> instructions = new ArrayList<>();
 
         instructions.add(new BaseInstruction(Ins.BL
                 , new LabelOp(FreePair.FUNC_NAME)));
-        instructions.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP, new Offset(4)));
+        instructions.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP
+                , new Offset(4)));
         return instructions;
     }
 }

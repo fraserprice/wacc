@@ -17,6 +17,10 @@ public class CheckDivideByZero extends LibFunc {
     public static final String ERROR_MESSAGE
       = "DivideByZeroError: divide or modulo by zero.\\n\\0";
 
+    /**
+     * Constructor for CheckDivideByZero
+     * Has a label for throwing an error if user tries to divide a number by 0
+     */
     public CheckDivideByZero(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ERROR_MESSAGE);

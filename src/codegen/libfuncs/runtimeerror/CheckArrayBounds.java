@@ -17,6 +17,11 @@ public class CheckArrayBounds extends LibFunc {
     public static final String ERROR_MESSAGE
       = "ArrayIndexOutOfBoundsError: negative index/index too large.\n\0";
 
+    /**
+     * Constructor for CheckArrayBounds
+     * Has a label for throwing an error if user tries to access an invalid
+     * index of an array
+     */
     public CheckArrayBounds(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ERROR_MESSAGE);

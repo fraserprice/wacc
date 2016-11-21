@@ -17,6 +17,11 @@ public class CheckNullPointer extends LibFunc {
     public static final String ERROR_MESSAGE
       = "NullReferenceError: dereference a null reference.\\n\\0";
 
+    /**
+     * Constructor for CheckNullPointer
+     * Has a label for throwing an error if user tries to access a null pointer
+     * reference
+     */
     public CheckNullPointer(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ERROR_MESSAGE);
