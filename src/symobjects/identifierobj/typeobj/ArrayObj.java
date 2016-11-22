@@ -2,6 +2,7 @@ package symobjects.identifierobj.typeobj;
 
 import symobjects.identifierobj.TypeObj;
 import symobjects.identifierobj.typeobj.scalarobj.CharObj;
+import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 
 public class ArrayObj extends TypeObj {
     private TypeObj type;
@@ -31,6 +32,10 @@ public class ArrayObj extends TypeObj {
 
     public int getElementsNo() {
         return elementsNo;
+    }
+
+    public int getHeapSize() {
+        return elementsNo * type.getSize() + new IntObj().getSize();
     }
 
     public void setElementsNo(int no) {

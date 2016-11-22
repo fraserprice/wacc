@@ -10,6 +10,10 @@ public class Immediate implements Operand {
         this.value = "=" + value;
     }
 
+    public Immediate(int value) {
+        this(String.valueOf(value));
+    }
+
     @Override
     public String toString() {
         return this.value;
