@@ -90,6 +90,7 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
         instructions.add(new BaseInstruction(Ins.ADD, reg1, new Offset(offset)));
 
         for(int i = 0; i < exprNodeList.size(); i++) {
+            // TODO: BE CAREFUL WHEN REMOVING FROM LIST BECAUSE IT REMOVES FROM ALL FUNCTIONS
             List<Register> temp = availableRegisters;
             temp.remove(0);
             instructions.addAll(exprNodeList.get(i).generateInstructions(codeGenRef, temp));
@@ -101,7 +102,7 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
             if(i == exprNodeList.size() - 1 && elemSize < 4) {
                 instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, reg2));
             } else {
-                instructions.add(new BaseInstruction(Ins.ADD, reg1 , reg1, reg2));
+                instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, reg2));
             }
         }
 
