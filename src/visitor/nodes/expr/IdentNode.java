@@ -55,8 +55,14 @@ public class IdentNode extends ExprNode<WACCParser.IdentExprContext> {
         int offset = currentST.lookupOffset(ident);
 
         List<Instruction> instructions = new LinkedList<Instruction>() {{
-            add(new BaseInstruction(Ins.getLdrInstruction(type), availableRegisters.get(0),
-                    new StackLocation(Register.SP, new Offset(offset))));
+            if(offset == 0) {
+                add(new BaseInstruction(Ins.getLdrInstruction(type), availableRegisters.get(0),
+                        new StackLocation(Register.SP)));
+
+            } else {
+                add(new BaseInstruction(Ins.getLdrInstruction(type), availableRegisters.get(0),
+                        new StackLocation(Register.SP, new Offset(offset))));
+            }
         }};
 
         return instructions;
