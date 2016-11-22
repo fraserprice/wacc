@@ -85,7 +85,7 @@ public class UnaryOpNode extends ExprNode<WACCParser.ExprContext> {
 
         switch (operator) {
             case "-":
-                if(!(argument.getType() instanceof IntObj)) {
+                if(!(argument instanceof LiteralNode)) {
                     codeGenRef.useLibFunc(ThrowOverflowError.class);
                     instructions.add(new BaseInstruction(Ins.RSBS, reg, reg, new Offset(0)));
                     instructions.add(new BaseInstruction(Ins.BLVS, new LabelOp(ThrowOverflowError.FUNC_NAME)));
