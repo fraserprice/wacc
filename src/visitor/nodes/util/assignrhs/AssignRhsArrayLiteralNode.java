@@ -63,9 +63,6 @@ public class AssignRhsArrayLiteralNode extends AssignRhsNode<WACCParser.AssignRh
         instructions.add(new BaseInstruction(Ins.LDR, Register.R0, new Immediate(arrayType.getHeapSize())));
         instructions.add(new BaseInstruction(Ins.BL, new LabelOp("malloc")));
         instructions.add(new BaseInstruction(Ins.MOV, o1, Register.R0));
-        // load second operand with array size and store it
-        instructions.add(new BaseInstruction(Ins.LDR, o2, new Immediate(arrayType.getElementsNo())));
-        instructions.add(new BaseInstruction(Ins.STR, o2, new StackLocation(o1)));
 
         int arrayIndex = 4;
         for (ExprNode arg : args) {
@@ -74,6 +71,10 @@ public class AssignRhsArrayLiteralNode extends AssignRhsNode<WACCParser.AssignRh
                     new StackLocation(o1, new Offset(arrayIndex))));
             arrayIndex += arrayType.getType().getSize();
         }
+
+        // load second operand with array size and store it
+        instructions.add(new BaseInstruction(Ins.LDR, o2, new Immediate(arrayType.getElementsNo())));
+        instructions.add(new BaseInstruction(Ins.STR, o2, new StackLocation(o1)));
 
         return instructions;
     }

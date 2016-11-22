@@ -15,9 +15,9 @@ public class CheckArrayBounds extends LibFunc {
 
     public static final String FUNC_NAME = "lib_check_array_bounds";
     public static final String ERROR_MESSAGE_1
-      = "ArrayIndexOutOfBoundsError: negative index/index too large.\\n\\0";
+      = "ArrayIndexOutOfBoundsError: negative index.\\n\\0";
     public static final String ERROR_MESSAGE_2
-      = "ArrayIndexOutOfBoundsError: index too large. \\n\\0";
+      = "ArrayIndexOutOfBoundsError: index too large.\\n\\0";
     private final String ERROR_MESSAGE_1_LOCATION;
     private final String ERROR_MESSAGE_2_LOCATION;
 
@@ -29,8 +29,8 @@ public class CheckArrayBounds extends LibFunc {
     public CheckArrayBounds(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ERROR_MESSAGE_1);
-        this.dataDir.put(ERROR_MESSAGE_2);
         ERROR_MESSAGE_1_LOCATION = this.dataDir.getLastMessage();
+        this.dataDir.put(ERROR_MESSAGE_2);
         ERROR_MESSAGE_2_LOCATION = this.dataDir.getLastMessage();
     }
 
