@@ -109,7 +109,7 @@ public class SymbolTable {
         if(map.containsKey(LR_SENTINEL)) {
             int sum = 0;
             for(Map.Entry<String, IdentifierObj> entry : map.entrySet()) {
-                if(entry.getValue() instanceof VariableObj && entry.getKey().equals(LR_SENTINEL)
+                if(entry.getValue() instanceof VariableObj && !entry.getKey().equals(LR_SENTINEL)
                     &&!isParam(entry.getKey())) {
                     sum += ((VariableObj) entry.getValue()).getType().getSize();
                 }
