@@ -1,10 +1,16 @@
 package visitor.nodes.util.assignlhs;
 
 import antlr.WACCParser;
+import codegen.CodeGenerator;
+import codegen.Instruction;
+import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.VariableObj;
 import visitor.nodes.util.AssignLhsNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AssignLhsIdentNode extends AssignLhsNode {
     // assignLhs: IDENT
@@ -23,5 +29,12 @@ public class AssignLhsIdentNode extends AssignLhsNode {
         }
 
         type = identObj.getType();
+    }
+
+    @Override
+    public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
+        List<Instruction> instructions = new ArrayList<>();
+
+        return instructions;
     }
 }
