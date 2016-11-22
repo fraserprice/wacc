@@ -26,6 +26,9 @@ import visitor.nodes.util.AssignLhsNode;
 import visitor.nodes.util.AssignRhsNode;
 import visitor.nodes.util.PairElemNode;
 import visitor.nodes.util.ParamNode;
+import visitor.nodes.util.assignlhs.AssignLhsArrayElemNode;
+import visitor.nodes.util.assignlhs.AssignLhsIdentNode;
+import visitor.nodes.util.assignlhs.AssignLhsPairElemNode;
 import visitor.nodes.util.assignrhs.*;
 
 import java.util.ArrayList;
@@ -163,17 +166,18 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node>
     }
 
     @Override
-    public AssignLhsNode visitAssignLhs(
-            @NotNull WACCParser.AssignLhsContext ctx) {
-        if (ctx.IDENT() != null) {
-            return new AssignLhsNode(currentST, ctx);
-        } else if (ctx.arrayElem() != null) {
-            return new AssignLhsNode(currentST, ctx, visitArrayElem(
-                    ctx.arrayElem()));
-        } else {
-            return new AssignLhsNode(currentST, ctx, visitPairElem(
-                    ctx.pairElem()));
-        }
+    public Node visitAssignLhsArrayElem(@NotNull WACCParser.AssignLhsArrayElemContext ctx) {
+        return new AssignLhsArrayElemNode(currentST, ctx, visitArrayElem(ctx.arrayElem()));
+    }
+
+    @Override
+    public Node visitAssignLhsIdent(@NotNull WACCParser.AssignLhsIdentContext ctx) {
+        return new AssignLhsIdentNode(currentST, ctx);
+    }
+
+    @Override
+    public Node visitAssignLhsPairElem(@NotNull WACCParser.AssignLhsPairElemContext ctx) {
+        return new AssignLhsPairElemNode(currentST, ctx, visitPairElem(ctx.pairElem()));
     }
 
     @Override
@@ -195,13 +199,13 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node>
     @Override
     public AssignPairArrayNode visitAssignPairArrayStat(
             @NotNull WACCParser.AssignPairArrayStatContext ctx) {
-        return new AssignPairArrayNode(currentST, ctx, visitAssignLhs(
+        return new AssignPairArrayNode(currentST, ctx, (AssignLhsNode) visit(
                 ctx.assignLhs()), (AssignRhsNode) visit(ctx.assignRhs()));
     }
 
     @Override
     public ReadNode visitReadStat(@NotNull WACCParser.ReadStatContext ctx) {
-        return new ReadNode(currentST, ctx, visitAssignLhs(ctx.assignLhs()));
+        return new ReadNode(currentST, ctx, (AssignLhsNode) visit(ctx.assignLhs()));
     }
 
     @Override

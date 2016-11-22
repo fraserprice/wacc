@@ -29,9 +29,9 @@ stat: SKIP_STAT                                           #SkipStat
     | stat COMPOSITION_STAT stat                          #CompositionStat
     ;
 
-assignLhs: IDENT
-         | arrayElem
-         | pairElem
+assignLhs: IDENT      #AssignLhsIdent
+         | arrayElem  #AssignLhsArrayElem
+         | pairElem   #AssignLhsPairElem
          ;
 
 assignRhs: expr                                                                      #AssignRhsExpr

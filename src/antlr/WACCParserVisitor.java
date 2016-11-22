@@ -25,11 +25,12 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArrayElem(@NotNull WACCParser.ArrayElemContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link WACCParser#assignLhs}.
+	 * Visit a parse tree produced by the {@code AssignLhsArrayElem}
+	 * labeled alternative in {@link WACCParser#assignLhs}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssignLhs(@NotNull WACCParser.AssignLhsContext ctx);
+	T visitAssignLhsArrayElem(@NotNull WACCParser.AssignLhsArrayElemContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WACCParser#program}.
 	 * @param ctx the parse tree
@@ -187,6 +188,13 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCharLiteral(@NotNull WACCParser.CharLiteralContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code AssignLhsIdent}
+	 * labeled alternative in {@link WACCParser#assignLhs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignLhsIdent(@NotNull WACCParser.AssignLhsIdentContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code BinMulDivModExpr}
 	 * labeled alternative in {@link WACCParser#expr}.
 	 * @param ctx the parse tree
@@ -296,6 +304,13 @@ public interface WACCParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFunc(@NotNull WACCParser.FuncContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AssignLhsPairElem}
+	 * labeled alternative in {@link WACCParser#assignLhs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignLhsPairElem(@NotNull WACCParser.AssignLhsPairElemContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code UnExpr}
 	 * labeled alternative in {@link WACCParser#expr}.

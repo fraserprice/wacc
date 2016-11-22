@@ -131,7 +131,7 @@ public enum CompileTimeError {
                         " is not a semantic error";
         }
 
-        System.err.println("Error on line " + line + ":" + characterPos +
+        System.err.println("Semantic Error on line " + line + ":" + characterPos +
                 " " + errorMessage);
         hasSemanticErrors = true;
     }
@@ -153,7 +153,7 @@ public enum CompileTimeError {
                         " is not a semantic error";
         }
 
-        System.err.println("Error on line " + line + ":" + characterPos +
+        System.err.println("Syntactic Error on line " + line + ":" + characterPos +
                 " " + errorMessage);
     }
 }
