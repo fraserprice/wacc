@@ -57,8 +57,10 @@ public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
         LabelOp labelOp = new LabelOp("0");
 
         if (typeObj instanceof IntObj) {
+            codeGenRef.useLibFunc(ReadInt.class);
             labelOp = new LabelOp(ReadInt.FUNC_NAME_READ_INT);
         } else if (typeObj instanceof CharObj) {
+            codeGenRef.useLibFunc(ReadChar.class);
             labelOp = new LabelOp(ReadChar.FUNC_NAME_READ_CHAR);
         }
 

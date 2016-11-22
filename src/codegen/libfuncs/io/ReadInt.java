@@ -14,5 +14,6 @@ public class ReadInt extends Readable {
 
     public ReadInt(DataDir dataDir) {
         super(dataDir);
+        this.dataDir.put(ARGUMENT_MESSAGE_READ_INT);
     }
 }

@@ -14,5 +14,6 @@ public class ReadChar extends Readable {
 
     public ReadChar(DataDir dataDir) {
         super(dataDir);
+        this.dataDir.put(ARGUMENT_MESSAGE_READ_CHAR);
     }
 }
