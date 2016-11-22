@@ -3,6 +3,9 @@ package visitor.nodes.util.assignlhs;
 import antlr.WACCParser;
 import codegen.CodeGenerator;
 import codegen.Instruction;
+import codegen.instructions.BaseInstruction;
+import codegen.instructions.Ins;
+import codegen.operands.Offset;
 import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
@@ -35,7 +38,14 @@ public class AssignLhsIdentNode extends AssignLhsNode<WACCParser.AssignLhsIdentC
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         List<Instruction> instructions = new ArrayList<>();
 
-        // int identOffset = currentST.lookupOffset(ctx);
+        int identOffset = currentST.lookupOffset(ctx.IDENT().getText());
+        Register returnReg = availableRegisters.get(0);
+
+        if (identOffset == 0) {
+            instructions.add(new BaseInstruction(Ins.MOV, returnReg, Register.SP));
+        } else {
+            instructions.add(new BaseInstruction(Ins.MOV, returnReg, Register.SP, new Offset(identOffset)));
+        }
 
         return instructions;
     }
