@@ -17,7 +17,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class IntNode extends LiteralNode<WACCParser.IntLiteralContext> {
-
     public IntNode(SymbolTable currentST, WACCParser.IntLiteralContext ctx) {
         super(currentST, ctx);
 
@@ -37,7 +36,7 @@ public class IntNode extends LiteralNode<WACCParser.IntLiteralContext> {
 
     private void check() {
         try {
-            Integer.parseInt(value);
+            this.value = String.valueOf(Integer.parseInt(value));
         } catch (NumberFormatException e) {
             addSyntacticError(CompileTimeError.INTEGER_OVERFLOW, ctx.getText());
             System.exit(CompileTimeError.EXIT_SYNTAX_ERROR);

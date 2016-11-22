@@ -19,4 +19,7 @@ public abstract class LiteralNode<T extends WACCParser.LiteralContext>
         super(currentST, ctx);
     }
 
+    public String getValue() {
+        return value;
+    }
 }
