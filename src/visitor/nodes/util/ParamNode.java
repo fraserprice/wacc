@@ -41,6 +41,7 @@ public class ParamNode extends Node<WACCParser.ParamContext> {
 
         obj = new VariableObj(currentST, type);
 
+        currentST.setInitialised(ctx.IDENT().getText());
         currentST.add(ctx.IDENT().getText(), obj);
     }
 
