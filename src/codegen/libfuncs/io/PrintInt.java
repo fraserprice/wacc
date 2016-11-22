@@ -14,5 +14,6 @@ public class PrintInt extends Printable {
 
     public PrintInt(DataDir dataDir) {
         super(dataDir);
+        this.dataDir.put(ARGUMENT_MESSAGE_PRINT_INT);
     }
 }

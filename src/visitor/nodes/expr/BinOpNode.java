@@ -22,6 +22,7 @@ import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
     private ExprNode lhs;
@@ -108,15 +109,13 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
         List<Instruction> instructions = new LinkedList<Instruction>() {{
             if(lhs.getWeight() > rhs.getWeight()) {
                 addAll(lhs.generateInstructions(codeGenRef, availableRegisters));
-                List<Register> availableRhs = availableRegisters;
-                availableRhs.remove(0);
+                List<Register> availableRhs = availableRegisters.stream().skip(1).collect(Collectors.toList());
                 addAll(rhs.generateInstructions(codeGenRef, availableRhs));
             } else {
-                List<Register> availableTemp = availableRegisters;
-                availableTemp.remove(0);
+                List<Register> availableTemp = availableRegisters.stream().skip(1).collect(Collectors.toList());
                 availableTemp.add(1, lhsR);
                 addAll(rhs.generateInstructions(codeGenRef, availableTemp));
-                availableTemp.remove(0);
+                availableTemp = availableTemp.stream().skip(1).collect(Collectors.toList());
                 addAll(lhs.generateInstructions(codeGenRef, availableTemp));
             }
         }};

@@ -16,6 +16,7 @@ import visitor.nodes.util.AssignRhsNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AssignRhsArrayLiteralNode extends AssignRhsNode<WACCParser.AssignRhsArrayLiteralContext> {
     private List<ExprNode> args;
@@ -57,7 +58,7 @@ public class AssignRhsArrayLiteralNode extends AssignRhsNode<WACCParser.AssignRh
         ArrayObj arrayType = (ArrayObj) type;
         Operand o1 = availableRegisters.get(0);
         Operand o2 = availableRegisters.get(1);
-        availableRegisters.remove(o1);
+        List<Register> newAvailableRegisters = availableRegisters.stream().skip(1).collect(Collectors.toList());
 
         instructions.add(new BaseInstruction(Ins.LDR, Register.R0, new Immediate(arrayType.getHeapSize())));
         instructions.add(new BaseInstruction(Ins.BL, new LabelOp("malloc")));
@@ -68,7 +69,7 @@ public class AssignRhsArrayLiteralNode extends AssignRhsNode<WACCParser.AssignRh
 
         int arrayIndex = 4;
         for (ExprNode arg : args) {
-            instructions.addAll(arg.generateInstructions(codeGenRef, availableRegisters));
+            instructions.addAll(arg.generateInstructions(codeGenRef, newAvailableRegisters));
             instructions.add(new BaseInstruction(Ins.getStrInstruciton(arg.getType()),
                     availableRegisters.get(0), new StackLocation(o1, new Offset(arrayIndex))));
             arrayIndex += arrayType.getType().getSize();

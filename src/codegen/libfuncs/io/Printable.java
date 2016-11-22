@@ -27,8 +27,6 @@ public abstract class Printable extends LibFunc {
      */
     public Printable(DataDir dataDir) {
         super(dataDir);
-        this.dataDir.put(ARGUMENT_MESSAGE_PRINT_INT);
-        this.dataDir.put(ARGUMENT_MESSAGE_PRINT_REFERENCE);
     }
 
     /**
@@ -62,8 +60,7 @@ public abstract class Printable extends LibFunc {
             add(new BaseInstruction(Ins.MOV, Register.R0, new Offset(0)));
             add(new BaseInstruction(Ins.BL, new LabelOp("fflush")));
             add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
-        }
-        };
+        }};
     }
 
     @Override
