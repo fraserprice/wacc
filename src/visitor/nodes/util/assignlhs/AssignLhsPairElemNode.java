@@ -26,6 +26,7 @@ public class AssignLhsPairElemNode extends AssignLhsNode<WACCParser.AssignLhsPai
 
         this.type = pairElem.getType();
         this.pairElem = pairElem;
+        this.ident = pairElem.getCtx().expr().getText();
     }
 
     @Override

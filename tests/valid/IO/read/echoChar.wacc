@@ -8,7 +8,7 @@
 # Program:
 
 begin
-	char c = '\0' ;
+	char c = '0' ;
   println "enter a character to echo";
 	read c ;
 	println c 

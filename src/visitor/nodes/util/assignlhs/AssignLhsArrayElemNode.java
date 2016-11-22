@@ -25,7 +25,8 @@ public class AssignLhsArrayElemNode extends AssignLhsNode<WACCParser.AssignLhsAr
             return;
         }
 
-        type = arrayElem.getType();
+        this.type = arrayElem.getType();
+        this.ident = arrayElem.getIdent();
     }
 
     @Override

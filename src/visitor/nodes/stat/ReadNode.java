@@ -53,6 +53,7 @@ public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         List<Instruction> instructions = new ArrayList<>();
+        Register reg = availableRegisters.get(0);
 
         LabelOp labelOp = new LabelOp("0");
 
@@ -64,9 +65,11 @@ public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
             labelOp = new LabelOp(ReadChar.FUNC_NAME_READ_CHAR);
         }
 
-        instructions.addAll(lhs.generateInstructions(codeGenRef, availableRegisters));
+        int offset = currentST.lookupOffset(lhs.getIdent());
+
+        instructions.add(new BaseInstruction(Ins.ADD, reg, Register.SP, new Offset(offset)));
         instructions.add(new BaseInstruction(Ins.MOV, Register
-                .R0, availableRegisters.get(0)));
+                .R0, reg));
         instructions.add(new BaseInstruction(Ins.BL, labelOp));
         return instructions;
     }

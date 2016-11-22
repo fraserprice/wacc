@@ -22,6 +22,9 @@ public class AssignLhsIdentNode extends AssignLhsNode<WACCParser.AssignLhsIdentC
             return;
         }
 
-        type = identObj.getType();
+        this.type = identObj.getType();
+        this.ident = ctx.IDENT().getText();
     }
+
+
 }
