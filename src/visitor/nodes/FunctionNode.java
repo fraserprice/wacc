@@ -97,15 +97,11 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         List<Instruction> ins = new ArrayList<>();
 
-        int usedVariableSpace = fObj.getVariableSpace();
-
         ins.add(new LabelIns("f_" + name));
         ins.add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
         ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP,
-                new Offset(usedVariableSpace)));
+                new Offset(fObj.getVariableSpace())));
         ins.addAll(body.generateInstructions(codeGenRef, availableRegisters));
-        ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP,
-                new Offset(usedVariableSpace)));
         ins.add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
         ins.add(new Ltorg());
 
