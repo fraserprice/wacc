@@ -19,6 +19,7 @@ import visitor.nodes.ExprNode;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
 
@@ -90,9 +91,7 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
         instructions.add(new BaseInstruction(Ins.ADD, reg1, new Offset(offset)));
 
         for(int i = 0; i < exprNodeList.size(); i++) {
-            // TODO: BE CAREFUL WHEN REMOVING FROM LIST BECAUSE IT REMOVES FROM ALL FUNCTIONS
-            List<Register> temp = availableRegisters;
-            temp.remove(0);
+            List<Register> temp = availableRegisters.stream().skip(1).collect(Collectors.toList());
             instructions.addAll(exprNodeList.get(i).generateInstructions(codeGenRef, temp));
             instructions.add(new BaseInstruction(Ins.LDR, reg1, new StackLocation(reg1)));
             instructions.add(new BaseInstruction(Ins.MOV, Register.R0, reg2));
