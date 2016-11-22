@@ -28,6 +28,9 @@ public enum Register implements Operand {
         for(Register register : Register.values()) {
             allRegisters.add(register);
         }
+        allRegisters.remove(SP);
+        allRegisters.remove(PC);
+        allRegisters.remove(LR);
         return allRegisters;
     }
 

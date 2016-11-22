@@ -28,6 +28,8 @@ import visitor.nodes.util.PairElemNode;
 import visitor.nodes.util.ParamNode;
 import visitor.nodes.util.assignrhs.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -72,9 +74,14 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node>
             createChildST();
             SymbolTable functionScope = currentST;
             TypeNode returnType = visitType(fCtx.type());
-            List<ParamNode> params = fCtx.param().stream()
-                    .map(p -> (ParamNode) visit(p))
-                    .collect(Collectors.toList());
+
+            List<ParamNode> params = new ArrayList<>();
+            // reverse params in order to set the offset properly
+            for (int i = fCtx.param().size() - 1; i >= 0; i--) {
+                WACCParser.ParamContext param = fCtx.param(i);
+                params.add(visitParam(param));
+            }
+            Collections.reverse(params);
 
             currentST.add(SymbolTable.LR_SENTINEL, new VariableObj(currentST,
                     new GenericObj()));
