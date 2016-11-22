@@ -9,6 +9,7 @@ public class SymbolTable {
     private Map<String, IdentifierObj> map;
     private SymbolTable parent;
     private int offsetLocation = 0;
+    private List<String> initialised = new LinkedList<>();
 
     public SymbolTable() {
         this.parent = null;
@@ -78,12 +79,20 @@ public class SymbolTable {
     }
 
     public int lookupOffset(String key) {
-        VariableObj vObj = lookup(key, VariableObj.class);
-        assert (parent != null || vObj != null): "parent != null || vObj != null";
-        if (vObj != null) {
-            return vObj.getOffset();
+        if(initialised.contains(key)) {
+            VariableObj vObj = lookup(key, VariableObj.class);
+            assert (parent != null || vObj != null) : "parent != null || vObj != null";
+            if (vObj != null) {
+                return vObj.getOffset();
+            }
+            return offsetLocation + parent.lookupOffset(key);
+        } else {
+            return offsetLocation + parent.lookupOffset(key);
         }
-        return offsetLocation + parent.lookupOffset(key);
+    }
+
+    public void setInitialised(String key) {
+        initialised.add(key);
     }
 
     public int getOffsetLocation() {

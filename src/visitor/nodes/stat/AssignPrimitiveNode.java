@@ -78,6 +78,7 @@ public class AssignPrimitiveNode extends StatNode<WACCParser
         List<Instruction> instructions = new ArrayList<>();
 
         instructions.addAll(rhs.generateInstructions(codeGenRef, availableRegisters));
+        currentST.setInitialised(ident);
 
         int offset = currentST.lookupOffset(ident);
         StackLocation location;
