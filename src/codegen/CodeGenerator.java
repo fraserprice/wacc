@@ -3,6 +3,7 @@ package codegen;
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
 import codegen.libfuncs.runtimeerror.CheckArrayBounds;
+import codegen.libfuncs.runtimeerror.CheckNullPointer;
 import codegen.operands.*;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
@@ -97,6 +98,25 @@ public class CodeGenerator {
         }
 
         codeGenRef.useLibFunc(CheckArrayBounds.class);
+
+        return instructions;
+    }
+
+    public static List<Instruction> getPairPointer(CodeGenerator codeGenRef, List<Register> availableRegisters,
+                                                   ExprNode expr, boolean isFst) {
+        List<Instruction> instructions = new ArrayList<>();
+        instructions.addAll(expr.generateInstructions(codeGenRef, availableRegisters));
+        Register ans = availableRegisters.get(0);
+
+        instructions.add(new BaseInstruction(Ins.MOV, Register.R0, ans));
+        instructions.add(new BaseInstruction(Ins.BL, new LabelOp(CheckNullPointer.FUNC_NAME)));
+        codeGenRef.useLibFunc(CheckNullPointer.class);
+
+        if (isFst) {
+            instructions.add(new BaseInstruction(Ins.LDR, ans, new StackLocation(ans)));
+        } else {
+            instructions.add(new BaseInstruction(Ins.LDR, ans, new StackLocation(ans, new Offset(4))));
+        }
 
         return instructions;
     }
