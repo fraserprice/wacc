@@ -38,13 +38,12 @@ public class CodeGenerator {
                 = start.generateInstructions(this, availableRegisters);
     }
 
-    public String addMessage(String message) {
+    public void addMessage(String message) {
         dataDir.put(message);
-        return dataDir.getLargestMessage();
     }
 
-    public String getMessage(String message) {
-        return dataDir.get(message);
+    public String getLastMessage() {
+        return dataDir.getLastMessage();
     }
 
     public String getNextLabel() {

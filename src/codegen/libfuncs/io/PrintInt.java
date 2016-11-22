@@ -13,7 +13,6 @@ import java.util.List;
 public class PrintInt extends Printable {
 
     public PrintInt(DataDir dataDir) {
-        super(dataDir);
-        this.dataDir.put(ARGUMENT_MESSAGE_PRINT_INT);
+        super(dataDir, ARGUMENT_MESSAGE_PRINT_INT);
     }
 }
