@@ -78,7 +78,7 @@ public class CodeGenerator {
         int elemSize = type.getSize();
         int offset = currentST.lookupOffset(ident);
 
-        instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, new Offset(offset)));
+        instructions.add(new BaseInstruction(Ins.ADD, reg1, Register.SP, new Offset(offset)));
 
         for(int i = 0; i < exprNodeList.size(); i++) {
             List<Register> temp = availableRegisters.stream().skip(1).collect(Collectors.toList());
