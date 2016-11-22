@@ -80,30 +80,17 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
         return ident;
     }
 
+    public List<ExprNode> getExprNodeList() {
+        return exprNodeList;
+    }
+
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         List<Instruction> instructions = new LinkedList<>();
+
+        instructions.addAll(CodeGenerator.getArrayPointer(codeGenRef, availableRegisters,
+                exprNodeList, type, currentST, ident));
         Register reg1 = availableRegisters.get(0);
-        Register reg2 = availableRegisters.get(1);
-        int elemSize = type.getSize();
-        int offset = currentST.lookupOffset(ident);
-
-        instructions.add(new BaseInstruction(Ins.ADD, reg1, new Offset(offset)));
-
-        for(int i = 0; i < exprNodeList.size(); i++) {
-            List<Register> temp = availableRegisters.stream().skip(1).collect(Collectors.toList());
-            instructions.addAll(exprNodeList.get(i).generateInstructions(codeGenRef, temp));
-            instructions.add(new BaseInstruction(Ins.LDR, reg1, new StackLocation(reg1)));
-            instructions.add(new BaseInstruction(Ins.MOV, Register.R0, reg2));
-            instructions.add(new BaseInstruction(Ins.MOV, Register.R1, reg1));
-            instructions.add(new BaseInstruction(Ins.BL, new LabelOp(CheckArrayBounds.FUNC_NAME)));
-            instructions.add(new BaseInstruction(Ins.AND, reg1, reg1, new Offset(4)));
-            if(i == exprNodeList.size() - 1 && elemSize < 4) {
-                instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, reg2));
-            } else {
-                instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, reg2));
-            }
-        }
 
         instructions.add(new BaseInstruction(Ins.LDR, reg1, new StackLocation(reg1)));
 

@@ -2,13 +2,17 @@ package codegen;
 
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
-import codegen.operands.Offset;
-import codegen.operands.Register;
+import codegen.libfuncs.runtimeerror.CheckArrayBounds;
+import codegen.operands.*;
 import symobjects.SymbolTable;
+import symobjects.identifierobj.TypeObj;
+import visitor.nodes.ExprNode;
 import visitor.nodes.ProgramNode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CodeGenerator {
     /**
@@ -60,6 +64,40 @@ public class CodeGenerator {
         ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP
                 , new Offset(currentST.getOffsetLocation())));
         return ins;
+    }
+
+    public static List<Instruction> getArrayPointer(
+            CodeGenerator codeGenRef, List<Register> availableRegisters,
+            List<ExprNode> exprNodeList, TypeObj type, SymbolTable currentST,
+            String ident) {
+
+        List<Instruction> instructions = new LinkedList<>();
+        Register reg1 = availableRegisters.get(0);
+        Register reg2 = availableRegisters.get(1);
+        int elemSize = type.getSize();
+        int offset = currentST.lookupOffset(ident);
+
+        instructions.add(new BaseInstruction(Ins.ADD, reg1, new Offset(offset)));
+
+        for(int i = 0; i < exprNodeList.size(); i++) {
+            List<Register> temp = availableRegisters.stream().skip(1).collect(Collectors.toList());
+            instructions.addAll(exprNodeList.get(i).generateInstructions(codeGenRef, temp));
+            instructions.add(new BaseInstruction(Ins.LDR, reg1, new StackLocation(reg1)));
+            instructions.add(new BaseInstruction(Ins.MOV, Register.R0, reg2));
+            instructions.add(new BaseInstruction(Ins.MOV, Register.R1, reg1));
+            instructions.add(new BaseInstruction(Ins.BL, new LabelOp(CheckArrayBounds.FUNC_NAME)));
+            instructions.add(new BaseInstruction(Ins.AND, reg1, reg1, new Offset(4)));
+            if(i == exprNodeList.size() - 1 && elemSize < 4) {
+                instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, reg2));
+            } else {
+                instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, reg2,
+                        new ShiftInstruction(Ins.LSL, new Offset(2))));
+            }
+        }
+
+        codeGenRef.useLibFunc(CheckArrayBounds.class);
+
+        return instructions;
     }
 
     public void useLibFunc(Class<? extends LibFunc> funcClass) {
