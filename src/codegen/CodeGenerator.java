@@ -37,8 +37,9 @@ public class CodeGenerator {
                 = start.generateInstructions(this, availableRegisters);
     }
 
-    public void addMessage(String message) {
+    public String addMessage(String message) {
         dataDir.put(message);
+        return dataDir.getLargestMessage();
     }
 
     public String getMessage(String message) {

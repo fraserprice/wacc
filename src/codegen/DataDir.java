@@ -30,10 +30,8 @@ public class DataDir {
      * @param message to be added (Example: OverflowError message)
      */
     public void put(String message) {
-        if (!messages.contains(message)) {
-            messages.add(currentMessageNumber, message);
-            currentMessageNumber++;
-        }
+        messages.add(currentMessageNumber, message);
+        currentMessageNumber++;
     }
 
     /**
@@ -45,6 +43,10 @@ public class DataDir {
         assert (messages.contains(message))
                 : "Message: " + message + " doesn't exit in messages.";
         return "msg_" + messages.indexOf(message);
+    }
+
+    public String getLargestMessage() {
+        return "msg_" + (currentMessageNumber - 1);
     }
 
     /**
