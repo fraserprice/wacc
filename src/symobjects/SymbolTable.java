@@ -79,7 +79,7 @@ public class SymbolTable {
     }
 
     public int lookupOffset(String key) {
-        if(initialised.contains(key) || key.equals("$LR_SENTINEL")) {
+        if(initialised.contains(key)) {
             VariableObj vObj = lookup(key, VariableObj.class);
             assert (parent != null || vObj != null) : "parent != null || vObj != null";
             if (vObj != null) {
@@ -91,6 +91,12 @@ public class SymbolTable {
         }
     }
 
+    private boolean isParam(String ident) {
+        int identOffset = ((VariableObj) map.get(ident)).getOffset();
+        int sentinelOffset = ((VariableObj) map.get(LR_SENTINEL)).getOffset();
+        return identOffset > sentinelOffset;
+    }
+
     public int getOffsetLocation() {
         return offsetLocation;
     }
@@ -100,11 +106,11 @@ public class SymbolTable {
     }
 
     public int getReturnOffsetSize() {
-        if(map.containsKey("$LR_SENTINEL")) {
+        if(map.containsKey(LR_SENTINEL)) {
             int sum = 0;
-            int sentinelOffset = lookupOffset("$LR_SENTINEL");
             for(Map.Entry<String, IdentifierObj> entry : map.entrySet()) {
-                if(entry.getValue() instanceof VariableObj && lookupOffset(entry.getKey()) < sentinelOffset) {
+                if(entry.getValue() instanceof VariableObj && entry.getKey().equals(LR_SENTINEL)
+                    &&!isParam(entry.getKey())) {
                     sum += ((VariableObj) entry.getValue()).getType().getSize();
                 }
             }
