@@ -15,7 +15,7 @@ public class CheckArrayBounds extends LibFunc {
 
     public static final String FUNC_NAME = "lib_check_array_bounds";
     public static final String ERROR_MESSAGE
-      = "ArrayIndexOutOfBoundsError: negative index/index too large.\n\0";
+      = "ArrayIndexOutOfBoundsError: negative index/index too large.\\n\\0";
 
     /**
      * Constructor for CheckArrayBounds
