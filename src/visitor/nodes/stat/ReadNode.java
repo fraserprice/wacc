@@ -9,6 +9,7 @@ import codegen.libfuncs.io.PrintInt;
 import codegen.libfuncs.io.Printable;
 import codegen.libfuncs.io.ReadChar;
 import codegen.libfuncs.io.ReadInt;
+import codegen.libfuncs.runtimeerror.CheckNullPointer;
 import codegen.operands.LabelOp;
 import codegen.operands.Offset;
 import codegen.operands.Register;
@@ -20,6 +21,8 @@ import symobjects.identifierobj.typeobj.scalarobj.IntObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
 import visitor.nodes.util.AssignLhsNode;
+import visitor.nodes.util.assignlhs.AssignLhsArrayElemNode;
+import visitor.nodes.util.assignlhs.AssignLhsPairElemNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +70,8 @@ public class ReadNode extends StatNode<WACCParser.ReadStatContext> {
 
         int offset = currentST.lookupOffset(lhs.getIdent());
 
-        instructions.add(new BaseInstruction(Ins.ADD, reg, Register.SP, new Offset(offset)));
+
+        instructions.addAll(lhs.generateInstructions(codeGenRef, availableRegisters));
         instructions.add(new BaseInstruction(Ins.MOV, Register
                 .R0, reg));
         instructions.add(new BaseInstruction(Ins.BL, labelOp));
