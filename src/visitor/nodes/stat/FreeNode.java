@@ -58,8 +58,10 @@ public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
         instructions.add(new BaseInstruction(Ins.MOV, Register.R0, availableRegisters.get(0)));
         if(exprNode.getType() instanceof ArrayObj) {
             instructions.add(new BaseInstruction(Ins.BL, new LabelOp(FreeArray.FUNC_NAME)));
+            codeGenRef.useLibFunc(FreeArray.class);
         } else {
             instructions.add(new BaseInstruction(Ins.BL, new LabelOp(FreePair.FUNC_NAME)));
+            codeGenRef.useLibFunc(FreePair.class);
         }
         return instructions;
     }

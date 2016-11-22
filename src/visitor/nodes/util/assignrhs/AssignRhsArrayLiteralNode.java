@@ -70,8 +70,8 @@ public class AssignRhsArrayLiteralNode extends AssignRhsNode<WACCParser.AssignRh
         int arrayIndex = 4;
         for (ExprNode arg : args) {
             instructions.addAll(arg.generateInstructions(codeGenRef, newAvailableRegisters));
-            instructions.add(new BaseInstruction(Ins.getStrInstruciton(arg.getType()),
-                    availableRegisters.get(0), new StackLocation(o1, new Offset(arrayIndex))));
+            instructions.add(new BaseInstruction(Ins.getStrInstruciton(arg.getType()), o2,
+                    new StackLocation(o1, new Offset(arrayIndex))));
             arrayIndex += arrayType.getType().getSize();
         }
 
