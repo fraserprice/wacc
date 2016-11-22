@@ -7,6 +7,7 @@ import visitor.Node;
 
 public abstract class AssignLhsNode<T extends ParserRuleContext> extends Node<T> {
     protected TypeObj type;
+    protected String ident;
 
     public AssignLhsNode(SymbolTable currentST, T ctx) {
         super(currentST, ctx);
@@ -14,5 +15,9 @@ public abstract class AssignLhsNode<T extends ParserRuleContext> extends Node<T>
 
     public TypeObj getType() {
         return type;
+    }
+
+    public String getIdent() {
+        return ident;
     }
 }
