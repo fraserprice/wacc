@@ -1,17 +1,14 @@
 package visitor.nodes.util;
 
-import antlr.WACCParser;
-import main.CompileTimeError;
+import org.antlr.v4.runtime.ParserRuleContext;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.TypeObj;
-import symobjects.identifierobj.VariableObj;
 import visitor.Node;
-import visitor.nodes.expr.ArrayElementNode;
 
-public abstract class AssignLhsNode extends Node<WACCParser.AssignLhsContext> {
+public abstract class AssignLhsNode<T extends ParserRuleContext> extends Node<T> {
     protected TypeObj type;
 
-    public AssignLhsNode(SymbolTable currentST, WACCParser.AssignLhsContext ctx) {
+    public AssignLhsNode(SymbolTable currentST, T ctx) {
         super(currentST, ctx);
     }
 

@@ -6,7 +6,7 @@ import symobjects.identifierobj.TypeObj;
 import visitor.nodes.util.AssignLhsNode;
 import visitor.nodes.util.PairElemNode;
 
-public class AssignLhsPairElemNode extends AssignLhsNode {
+public class AssignLhsPairElemNode extends AssignLhsNode<WACCParser.AssignLhsPairElemContext> {
 
     // assignLhs; pairElem
     public AssignLhsPairElemNode(SymbolTable currentST, WACCParser.AssignLhsPairElemContext

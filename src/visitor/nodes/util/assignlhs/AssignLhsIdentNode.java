@@ -12,7 +12,7 @@ import visitor.nodes.util.AssignLhsNode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignLhsIdentNode extends AssignLhsNode {
+public class AssignLhsIdentNode extends AssignLhsNode<WACCParser.AssignLhsIdentContext> {
     // assignLhs: IDENT
     public AssignLhsIdentNode(SymbolTable currentST, WACCParser.AssignLhsIdentContext
             ctx) {
@@ -34,6 +34,8 @@ public class AssignLhsIdentNode extends AssignLhsNode {
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
         List<Instruction> instructions = new ArrayList<>();
+
+        // int identOffset = currentST.lookupOffset(ctx);
 
         return instructions;
     }
