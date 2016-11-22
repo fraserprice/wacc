@@ -87,7 +87,7 @@ public class CodeGenerator {
             instructions.add(new BaseInstruction(Ins.MOV, Register.R0, reg2));
             instructions.add(new BaseInstruction(Ins.MOV, Register.R1, reg1));
             instructions.add(new BaseInstruction(Ins.BL, new LabelOp(CheckArrayBounds.FUNC_NAME)));
-            instructions.add(new BaseInstruction(Ins.AND, reg1, reg1, new Offset(4)));
+            instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, new Offset(4)));
             if(i == exprNodeList.size() - 1 && elemSize < 4) {
                 instructions.add(new BaseInstruction(Ins.ADD, reg1, reg1, reg2));
             } else {
