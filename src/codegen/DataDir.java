@@ -1,6 +1,8 @@
 package codegen;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class DataDir {
     /**
@@ -55,7 +57,9 @@ public class DataDir {
 
         for(int i = 0; i < currentMessageNumber; i++) {
             String message = messages.get(i);
-            sb.append("msg_").append(i).append(":\n\t.word ").append(message.length())
+            int messageLength = message.length();
+            messageLength -= message.chars().filter(c -> c == ('\\')).count();
+            sb.append("msg_").append(i).append(":\n\t.word ").append(messageLength)
                     .append("\n\t.ascii \"").append(message).append("\"\n");
         }
 
