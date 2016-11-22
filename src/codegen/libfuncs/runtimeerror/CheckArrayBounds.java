@@ -14,8 +14,12 @@ import java.util.List;
 public class CheckArrayBounds extends LibFunc {
 
     public static final String FUNC_NAME = "lib_check_array_bounds";
-    public static final String ERROR_MESSAGE
+    public static final String ERROR_MESSAGE_1
       = "ArrayIndexOutOfBoundsError: negative index/index too large.\\n\\0";
+    public static final String ERROR_MESSAGE_2
+      = "ArrayIndexOutOfBoundsError: index too large. \\n\\0";
+    private final String ERROR_MESSAGE_1_LOCATION;
+    private final String ERROR_MESSAGE_2_LOCATION;
 
     /**
      * Constructor for CheckArrayBounds
@@ -24,7 +28,10 @@ public class CheckArrayBounds extends LibFunc {
      */
     public CheckArrayBounds(DataDir dataDir) {
         super(dataDir);
-        this.dataDir.put(ERROR_MESSAGE);
+        this.dataDir.put(ERROR_MESSAGE_1);
+        this.dataDir.put(ERROR_MESSAGE_2);
+        ERROR_MESSAGE_1_LOCATION = this.dataDir.getLastMessage();
+        ERROR_MESSAGE_2_LOCATION = this.dataDir.getLastMessage();
     }
 
     /**
@@ -47,14 +54,14 @@ public class CheckArrayBounds extends LibFunc {
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.CMP, Register.R0, new Offset(0)));
             add(new BaseInstruction(Ins.LDRLT, Register.R0
-                    , new Immediate(dataDir.get(ERROR_MESSAGE))));
+                    , new Immediate(ERROR_MESSAGE_1_LOCATION)));
             add(new BaseInstruction(Ins.BLLT
                     , new LabelOp(ThrowRuntimeError.FUNC_NAME)));
             add(new BaseInstruction(Ins.LDR, Register.R1
                     , new StackLocation(Register.R1)));
             add(new BaseInstruction(Ins.CMP, Register.R0, Register.R1));
             add(new BaseInstruction(Ins.LDRCS, Register.R0
-                    , new Immediate(dataDir.get(ERROR_MESSAGE))));
+                    , new Immediate(ERROR_MESSAGE_2_LOCATION)));
             add(new BaseInstruction(Ins.BLCS
                     , new LabelOp(ThrowRuntimeError.FUNC_NAME)));
             add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));

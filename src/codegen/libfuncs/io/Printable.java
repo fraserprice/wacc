@@ -21,12 +21,16 @@ public abstract class Printable extends LibFunc {
             = "lib_print_reference";
     public static final String ARGUMENT_MESSAGE_PRINT_REFERENCE = "%p\\0";
 
+    private final String messageLocation;
+
     /**
      * Constructor for PrintInt or PrintReference
      * Note: Only msg differs between lib_print_int and lib_print_reference
      */
-    public Printable(DataDir dataDir) {
+    public Printable(DataDir dataDir, String message) {
         super(dataDir);
+        dataDir.put(message);
+        this.messageLocation = dataDir.getLastMessage();
     }
 
     /**
@@ -43,8 +47,6 @@ public abstract class Printable extends LibFunc {
      */
     @Override
     public List<Instruction> getInstructions() {
-        final String argumentMessage = (getClass().equals(PrintInt.class))
-                ? ARGUMENT_MESSAGE_PRINT_INT : ARGUMENT_MESSAGE_PRINT_REFERENCE;
         final String labelName = (getClass().equals(PrintInt.class))
                 ? FUNC_NAME_PRINT_INT : FUNC_NAME_PRINT_REFERENCE;
 
@@ -53,7 +55,7 @@ public abstract class Printable extends LibFunc {
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.MOV, Register.R1, Register.R0));
             add(new BaseInstruction(Ins.LDR, Register.R0
-                    , new Immediate(dataDir.get(argumentMessage))));
+                    , new Immediate(messageLocation)));
             add(new BaseInstruction(Ins.ADD, Register.R0, Register.R0
                     , new Offset(4)));
             add(new BaseInstruction(Ins.BL, new LabelOp("printf")));

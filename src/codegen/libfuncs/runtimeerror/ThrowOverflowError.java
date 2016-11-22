@@ -17,6 +17,7 @@ public class ThrowOverflowError extends LibFunc {
     public static final String ERROR_MESSAGE
             = "OverflowError: the result is too small/large " +
               "to store in a 4-byte signed-integer.\\n\\0";
+    private final String ERROR_MESSAGE_LOCATION;
 
     /**
      * Constructor for CheckDivideByZero
@@ -26,6 +27,7 @@ public class ThrowOverflowError extends LibFunc {
     public ThrowOverflowError(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ERROR_MESSAGE);
+        this.ERROR_MESSAGE_LOCATION = dataDir.getLastMessage();
     }
 
     /**
@@ -39,7 +41,7 @@ public class ThrowOverflowError extends LibFunc {
         return new ArrayList<Instruction>() {{
             add(new LabelIns(FUNC_NAME));
             add(new BaseInstruction(Ins.LDR, Register.R0
-                    , new Immediate(dataDir.get(ERROR_MESSAGE))));
+                    , new Immediate(ERROR_MESSAGE_LOCATION)));
             add(new BaseInstruction(Ins.BL
                     , new LabelOp(ThrowRuntimeError.FUNC_NAME)));
         }};

@@ -18,13 +18,16 @@ public abstract class Readable extends LibFunc {
 
     public static final String FUNC_NAME_READ_CHAR = "lib_read_char";
     public static final String ARGUMENT_MESSAGE_READ_CHAR = " %c\\0";
+    private final String MESSAGE_LOCATION;
 
     /**
      * Constructor for ReadInt and ReadChar
      * Note: Only msg differs between lib_read_int and lib_read_char
      */
-    public Readable(DataDir dataDir) {
+    public Readable(DataDir dataDir, String message) {
         super(dataDir);
+        this.dataDir.put(message);
+        MESSAGE_LOCATION = this.dataDir.getLastMessage();
     }
 
     /**
@@ -49,7 +52,7 @@ public abstract class Readable extends LibFunc {
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.MOV, Register.R1, Register.R0));
             add(new BaseInstruction(Ins.LDR, Register.R0
-                    , new Immediate(dataDir.get(argumenMessage))));
+                    , new Immediate(MESSAGE_LOCATION)));
             add(new BaseInstruction(Ins.ADD, Register.R0, Register.R0
                     , new Offset(4)));
             add(new BaseInstruction(Ins.BL, new LabelOp("scanf")));

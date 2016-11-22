@@ -15,10 +15,12 @@ public class PrintString extends LibFunc {
 
     public static final String FUNC_NAME = "lib_print_string";
     public static final String ARGUMENT_MESSAGE = "%.*s\\0";
+    private final String ARGUMENT_MESSAGE_LOCATION;
 
     public PrintString(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ARGUMENT_MESSAGE);
+        this.ARGUMENT_MESSAGE_LOCATION = this.dataDir.getLastMessage();
     }
 
     /**
@@ -44,7 +46,7 @@ public class PrintString extends LibFunc {
             add(new BaseInstruction(Ins.ADD, Register.R2, Register.R0
                     , new Offset(4)));
             add(new BaseInstruction(Ins.LDR, Register.R0
-                    , new Immediate(dataDir.get(ARGUMENT_MESSAGE))));
+                    , new Immediate(ARGUMENT_MESSAGE_LOCATION)));
             add(new BaseInstruction(Ins.ADD, Register.R0
                     , Register.R0, new Offset(4)));
             add(new BaseInstruction(Ins.BL, new LabelOp("printf")));

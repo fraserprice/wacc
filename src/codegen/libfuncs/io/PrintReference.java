@@ -13,7 +13,6 @@ import java.util.List;
 public class PrintReference extends Printable {
 
     public PrintReference(DataDir dataDir) {
-        super(dataDir);
-        this.dataDir.put(ARGUMENT_MESSAGE_PRINT_REFERENCE);
+        super(dataDir, ARGUMENT_MESSAGE_PRINT_REFERENCE);
     }
 }

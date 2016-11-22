@@ -16,6 +16,7 @@ public class FreeArray extends LibFunc {
     public static final String FUNC_NAME = "lib_free_array";
     public static final String ERROR_MESSAGE
             = "NullReferenceError: dereference a null reference.\\n\\0";
+    private final String ERROR_MESSAGE_LOCATION;
 
     /**
      * Constructor for FreePair
@@ -25,6 +26,7 @@ public class FreeArray extends LibFunc {
     public FreeArray(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ERROR_MESSAGE);
+        this.ERROR_MESSAGE_LOCATION = this.dataDir.getLastMessage();
     }
 
     /**
@@ -45,7 +47,7 @@ public class FreeArray extends LibFunc {
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.CMP, Register.R0, new Offset(0)));
             add(new BaseInstruction(Ins.LDREQ, Register.R0
-                    , new Immediate(dataDir.get(ERROR_MESSAGE))));
+                    , new Immediate(ERROR_MESSAGE_LOCATION)));
             add(new BaseInstruction(Ins.BEQ
                     , new LabelOp(ThrowRuntimeError.FUNC_NAME)));
             add(new BaseInstruction(Ins.BL, new LabelOp("free")));

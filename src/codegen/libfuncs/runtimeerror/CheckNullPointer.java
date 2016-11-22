@@ -16,6 +16,7 @@ public class CheckNullPointer extends LibFunc {
     public static final String FUNC_NAME = "lib_check_null_pointer";
     public static final String ERROR_MESSAGE
       = "NullReferenceError: dereference a null reference.\\n\\0";
+    private final String ERROR_MESSAGE_LOCATION;
 
     /**
      * Constructor for CheckNullPointer
@@ -25,6 +26,7 @@ public class CheckNullPointer extends LibFunc {
     public CheckNullPointer(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ERROR_MESSAGE);
+        this.ERROR_MESSAGE_LOCATION = this.dataDir.getLastMessage();
     }
 
     /**
@@ -43,7 +45,7 @@ public class CheckNullPointer extends LibFunc {
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.CMP, Register.R0, new Offset(0)));
             add(new BaseInstruction(Ins.LDREQ, Register.R0
-                    , new Immediate(dataDir.get(ERROR_MESSAGE))));
+                    , new Immediate(ERROR_MESSAGE_LOCATION)));
             add(new BaseInstruction(Ins.BLEQ
                     , new LabelOp(ThrowRuntimeError.FUNC_NAME)));
             add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));

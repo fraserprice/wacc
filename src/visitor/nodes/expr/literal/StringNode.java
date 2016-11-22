@@ -27,7 +27,8 @@ public class StringNode extends LiteralNode<WACCParser.StrLiteralContext> {
 
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
-        String message = codeGenRef.addMessage(value);
+        codeGenRef.addMessage(value);
+        String message = codeGenRef.getLastMessage();
 
         return new LinkedList<Instruction>() {{
             add(new BaseInstruction(Ins.getLdrInstruction(type), availableRegisters.get(0), new Immediate(message)));

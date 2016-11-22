@@ -16,11 +16,15 @@ public class PrintBool extends LibFunc {
     public static final String FUNC_NAME = "lib_print_bool";
     public static final String ARGUMENT_MESSAGE_TRUE = "true\\0";
     public static final String ARGUMENT_MESSAGE_FALSE = "false\\0";
+    private final String ARGUMENT_MESSAGE_TRUE_LOCATION;
+    private final String ARGUMENT_MESSAGE_FALSE_LOCATION;
 
     public PrintBool(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ARGUMENT_MESSAGE_TRUE);
+        ARGUMENT_MESSAGE_TRUE_LOCATION = this.dataDir.getLastMessage();
         this.dataDir.put(ARGUMENT_MESSAGE_FALSE);
+        ARGUMENT_MESSAGE_FALSE_LOCATION = this.dataDir.getLastMessage();
     }
 
     /**
@@ -43,9 +47,9 @@ public class PrintBool extends LibFunc {
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.CMP, Register.R0, new Offset(0)));
             add(new BaseInstruction(Ins.LDRNE, Register.R0
-                    , new Immediate(dataDir.get(ARGUMENT_MESSAGE_TRUE))));
+                    , new Immediate(ARGUMENT_MESSAGE_TRUE_LOCATION)));
             add(new BaseInstruction(Ins.LDREQ, Register.R0
-                    , new Immediate(dataDir.get(ARGUMENT_MESSAGE_FALSE))));
+                    , new Immediate(ARGUMENT_MESSAGE_FALSE_LOCATION)));
             add(new BaseInstruction(Ins.ADD, Register.R0, Register.R0
                     , new Offset(4)));
             add(new BaseInstruction(Ins.BL, new LabelOp("printf")));

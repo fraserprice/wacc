@@ -34,18 +34,7 @@ public class DataDir {
         currentMessageNumber++;
     }
 
-    /**
-     * Get the message label from the list of messages
-     * @param message the name for which the index is retrieved
-     * @return The label name + index (Example: msg_1)
-     */
-    public String get(String message) {
-        assert (messages.contains(message))
-                : "Message: " + message + " doesn't exit in messages.";
-        return "msg_" + messages.indexOf(message);
-    }
-
-    public String getLargestMessage() {
+    public String getLastMessage() {
         return "msg_" + (currentMessageNumber - 1);
     }
 

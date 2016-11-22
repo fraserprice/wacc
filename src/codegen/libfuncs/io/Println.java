@@ -15,10 +15,12 @@ public class Println extends LibFunc {
 
     public static final String FUNC_NAME = "lib_print_ln";
     public static final String ARGUMENT_MESSAGE = "\\0";
+    private final String ARGUMENT_MESSAGE_LOCATION;
 
     public Println(DataDir dataDir) {
         super(dataDir);
         this.dataDir.put(ARGUMENT_MESSAGE);
+        this.ARGUMENT_MESSAGE_LOCATION = this.dataDir.getLastMessage();
     }
 
     /**
@@ -38,7 +40,7 @@ public class Println extends LibFunc {
             add(new LabelIns(FUNC_NAME));
             add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
             add(new BaseInstruction(Ins.LDR, Register.R0
-                    , new Immediate(dataDir.get(ARGUMENT_MESSAGE))));
+                    , new Immediate(ARGUMENT_MESSAGE_LOCATION)));
             add(new BaseInstruction(Ins.ADD, Register.R0, Register.R0
                     , new Offset(4)));
             add(new BaseInstruction(Ins.BL, new LabelOp("puts")));
