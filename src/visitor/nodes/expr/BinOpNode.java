@@ -103,11 +103,16 @@ public class BinOpNode extends ExprNode<WACCParser.ExprContext> {
 
     @Override
     public List<Instruction> generateInstructions(CodeGenerator codeGenRef, List<Register> availableRegisters) {
+
         Register lhsR = availableRegisters.get(0);
         Register rhsR = availableRegisters.get(1);
 
         List<Instruction> instructions = new LinkedList<Instruction>() {{
-            if(lhs.getWeight() > rhs.getWeight()) {
+
+            boolean lhsFirst = lhs instanceof ParenthesisNode && !(rhs instanceof ParenthesisNode);
+            boolean rhsFirst = rhs instanceof ParenthesisNode && !(lhs instanceof ParenthesisNode);
+
+            if(lhsFirst || (lhs.getWeight() > rhs.getWeight() && !rhsFirst)) {
                 addAll(lhs.generateInstructions(codeGenRef, availableRegisters));
                 List<Register> availableRhs = availableRegisters.stream().skip(1).collect(Collectors.toList());
                 addAll(rhs.generateInstructions(codeGenRef, availableRhs));
