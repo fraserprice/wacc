@@ -5,7 +5,11 @@ import codegen.CodeGenerator;
 import codegen.Instruction;
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
+import codegen.instructions.LabelIns;
+import codegen.libfuncs.Modulo;
+import codegen.operands.Immediate;
 import codegen.operands.LabelOp;
+import codegen.operands.Offset;
 import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
@@ -46,7 +50,12 @@ public class ExitNode extends StatNode<WACCParser.ExitStatContext> {
         instructions.addAll(expr.generateInstructions(codeGenRef, availableRegisters));
         instructions.add(new BaseInstruction(Ins.MOV, Register.R0,
                 availableRegisters.get(0)));
+        instructions.add(new BaseInstruction(Ins.CMP, Register.R0, new
+                LabelOp("0")));
+        instructions.add(new BaseInstruction(Ins.BLLT, new LabelOp(Modulo
+                .FUNC_NAME)));
         instructions.add(new BaseInstruction(Ins.BL, new LabelOp("exit")));
+        codeGenRef.useLibFunc(Modulo.class);
         return instructions;
     }
 }
