@@ -6,12 +6,14 @@ import codegen.Instruction;
 import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
 import codegen.instructions.LabelIns;
+import codegen.libfuncs.runtimeerror.FreeArray;
 import codegen.libfuncs.runtimeerror.FreePair;
 import codegen.operands.LabelOp;
 import codegen.operands.Offset;
 import codegen.operands.Register;
 import main.CompileTimeError;
 import symobjects.SymbolTable;
+import symobjects.identifierobj.typeobj.ArrayObj;
 import symobjects.identifierobj.typeobj.PairObj;
 import visitor.nodes.ExprNode;
 import visitor.nodes.StatNode;
@@ -54,7 +56,11 @@ public class FreeNode extends StatNode<WACCParser.FreeStatContext> {
 
         instructions.addAll(exprNode.generateInstructions(codeGenRef, availableRegisters));
         instructions.add(new BaseInstruction(Ins.MOV, Register.R0, availableRegisters.get(0)));
-        instructions.add(new BaseInstruction(Ins.BL, new LabelOp(FreePair.FUNC_NAME)));
+        if(exprNode.getType() instanceof ArrayObj) {
+            instructions.add(new BaseInstruction(Ins.BL, new LabelOp(FreeArray.FUNC_NAME)));
+        } else {
+            instructions.add(new BaseInstruction(Ins.BL, new LabelOp(FreePair.FUNC_NAME)));
+        }
         return instructions;
     }
 }
