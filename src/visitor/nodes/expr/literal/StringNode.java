@@ -10,6 +10,7 @@ import codegen.operands.Offset;
 import codegen.operands.Register;
 import symobjects.SymbolTable;
 import symobjects.identifierobj.typeobj.ArrayObj;
+import symobjects.identifierobj.typeobj.scalarobj.CharObj;
 import visitor.nodes.expr.LiteralNode;
 
 import java.util.LinkedList;
@@ -20,8 +21,8 @@ public class StringNode extends LiteralNode<WACCParser.StrLiteralContext> {
     public StringNode(SymbolTable currentST, WACCParser.StrLiteralContext ctx) {
         super(currentST, ctx);
 
-        this.type = currentST.lookupAll("string", ArrayObj.class);
-        this.value = ctx.STR_LITERAL().getText();
+        this.value = ctx.STR_LITERAL().getText().substring(1, ctx.STR_LITERAL().getText().length() - 1);
+        this.type = new ArrayObj(new CharObj(), this.value.length());
     }
 
     @Override

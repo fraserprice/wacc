@@ -68,7 +68,6 @@ public class SemanticVisitor extends AbstractParseTreeVisitor<Node>
         currentST.add("bool", new BoolObj());
         currentST.add("char", new CharObj());
         currentST.add("null", new NullPairObj());
-        currentST.add("string", new ArrayObj(new CharObj()));
         for (WACCParser.FuncContext fCtx : ctx.func()) {
             createChildST();
             SymbolTable functionScope = currentST;

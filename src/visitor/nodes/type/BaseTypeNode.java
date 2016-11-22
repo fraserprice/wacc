@@ -25,7 +25,7 @@ public class BaseTypeNode extends Node<WACCParser.BaseTypeContext> {
                 type = currentST.lookupAll("char", CharObj.class);
                 break;
             case "string":
-                type = currentST.lookupAll("string", ArrayObj.class);
+                type = new ArrayObj(new CharObj());
                 break;
         }
     }
