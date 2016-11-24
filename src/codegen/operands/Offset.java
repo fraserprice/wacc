@@ -3,6 +3,7 @@ package codegen.operands;
 import codegen.Operand;
 
 public class Offset implements Operand {
+    public static final int MAXIMUM_OFFSET = 1024;
 
     private String value;
 
@@ -18,5 +19,4 @@ public class Offset implements Operand {
     public String toString() {
         return this.value;
     }
-
 }

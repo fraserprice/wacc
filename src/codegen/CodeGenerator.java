@@ -101,14 +101,26 @@ public class CodeGenerator {
 
     public static List<Instruction> makeSpaceOnStack(int spaceSize, List<Instruction> inBetween) {
         List<Instruction> ins = new ArrayList<>();
-        if (spaceSize == 0) {
+        int remainder = spaceSize % Offset.MAXIMUM_OFFSET;
+        int quotient = spaceSize / Offset.MAXIMUM_OFFSET;
+
+        if (remainder == 0 && quotient == 0) {
             return inBetween;
         }
-        ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP
-                , new Offset(spaceSize)));
+
+        ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP, new Offset(remainder)));
+
+        for (int i = 1; i <= quotient; i++) {
+            ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP, new Offset(Offset.MAXIMUM_OFFSET)));
+        }
+
         ins.addAll(inBetween);
-        ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP
-                , new Offset(spaceSize)));
+
+        ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP, new Offset(remainder)));
+
+        for (int i = 1; i <= quotient; i++) {
+            ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP, new Offset(Offset.MAXIMUM_OFFSET)));
+        }
         return ins;
     }
 
