@@ -43,8 +43,6 @@ public class ReturnNode extends StatNode<WACCParser.ReturnStatContext> {
         instructions.addAll(retrunExpr.generateInstructions(codeGenRef, availableRegisters));
         instructions.add(new BaseInstruction(Ins.MOV, Register.R0,
                 availableRegisters.get(0)));
-        instructions.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP,
-                new Offset(currentST.getReturnOffsetSize())));
         return instructions;
     }
 }

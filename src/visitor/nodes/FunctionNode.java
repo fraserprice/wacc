@@ -99,9 +99,10 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
 
         ins.add(new LabelIns("f_" + name));
         ins.add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
-        ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP,
-                new Offset(fObj.getVariableSpace())));
-        ins.addAll(body.generateInstructions(codeGenRef, availableRegisters));
+
+        ins.addAll(CodeGenerator.makeSpaceOnStack(fObj.getVariableSpace(),
+                body.generateInstructions(codeGenRef, availableRegisters)));
+
         ins.add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
         ins.add(new Ltorg());
 

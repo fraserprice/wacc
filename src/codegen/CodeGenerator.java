@@ -52,18 +52,63 @@ public class CodeGenerator {
         return labelName;
     }
 
-    public static List<Instruction> makeSpaceOnStack(SymbolTable currentST
-            , List<Instruction> inBetween) {
+    public void useLibFunc(Class<? extends LibFunc> funcClass) {
+        for (LibFunc func : libDir) {
+            if (funcClass.isInstance(func)) {
+                return;
+            }
+        }
 
+        try {
+            LibFunc func = funcClass.getConstructor(DataDir.class).newInstance
+                    (dataDir);
+            libDir.add(func);
+
+            for (Class<? extends LibFunc> dep : func.getDependencies()) {
+                useLibFunc(dep);
+            }
+        } catch(Exception e) {
+            assert(false): "CodeGenerator: Should not get here";
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(dataDir.toString());
+
+        sb.append(".text\n\n.global main\n");
+
+        for (Instruction ins : mainDir) {
+            sb.append(ins.toString());
+        }
+
+        for (LibFunc func : libDir) {
+            for (Instruction ins : func.getInstructions()) {
+                sb.append(ins.toString());
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public static List<Instruction> makeSpaceOnStack(SymbolTable currentST, List<Instruction> inBetween) {
+        int spaceSize = currentST.getOffsetLocation();
+
+        return makeSpaceOnStack(spaceSize, inBetween);
+    }
+
+    public static List<Instruction> makeSpaceOnStack(int spaceSize, List<Instruction> inBetween) {
         List<Instruction> ins = new ArrayList<>();
-        if (currentST.getOffsetLocation() == 0) {
+        if (spaceSize == 0) {
             return inBetween;
         }
         ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP
-                , new Offset(currentST.getOffsetLocation())));
+                , new Offset(spaceSize)));
         ins.addAll(inBetween);
         ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP
-                , new Offset(currentST.getOffsetLocation())));
+                , new Offset(spaceSize)));
         return ins;
     }
 
@@ -118,46 +163,5 @@ public class CodeGenerator {
         }
 
         return instructions;
-    }
-
-    public void useLibFunc(Class<? extends LibFunc> funcClass) {
-        for (LibFunc func : libDir) {
-            if (funcClass.isInstance(func)) {
-                return;
-            }
-        }
-
-        try {
-            LibFunc func = funcClass.getConstructor(DataDir.class).newInstance
-                    (dataDir);
-            libDir.add(func);
-
-            for (Class<? extends LibFunc> dep : func.getDependencies()) {
-                useLibFunc(dep);
-            }
-        } catch(Exception e) {
-            assert(false): "CodeGenerator: Should not get here";
-        }
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(dataDir.toString());
-
-        sb.append(".text\n\n.global main\n");
-
-        for (Instruction ins : mainDir) {
-            sb.append(ins.toString());
-        }
-
-        for (LibFunc func : libDir) {
-            for (Instruction ins : func.getInstructions()) {
-                sb.append(ins.toString());
-            }
-        }
-
-        return sb.toString();
     }
 }
