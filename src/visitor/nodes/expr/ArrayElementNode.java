@@ -92,7 +92,7 @@ public class ArrayElementNode extends ExprNode<WACCParser.ArrayElemContext> {
                 exprNodeList, type, currentST, ident));
         Register reg1 = availableRegisters.get(0);
 
-        instructions.add(new BaseInstruction(Ins.LDR, reg1, new StackLocation(reg1)));
+        instructions.add(new BaseInstruction(Ins.getLdrInstruction(type), reg1, new StackLocation(reg1)));
 
         return instructions;
     }
