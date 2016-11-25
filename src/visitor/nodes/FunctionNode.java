@@ -7,7 +7,6 @@ import codegen.instructions.BaseInstruction;
 import codegen.instructions.Ins;
 import codegen.instructions.LabelIns;
 import codegen.instructions.Ltorg;
-import codegen.operands.Offset;
 import codegen.operands.RegList;
 import codegen.operands.Register;
 import main.CompileTimeError;
@@ -100,8 +99,8 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
         ins.add(new LabelIns("f_" + name));
         ins.add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
 
-        ins.addAll(CodeGenerator.makeSpaceOnStack(fObj.getVariableSpace(),
-                body.generateInstructions(codeGenRef, availableRegisters)));
+        ins.addAll(CodeGenerator.makeSpaceOnStack(fObj.getVariableSpace()));
+        ins.addAll(body.generateInstructions(codeGenRef, availableRegisters));
         ins.add(new Ltorg());
 
         return ins;

@@ -34,7 +34,7 @@ public class ScopeBlockNode extends StatNode<WACCParser.ScopeBlockStatContext> {
         List<Instruction> instructions = new LinkedList<>();
 
         List<Instruction> bodyInstr = body.generateInstructions(codeGenRef, availableRegisters);
-        instructions.addAll(CodeGenerator.makeSpaceOnStack(currentST, bodyInstr));
+        instructions.addAll(CodeGenerator.makeSpaceOnStackAndRestore(currentST, bodyInstr));
 
         return instructions;
     }

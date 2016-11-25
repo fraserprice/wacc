@@ -61,7 +61,7 @@ public class WhileNode extends StatNode<WACCParser.WhileStatContext> {
         instructions.add(new LabelIns(label2));
 
         List<Instruction> inBetween = body.generateInstructions(codeGenRef, availableRegisters);
-        instructions.addAll(CodeGenerator.makeSpaceOnStack(currentST, inBetween));
+        instructions.addAll(CodeGenerator.makeSpaceOnStackAndRestore(currentST, inBetween));
 
         instructions.add(new LabelIns(label1));
         instructions.addAll(condition.generateInstructions(codeGenRef, availableRegisters));

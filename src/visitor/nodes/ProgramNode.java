@@ -74,7 +74,7 @@ public class ProgramNode extends Node<WACCParser.ProgramContext> {
         ins.add(new BaseInstruction(Ins.PUSH, new RegList(Register.LR)));
 
         List<Instruction> bodyInsList = body.generateInstructions(codeGenRef, availableRegisters);
-        ins.addAll(CodeGenerator.makeSpaceOnStack(currentST, bodyInsList));
+        ins.addAll(CodeGenerator.makeSpaceOnStackAndRestore(currentST, bodyInsList));
 
         ins.add(new BaseInstruction(Ins.LDR, Register.R0, new Immediate("0")));
         ins.add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));

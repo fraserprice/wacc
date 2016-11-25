@@ -93,33 +93,40 @@ public class CodeGenerator {
         return sb.toString();
     }
 
-    public static List<Instruction> makeSpaceOnStack(SymbolTable currentST, List<Instruction> inBetween) {
+    public static List<Instruction> makeSpaceOnStackAndRestore(SymbolTable currentST, List<Instruction> inBetween) {
         int spaceSize = currentST.getOffsetLocation();
 
-        return makeSpaceOnStack(spaceSize, inBetween);
+        return makeSpaceOnStackAndRestore(spaceSize, inBetween);
     }
 
-    public static List<Instruction> makeSpaceOnStack(int spaceSize, List<Instruction> inBetween) {
+    public static List<Instruction> makeSpaceOnStackAndRestore(int spaceSize, List<Instruction> inBetween) {
+        List<Instruction> ins = new ArrayList<>();
+        ins.addAll(makeSpaceOnStack(spaceSize));
+        ins.addAll(inBetween);
+        ins.addAll(removeSpaceOnStack(spaceSize));
+        return ins;
+    }
+
+    public static List<Instruction> makeSpaceOnStack(int spaceSize) {
+        return addOrRemoveSpaceOnStack(spaceSize, false);
+    }
+
+    public static List<Instruction> removeSpaceOnStack(int spaceSize) {
+        return addOrRemoveSpaceOnStack(spaceSize, true);
+    }
+
+    private static List<Instruction> addOrRemoveSpaceOnStack(int spaceSize, boolean withRemove) {
+        Ins instr = withRemove ? Ins.ADD : Ins.SUB;
         List<Instruction> ins = new ArrayList<>();
         int remainder = spaceSize % Offset.MAXIMUM_OFFSET;
         int quotient = spaceSize / Offset.MAXIMUM_OFFSET;
 
-        if (remainder == 0 && quotient == 0) {
-            return inBetween;
+        if (remainder != 0) {
+            ins.add(new BaseInstruction(instr, Register.SP, Register.SP, new Offset(remainder)));
         }
 
-        ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP, new Offset(remainder)));
-
         for (int i = 1; i <= quotient; i++) {
-            ins.add(new BaseInstruction(Ins.SUB, Register.SP, Register.SP, new Offset(Offset.MAXIMUM_OFFSET)));
-        }
-
-        ins.addAll(inBetween);
-
-        ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP, new Offset(remainder)));
-
-        for (int i = 1; i <= quotient; i++) {
-            ins.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP, new Offset(Offset.MAXIMUM_OFFSET)));
+            ins.add(new BaseInstruction(instr, Register.SP, Register.SP, new Offset(Offset.MAXIMUM_OFFSET)));
         }
         return ins;
     }
