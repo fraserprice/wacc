@@ -9,6 +9,7 @@ public class SymbolTable {
     private Map<String, IdentifierObj> map;
     private SymbolTable parent;
     private int offsetLocation = 0;
+    private int extraSpace = 0;
     private List<String> initialised = new LinkedList<>();
 
     public SymbolTable() {
@@ -83,12 +84,20 @@ public class SymbolTable {
             VariableObj vObj = lookup(key, VariableObj.class);
             assert (parent != null || vObj != null) : "parent != null || vObj != null";
             if (vObj != null) {
-                return vObj.getOffset();
+                return extraSpace + vObj.getOffset();
             }
-            return offsetLocation + parent.lookupOffset(key);
+            return extraSpace + offsetLocation + parent.lookupOffset(key);
         } else {
-            return offsetLocation + parent.lookupOffset(key);
+            return extraSpace + offsetLocation + parent.lookupOffset(key);
         }
+    }
+
+    public void addExtraSpace(int size) {
+        extraSpace += size;
+    }
+
+    public void resetExtraSpace() {
+        extraSpace = 0;
     }
 
     private boolean isParam(String ident) {

@@ -81,10 +81,12 @@ public class AssignRhsCallFuncNode extends AssignRhsNode<WACCParser.AssignRhsCal
                     availableRegisters.get(0),
                     new StackLocation(true, Register.SP, new Offset(-arg.getType().getSize()))));
             totalSpaceSize += arg.getType().getSize();
+            currentST.addExtraSpace(arg.getType().getSize());
         }
         instructions.add(new BaseInstruction(Ins.BL, new LabelOp("f_" + ident)));
         // restore space
         instructions.add(new BaseInstruction(Ins.ADD, Register.SP, Register.SP, new Offset(totalSpaceSize)));
+        currentST.resetExtraSpace();
         instructions.add(new BaseInstruction(Ins.MOV, availableRegisters.get(0), Register.R0));
 
         return instructions;
