@@ -97,6 +97,27 @@ public class SymbolTable {
         return identOffset > sentinelOffset;
     }
 
+    public int getReturnOffsetSize() {
+        if(map.containsKey(LR_SENTINEL)) {
+            int sum = 0;
+            for(Map.Entry<String, IdentifierObj> entry : map.entrySet()) {
+                if(entry.getValue() instanceof VariableObj && !entry.getKey().equals(LR_SENTINEL)
+                        &&!isParam(entry.getKey())) {
+                    sum += ((VariableObj) entry.getValue()).getType().getSize();
+                }
+            }
+            return sum;
+        } else {
+            int sum = 0;
+            for(IdentifierObj obj : map.values()) {
+                if(obj instanceof VariableObj) {
+                    sum += ((VariableObj) obj).getType().getSize();
+                }
+            }
+            return parent.getReturnOffsetSize() + sum;
+        }
+    }
+
     public int getOffsetLocation() {
         return offsetLocation;
     }

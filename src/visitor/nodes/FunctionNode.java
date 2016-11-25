@@ -102,8 +102,6 @@ public class FunctionNode extends Node<WACCParser.FuncContext> {
 
         ins.addAll(CodeGenerator.makeSpaceOnStack(fObj.getVariableSpace(),
                 body.generateInstructions(codeGenRef, availableRegisters)));
-
-        ins.add(new BaseInstruction(Ins.POP, new RegList(Register.PC)));
         ins.add(new Ltorg());
 
         return ins;
